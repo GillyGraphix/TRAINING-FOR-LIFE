@@ -31,8 +31,14 @@ RUN composer install --no-dev --optimize-autoloader
 RUN npm install
 RUN npm run build
 
+# --- MISTARI MIPYA YA RUHUSA ---
+# Tunatoa ruhusa za kusoma folder la 'public' ili Apache ipate assets
+RUN chmod -R 775 /var/www/html/public
+RUN chmod -R 775 /var/www/html/public/build
+# -------------------------------
+
 # Tunatoa ruhusa (permissions) kwenye folders za storage na cache
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/public/build
 
 # Tunaiambia Apache isome folder la public
 RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf
