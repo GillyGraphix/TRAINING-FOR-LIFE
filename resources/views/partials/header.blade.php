@@ -19,27 +19,33 @@
         x-init="applyTheme()"
         @scroll.window="scrolled = (window.pageYOffset > 50)"
         class="fixed w-full top-0 z-40 transition-all duration-500"
-        :class="scrolled ? 'bg-white dark:bg-slate-900 shadow-md' : 'bg-transparent'">
-    
+        :class="scrolled ? 'bg-white dark:bg-slate-900 shadow-md' : 'bg-black/30 backdrop-blur-md border-b border-white/10 shadow-sm'">
+
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center transition-all duration-500"
              :class="scrolled ? 'h-16' : 'h-24'">
-            
+
             <!-- Logo -->
             <div class="flex-shrink-0 flex items-center">
                 <span class="font-bold text-2xl text-primary transition-colors duration-300">TFL LOGO</span>
             </div>
-            
+
             <!-- Desktop Nav Links -->
             <nav class="hidden lg:flex items-center space-x-6">
-                <a href="#" class="font-medium text-sm xl:text-base transition-colors duration-300 hover:text-primary" :class="scrolled ? 'text-slate-900 dark:text-gray-200' : 'text-gray-100 dark:text-gray-200'">Home</a>
-                <a href="#" class="font-medium text-sm xl:text-base transition-colors duration-300 hover:text-primary" :class="scrolled ? 'text-slate-900 dark:text-gray-200' : 'text-gray-100 dark:text-gray-200'">About Us</a>
-                <a href="#" class="font-medium text-sm xl:text-base transition-colors duration-300 hover:text-primary" :class="scrolled ? 'text-slate-900 dark:text-gray-200' : 'text-gray-100 dark:text-gray-200'">Our Programmes</a>
-                <a href="#" class="font-medium text-sm xl:text-base transition-colors duration-300 hover:text-primary" :class="scrolled ? 'text-slate-900 dark:text-gray-200' : 'text-gray-100 dark:text-gray-200'">Impact</a>
-                <a href="#" class="font-medium text-sm xl:text-base transition-colors duration-300 hover:text-primary" :class="scrolled ? 'text-slate-900 dark:text-gray-200' : 'text-gray-100 dark:text-gray-200'">Get Involved</a>
-                <a href="#" class="font-medium text-sm xl:text-base transition-colors duration-300 hover:text-primary" :class="scrolled ? 'text-slate-900 dark:text-gray-200' : 'text-gray-100 dark:text-gray-200'">News & Stories</a>
-                <a href="#" class="font-medium text-sm xl:text-base transition-colors duration-300 hover:text-primary" :class="scrolled ? 'text-slate-900 dark:text-gray-200' : 'text-gray-100 dark:text-gray-200'">Contact</a>
+                <a href="/" class="font-medium text-sm xl:text-base transition-colors duration-300 hover:text-primary" :class="scrolled ? 'text-slate-900 dark:text-gray-200' : 'text-gray-100 dark:text-gray-200'">Home</a>
                 
+                <a href="/about" class="font-medium text-sm xl:text-base transition-colors duration-300 hover:text-primary" :class="scrolled ? 'text-slate-900 dark:text-gray-200' : 'text-gray-100 dark:text-gray-200'">About Us</a>
+                
+                <a href="/programmes" class="font-medium text-sm xl:text-base transition-colors duration-300 hover:text-primary" :class="scrolled ? 'text-slate-900 dark:text-gray-200' : 'text-gray-100 dark:text-gray-200'">Our Programmes</a>
+                
+                <a href="/impact" class="font-medium text-sm xl:text-base transition-colors duration-300 hover:text-primary" :class="scrolled ? 'text-slate-900 dark:text-gray-200' : 'text-gray-100 dark:text-gray-200'">Impact</a>
+                
+                <a href="/get-involved" class="font-medium text-sm xl:text-base transition-colors duration-300 hover:text-primary" :class="scrolled ? 'text-slate-900 dark:text-gray-200' : 'text-gray-100 dark:text-gray-200'">Get Involved</a>
+                
+                <a href="/news-stories" class="font-medium text-sm xl:text-base transition-colors duration-300 hover:text-primary" :class="scrolled ? 'text-slate-900 dark:text-gray-200' : 'text-gray-100 dark:text-gray-200'">News & Stories</a>
+                
+                <a href="/contact" class="font-medium text-sm xl:text-base transition-colors duration-300 hover:text-primary" :class="scrolled ? 'text-slate-900 dark:text-gray-200' : 'text-gray-100 dark:text-gray-200'">Contact</a>
+
                 <!-- Desktop Theme Toggle Button -->
                 <div class="relative flex items-center border-l-2 pl-4 ml-2 transition-colors duration-300 border-gray-300 dark:border-gray-600">
                     <button @click="toggleTheme()" class="focus:outline-none transition-transform duration-300 hover:scale-110 hover:text-primary" :class="scrolled ? 'text-slate-900 dark:text-gray-300' : 'text-white dark:text-gray-300'">
@@ -54,10 +60,10 @@
                     </button>
                 </div>
             </nav>
-            
+
             <!-- Desktop Donate Button -->
             <div class="hidden lg:block ml-4">
-                <a href="#" class="bg-primary hover:bg-orange-600 text-white font-semibold py-2 px-6 rounded-md shadow transition-transform duration-300 hover:-translate-y-0.5">Donate</a>
+                <a href="/get-involved" class="bg-primary hover:bg-orange-600 text-white font-semibold py-2 px-6 rounded-md shadow transition-transform duration-300 hover:-translate-y-0.5">Donate</a>
             </div>
 
             <!-- Mobile Actions (Theme Toggle & Hamburger) -->
@@ -81,14 +87,14 @@
                     <svg class="w-8 h-8 transform transition-transform duration-300 hover:scale-110 active:scale-95" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                 </button>
             </div>
-            
+
         </div>
     </div>
 
     <!-- Mobile Side Drawer (Genie Effect) -->
     <div x-show="open" class="fixed inset-0 overflow-hidden z-[60]" style="display: none;" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
         <div class="absolute inset-0 overflow-hidden">
-            
+
             <!-- Dark Overlay -->
             <div x-show="open" 
                  x-transition:enter="ease-out duration-500" 
@@ -101,7 +107,7 @@
                  @click="open = false" aria-hidden="true"></div>
 
             <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full">
-                
+
                 <!-- Drawer Box -->
                 <div x-show="open" 
                      x-transition:enter="transform transition-all duration-[1000ms] ease-out origin-top" 
@@ -111,7 +117,7 @@
                      x-transition:leave-start="opacity-100 scale-y-100" 
                      x-transition:leave-end="opacity-0 scale-y-0" 
                      class="pointer-events-auto relative w-screen max-w-sm h-full bg-white dark:bg-slate-900 shadow-2xl flex flex-col overflow-hidden">
-                        
+
                         <!-- Header ya Side Menu & Kitufe cha Kufunga (X) -->
                         <div class="px-6 flex justify-between items-center border-b border-gray-100 dark:border-gray-800 pb-4 mt-6">
                             <h2 class="text-2xl font-bold text-primary">TFL LOGO</h2>
@@ -122,21 +128,27 @@
                                 </svg>
                             </button>
                         </div>
-                        
+
                         <!-- Links za Menu -->
                         <div class="relative mt-4 flex-1 px-6 overflow-y-auto">
                             <nav class="flex flex-col space-y-1">
-                                <a href="#" class="px-4 py-3 text-base font-medium text-slate-700 dark:text-gray-200 hover:text-primary dark:hover:text-primary hover:bg-orange-50 dark:hover:bg-slate-800 rounded-lg transition-colors">Home</a>
-                                <a href="#" class="px-4 py-3 text-base font-medium text-slate-700 dark:text-gray-200 hover:text-primary dark:hover:text-primary hover:bg-orange-50 dark:hover:bg-slate-800 rounded-lg transition-colors">About Us</a>
-                                <a href="#" class="px-4 py-3 text-base font-medium text-slate-700 dark:text-gray-200 hover:text-primary dark:hover:text-primary hover:bg-orange-50 dark:hover:bg-slate-800 rounded-lg transition-colors">Our Programmes</a>
-                                <a href="#" class="px-4 py-3 text-base font-medium text-slate-700 dark:text-gray-200 hover:text-primary dark:hover:text-primary hover:bg-orange-50 dark:hover:bg-slate-800 rounded-lg transition-colors">Impact</a>
-                                <a href="#" class="px-4 py-3 text-base font-medium text-slate-700 dark:text-gray-200 hover:text-primary dark:hover:text-primary hover:bg-orange-50 dark:hover:bg-slate-800 rounded-lg transition-colors">Get Involved</a>
-                                <a href="#" class="px-4 py-3 text-base font-medium text-slate-700 dark:text-gray-200 hover:text-primary dark:hover:text-primary hover:bg-orange-50 dark:hover:bg-slate-800 rounded-lg transition-colors">News & Stories</a>
-                                <a href="#" class="px-4 py-3 text-base font-medium text-slate-700 dark:text-gray-200 hover:text-primary dark:hover:text-primary hover:bg-orange-50 dark:hover:bg-slate-800 rounded-lg transition-colors">Contact</a>
+                                <a href="/" class="px-4 py-3 text-base font-medium text-slate-700 dark:text-gray-200 hover:text-primary dark:hover:text-primary hover:bg-orange-50 dark:hover:bg-slate-800 rounded-lg transition-colors">Home</a>
                                 
+                                <a href="/about" class="px-4 py-3 text-base font-medium text-slate-700 dark:text-gray-200 hover:text-primary dark:hover:text-primary hover:bg-orange-50 dark:hover:bg-slate-800 rounded-lg transition-colors">About Us</a>
+                                
+                                <a href="/programmes" class="px-4 py-3 text-base font-medium text-slate-700 dark:text-gray-200 hover:text-primary dark:hover:text-primary hover:bg-orange-50 dark:hover:bg-slate-800 rounded-lg transition-colors">Our Programmes</a>
+                                
+                                <a href="/impact" class="px-4 py-3 text-base font-medium text-slate-700 dark:text-gray-200 hover:text-primary dark:hover:text-primary hover:bg-orange-50 dark:hover:bg-slate-800 rounded-lg transition-colors">Impact</a>
+                                
+                                <a href="/get-involved" class="px-4 py-3 text-base font-medium text-slate-700 dark:text-gray-200 hover:text-primary dark:hover:text-primary hover:bg-orange-50 dark:hover:bg-slate-800 rounded-lg transition-colors">Get Involved</a>
+                                
+                                <a href="/news-stories" class="px-4 py-3 text-base font-medium text-slate-700 dark:text-gray-200 hover:text-primary dark:hover:text-primary hover:bg-orange-50 dark:hover:bg-slate-800 rounded-lg transition-colors">News & Stories</a>
+                                
+                                <a href="/contact" class="px-4 py-3 text-base font-medium text-slate-700 dark:text-gray-200 hover:text-primary dark:hover:text-primary hover:bg-orange-50 dark:hover:bg-slate-800 rounded-lg transition-colors">Contact</a>
+
                                 <!-- Donate Button (Mobile) -->
                                 <div class="pt-6 mt-2 border-t border-gray-100 dark:border-gray-800">
-                                    <a href="#" class="block w-full text-center bg-primary hover:bg-orange-600 text-white font-semibold py-4 px-6 rounded-md shadow-lg transition-transform duration-300 hover:-translate-y-1">
+                                    <a href="/get-involved" class="block w-full text-center bg-primary hover:bg-orange-600 text-white font-semibold py-4 px-6 rounded-md shadow-lg transition-transform duration-300 hover:-translate-y-1">
                                         Donate Now
                                     </a>
                                 </div>
