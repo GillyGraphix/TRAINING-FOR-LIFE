@@ -71,13 +71,17 @@
             <div class="flex justify-between items-center transition-all duration-500"
                  :class="scrolled ? 'h-16' : 'h-24'">
 
-                <!-- Logo -->
+                <!-- Logo Dynamic Switcher (Inabadilika kulingana na Scroll) -->
                 <div class="flex-shrink-0 flex items-center">
-                    <span class="font-bold text-2xl text-primary transition-colors duration-300">TFL LOGO</span>
+                    <a href="/" class="block hover:scale-105 transition-transform duration-300">
+                        <img :src="scrolled ? '{{ asset('images/training logo.png') }}' : '{{ asset('images/training-logo-white.png') }}'" 
+                             alt="Training For Life Logo" 
+                             class="h-12 sm:h-14 w-auto object-contain transition-all duration-300">
+                    </a>
                 </div>
 
-                <!-- Desktop Nav Links -->
-                <nav class="hidden lg:flex items-center space-x-6">
+                <!-- Desktop Nav Links (Nimeongeza ml-8 hapa chini ili kutoa nafasi kati ya logo na Home) -->
+                <nav class="hidden lg:flex items-center space-x-3 xl:space-x-5 ml-4">
                     <a href="/" class="relative py-2 font-medium text-sm xl:text-base transition-colors duration-300 {{ request()->is('/') ? 'text-primary font-bold' : 'hover:text-primary' }}" :class="scrolled ? 'text-slate-800 dark:text-gray-200' : 'text-white font-semibold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] dark:text-gray-200'">
                         Home
                         @if(request()->is('/'))

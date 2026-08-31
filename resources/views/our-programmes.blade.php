@@ -24,7 +24,8 @@
             
             <!-- Page Header -->
             <div class="text-center mb-16">
-                <h1 class="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">Our Programmes</h1>
+                <span class="text-primary font-bold text-xs uppercase tracking-[0.25em] bg-primary/10 px-4 py-1.5 rounded-full">Our Initiatives</span>
+                <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mt-4 mb-4">Our Programmes</h1>
                 <div class="w-24 h-1 bg-primary mx-auto rounded-full"></div>
                 <p class="mt-6 text-lg text-slate-600 dark:text-gray-400 max-w-3xl mx-auto">
                     Empowering Tanzanian youth through targeted interventions, practical skills, and life-changing opportunities.
@@ -108,6 +109,35 @@
                         <div class="bg-primary/5 dark:bg-slate-700/50 border-l-4 border-primary p-6 rounded-r-2xl">
                             <p class="text-slate-700 dark:text-gray-200 font-medium italic leading-relaxed">
                                 Soma na Matumaini is TFL's flagship scholarship program for talented young Tanzanians whose education was cut short by poverty. We cover the full cost of returning to school and welcome every scholar into a community of young leaders, because poverty should never determine destiny.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. TFL FARM PROGRAM (Mpya) -->
+                <div class="bg-white dark:bg-slate-800 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden transition-transform duration-300 hover:shadow-md">
+                    <div class="p-8 md:p-12">
+                        <div class="flex items-center mb-6">
+                            <span class="flex items-center justify-center w-14 h-14 rounded-xl bg-primary/10 text-primary mr-5 font-bold text-2xl">4</span>
+                            <h2 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">TFL FARM PROGRAM</h2>
+                        </div>
+                        
+                        <p class="text-slate-600 dark:text-gray-300 leading-relaxed mb-6">
+                            TFL Farm serves as our dynamic agricultural incubation and hands-on training hub. Recognizing that agriculture remains the backbone of Tanzania's economy and the most viable gateway to youth employment, this program transforms traditional farming into a profitable, high-tech, and modern agribusiness venture for the younger generation.
+                        </p>
+                        
+                        <p class="text-slate-600 dark:text-gray-300 leading-relaxed mb-6">
+                            At TFL Farm, participants move beyond theory. They undergo rigorous practical training in smart-farming technologies, greenhouse management, horticulture, modern livestock keeping, and value chain addition. The farm acts as an experiential laboratory where youth cultivate not only crops and livestock, but also the discipline, resilience, and business acumen required to commercialize agriculture.
+                        </p>
+
+                        <p class="text-slate-600 dark:text-gray-300 leading-relaxed mb-8">
+                            By merging food security with agripreneurship, TFL Farm ensures that young people view farming not as a fallback option for the destitute, but as a lucrative, dignified, and sustainable career path that drives rural and national economic transformation.
+                        </p>
+
+                        <!-- Highlight Box -->
+                        <div class="bg-primary/5 dark:bg-slate-700/50 border-l-4 border-primary p-6 rounded-r-2xl">
+                            <p class="text-slate-700 dark:text-gray-200 font-medium italic leading-relaxed">
+                                TFL Farm is our practical agricultural incubation hub where youth master smart farming, modern agribusiness, and value addition. We turn soil into success, proving that agriculture is a thriving business enterprise capable of generating sustainable wealth and employment for the youth.
                             </p>
                         </div>
                     </div>

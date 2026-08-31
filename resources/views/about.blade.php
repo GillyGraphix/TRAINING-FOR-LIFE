@@ -23,65 +23,103 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
             <!-- Page Header -->
-            <div class="text-center mb-16">
-                <h1 class="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">Organisational Identity & Values</h1>
-                <div class="w-24 h-1 bg-primary mx-auto rounded-full"></div>
+            <div class="text-center max-w-3xl mx-auto mb-20">
+                <span class="text-primary font-bold text-xs uppercase tracking-[0.25em] bg-primary/10 px-4 py-1.5 rounded-full">Discover TFL</span>
+                <h1 class="text-4xl md:text-6xl font-extrabold text-slate-900 dark:text-white mt-4 mb-6">Organisational Identity & Values</h1>
+                <p class="text-slate-600 dark:text-gray-300 text-base md:text-lg">Breaking the cycle of poverty through strategic youth empowerment and sustainable community leadership.</p>
+                <div class="w-24 h-1 bg-primary mx-auto rounded-full mt-6"></div>
             </div>
 
-            <!-- Section 1.1: Who We Are & Story -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
-                <!-- Who we are -->
-                <div class="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800">
-                    <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center">
-                        <span class="text-primary mr-3">1.1</span> Who We Are
-                    </h2>
-                    <p class="text-slate-600 dark:text-gray-300 leading-relaxed">
-                        TFL (Training For Life) is a Tanzanian youth- centered NGO dedicated to breaking the cycle of poverty through strategic unemployment solutions. We identify, train and mentor talented young leaders from economically disadvantaged families equipping them with market-driven skills, scholarships an entrepreneurship pathways to become job creators and community change makers. TFL was founded in 1996 and its headquarters are in Moshi, Kilimanjaro.
-                    </p>
+            <!-- Section 1.1: Who We Are & Story (Imesawazishwa ili kuzuia nafasi tupu) -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-20 items-stretch">
+                
+                <!-- Who we are (Left Column - Span 5) -->
+                <div class="lg:col-span-5 flex flex-col justify-between space-y-6">
+                    <div class="bg-white dark:bg-slate-800 p-8 md:p-10 rounded-3xl shadow-sm border border-gray-100 dark:border-slate-700/80 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center">
+                                <span class="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center mr-3 text-base">1.1</span> Who We Are
+                            </h2>
+                            <p class="text-slate-600 dark:text-gray-300 leading-relaxed text-base">
+                                TFL (Training For Life) is a Tanzanian youth- centered NGO dedicated to breaking the cycle of poverty through strategic unemployment solutions. We identify, train and mentor talented young leaders from economically disadvantaged families equipping them with market-driven skills, scholarships an entrepreneurship pathways to become job creators and community change makers. TFL was founded in 1996 and its headquarters are in Moshi, Kilimanjaro.
+                            </p>
+                        </div>
+                        <div class="mt-8 pt-6 border-t border-gray-100 dark:border-slate-700 flex items-center justify-between text-xs font-bold text-primary uppercase tracking-wider">
+                            <span>Established 1996</span>
+                            <span>Moshi, Tanzania</span>
+                        </div>
+                    </div>
+
+                    <!-- Kakitu Ka Ziada ka Kuondoa Nafasi Tupu (Impact Quick Box) -->
+                    <div class="bg-slate-900 text-white p-8 rounded-3xl shadow-xl relative overflow-hidden flex items-center justify-between">
+                        <div class="absolute -right-10 -bottom-10 w-32 h-32 bg-primary/20 rounded-full blur-2xl"></div>
+                        <div class="relative z-10">
+                            <span class="text-xs font-bold uppercase tracking-widest text-orange-400">Our Commitment</span>
+                            <h4 class="text-xl font-bold mt-1">Empowering Generations</h4>
+                        </div>
+                        <div class="w-12 h-12 rounded-2xl bg-primary text-white flex items-center justify-center shadow-lg relative z-10">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Our Founding Story & Commitment -->
-                <div class="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800">
+                <!-- Our Founding Story & Commitment (Right Column - Span 7) -->
+                <div class="lg:col-span-7 bg-white dark:bg-slate-800 p-8 md:p-10 rounded-3xl shadow-sm border border-gray-100 dark:border-slate-700/80 flex flex-col justify-between">
                     <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-6">Our Founding Story & Commitment</h2>
                     
-                    <div class="space-y-4">
-                        <p class="text-slate-600 dark:text-gray-300 leading-relaxed">
-                            In 1996, Training for Life was born from a simple, powerful belief, <span class="italic font-medium text-slate-800 dark:text-gray-200">“that every young person, regardless of their background, holds the potential to become a leader and a catalyst for change in their own community.”</span>
+                    <div class="space-y-4 text-slate-600 dark:text-gray-300 leading-relaxed text-sm md:text-base">
+                        <p>
+                            In 1996, Training for Life was born from a simple, powerful belief, <span class="italic font-medium text-slate-900 dark:text-white bg-primary/5 px-2 py-0.5 rounded">“that every young person, regardless of their background, holds the potential to become a leader and a catalyst for change in their own community.”</span>
                         </p>
-                        <p class="text-slate-600 dark:text-gray-300 leading-relaxed">
+                        <p>
                             We are a Tanzanian non-governmental organization dedicated to empowering youth (ages 15-35) from marginalized communities. We do this through practical, life-changing interventions: life skills trainings, job readiness training, entrepreneurship trainings, tangible skills, and educational scholarships. Registered in 2007 with registration number 00NGO/0245 to operate in Tanzania Mainland.
                         </p>
-                        <p class="text-slate-600 dark:text-gray-300 leading-relaxed">
+                        <p>
                             This Human Resources Manual is the blueprint for how we turn our belief into action. It is a declaration of our commitment to building an organization as strong and resilient as the youth we serve. It ensures that every member of our team from our Board of Directors to our field facilitators is united, empowered, and aligned to deliver exceptional, measurable impact. We pledge to be outstanding stewards of the trust and resources granted to us by our donors, our communities, and the young people who inspire us every day.
                         </p>
                     </div>
                 </div>
+
             </div>
 
             <!-- Section 1.2: Vision, Mission & Core Belief -->
-            <div class="mb-16">
-                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-8 text-center">
-                    <span class="text-primary">1.2</span> Why We Exist
-                </h2>
+            <div class="mb-20">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-slate-900 dark:text-white">
+                        <span class="text-primary mr-2">1.2</span> Why We Exist
+                    </h2>
+                </div>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <!-- Vision -->
-                    <div class="bg-primary/10 dark:bg-slate-800 p-8 rounded-2xl border-t-4 border-primary text-center">
-                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4 uppercase tracking-wider">Our Vision</h3>
-                        <p class="text-slate-600 dark:text-gray-300">
+                    <div class="bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-sm border border-gray-100 dark:border-slate-700 hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
+                        <div class="absolute top-0 left-0 right-0 h-1.5 bg-primary"></div>
+                        <div class="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center font-bold mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4 tracking-wide">Our Vision</h3>
+                        <p class="text-slate-600 dark:text-gray-300 text-sm leading-relaxed">
                             A future where every young person in Tanzania has the skills, confidence, and opportunity to build a thriving life and lead their community toward decent life.
                         </p>
                     </div>
                     <!-- Mission -->
-                    <div class="bg-primary/10 dark:bg-slate-800 p-8 rounded-2xl border-t-4 border-primary text-center">
-                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4 uppercase tracking-wider">Our Mission</h3>
-                        <p class="text-slate-600 dark:text-gray-300">
+                    <div class="bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-sm border border-gray-100 dark:border-slate-700 hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
+                        <div class="absolute top-0 left-0 right-0 h-1.5 bg-primary"></div>
+                        <div class="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center font-bold mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4 tracking-wide">Our Mission</h3>
+                        <p class="text-slate-600 dark:text-gray-300 text-sm leading-relaxed">
                             To empower youth from marginalized communities with practical life skills, tangible knowledge, and educational support, fostering a generation of resilient, ethical, and self-reliant leaders.
                         </p>
                     </div>
                     <!-- Core Belief -->
-                    <div class="bg-primary/10 dark:bg-slate-800 p-8 rounded-2xl border-t-4 border-primary text-center">
-                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4 uppercase tracking-wider">Core Belief</h3>
-                        <p class="text-slate-600 dark:text-gray-300">
+                    <div class="bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-sm border border-gray-100 dark:border-slate-700 hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
+                        <div class="absolute top-0 left-0 right-0 h-1.5 bg-primary"></div>
+                        <div class="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center font-bold mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4 tracking-wide">Core Belief</h3>
+                        <p class="text-slate-600 dark:text-gray-300 text-sm leading-relaxed">
                             Unemployment is not a lack of ability. It is a lack of opportunity. When a talented young person cannot afford school or training, poverty is not their failure; it is a system failure. TFL exists to fix that system, one young leader at a time.
                         </p>
                     </div>
@@ -90,40 +128,55 @@
 
             <!-- Section 1.3: Core Values -->
             <div>
-                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-8 text-center">
-                    <span class="text-primary">1.3</span> Core Values
-                </h2>
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-slate-900 dark:text-white">
+                        <span class="text-primary mr-2">1.3</span> Core Values
+                    </h2>
+                </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <!-- Empowerment -->
-                    <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 hover:-translate-y-1 transition-transform duration-300">
-                        <h4 class="text-lg font-bold text-primary mb-3">a. Empowerment</h4>
-                        <p class="text-slate-600 dark:text-gray-300 text-sm">We believe in handing over the tools, not just providing the solution. We equip youth to drive their own development.</p>
+                    <div class="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 hover:-translate-y-1 transition-all duration-300">
+                        <h4 class="text-lg font-bold text-primary mb-3 flex items-center">
+                            <span class="w-2 h-2 rounded-full bg-primary mr-2"></span> a. Empowerment
+                        </h4>
+                        <p class="text-slate-600 dark:text-gray-300 text-sm leading-relaxed">We believe in handing over the tools, not just providing the solution. We equip youth to drive their own development.</p>
                     </div>
                     <!-- Integrity -->
-                    <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 hover:-translate-y-1 transition-transform duration-300">
-                        <h4 class="text-lg font-bold text-primary mb-3">b. Integrity</h4>
-                        <p class="text-slate-600 dark:text-gray-300 text-sm">We act with unwavering honesty and transparency. We are accountable to our youth, our donors, and each other.</p>
+                    <div class="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 hover:-translate-y-1 transition-all duration-300">
+                        <h4 class="text-lg font-bold text-primary mb-3 flex items-center">
+                            <span class="w-2 h-2 rounded-full bg-primary mr-2"></span> b. Integrity
+                        </h4>
+                        <p class="text-slate-600 dark:text-gray-300 text-sm leading-relaxed">We act with unwavering honesty and transparency. We are accountable to our youth, our donors, and each other.</p>
                     </div>
                     <!-- Excellence -->
-                    <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 hover:-translate-y-1 transition-transform duration-300">
-                        <h4 class="text-lg font-bold text-primary mb-3">c. Excellence</h4>
-                        <p class="text-slate-600 dark:text-gray-300 text-sm">We bring our best to everything we do, from designing a training module to managing a scholarship fund. Our beneficiaries deserve nothing less.</p>
+                    <div class="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 hover:-translate-y-1 transition-all duration-300">
+                        <h4 class="text-lg font-bold text-primary mb-3 flex items-center">
+                            <span class="w-2 h-2 rounded-full bg-primary mr-2"></span> c. Excellence
+                        </h4>
+                        <p class="text-slate-600 dark:text-gray-300 text-sm leading-relaxed">We bring our best to everything we do, from designing a training module to managing a scholarship fund. Our beneficiaries deserve nothing less.</p>
                     </div>
                     <!-- Collaboration -->
-                    <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 hover:-translate-y-1 transition-transform duration-300 lg:col-start-1 lg:ml-[50%]">
-                        <h4 class="text-lg font-bold text-primary mb-3">d. Collaboration</h4>
-                        <p class="text-slate-600 dark:text-gray-300 text-sm">We work hand-in-hand with communities, local leaders, and each other. We achieve more together.</p>
+                    <div class="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 hover:-translate-y-1 transition-all duration-300">
+                        <h4 class="text-lg font-bold text-primary mb-3 flex items-center">
+                            <span class="w-2 h-2 rounded-full bg-primary mr-2"></span> d. Collaboration
+                        </h4>
+                        <p class="text-slate-600 dark:text-gray-300 text-sm leading-relaxed">We work hand-in-hand with communities, local leaders, and each other. We achieve more together.</p>
                     </div>
                     <!-- Stewardship -->
-                    <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 hover:-translate-y-1 transition-transform duration-300 lg:ml-[50%]">
-                        <h4 class="text-lg font-bold text-primary mb-3">e. Stewardship</h4>
-                        <p class="text-slate-600 dark:text-gray-300 text-sm">We treat every donation, every piece of equipment, and every minute of time as a precious resource meant for maximum impact.</p>
+                    <div class="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 hover:-translate-y-1 transition-all duration-300 md:col-span-2 lg:col-span-2">
+                        <h4 class="text-lg font-bold text-primary mb-3 flex items-center">
+                            <span class="w-2 h-2 rounded-full bg-primary mr-2"></span> e. Stewardship
+                        </h4>
+                        <p class="text-slate-600 dark:text-gray-300 text-sm leading-relaxed">We treat every donation, every piece of equipment, and every minute of time as a precious resource meant for maximum impact.</p>
                     </div>
                 </div>
             </div>
 
         </div>
     </main>
+
+    <!-- Interactive WhatsApp Widget -->
+    @include('partials.whatsapp-float')
 
     <!-- Footer Section -->
     @include('partials.footer')
@@ -139,7 +192,7 @@
             x-transition:leave="transition ease-in duration-300"
             x-transition:leave-start="opacity-100 translate-y-0"
             x-transition:leave-end="opacity-0 translate-y-10"
-            class="fixed bottom-8 right-8 z-50 p-3 rounded-full bg-primary hover:bg-orange-600 text-white shadow-xl focus:outline-none transform transition-transform hover:-translate-y-1 cursor-pointer"
+            class="fixed bottom-24 right-6 z-40 p-3 rounded-full bg-primary hover:bg-orange-600 text-white shadow-xl focus:outline-none transform transition-transform hover:-translate-y-1 cursor-pointer"
             style="display: none;"
             aria-label="Scroll to top">
         <!-- Up Arrow Icon -->

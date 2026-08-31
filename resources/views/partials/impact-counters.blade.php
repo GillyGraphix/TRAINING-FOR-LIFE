@@ -1,7 +1,8 @@
 <!-- Impact Counters Section (Optimized for Dark Mode & Navy Blue Theme) -->
 <section class="py-16 bg-white dark:bg-secondary border-b border-gray-100 dark:border-gray-800 transition-colors duration-500" x-data="impactCounters()" x-init="initObserver()">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" x-ref="counterSection">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-gray-100 dark:divide-gray-800">
+        <!-- Nimebadilisha kuwa lg:grid-cols-5 ili counters zote 5 zikae kwenye mstari mmoja kwa kioo kikubwa -->
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 text-center lg:divide-x divide-gray-100 dark:divide-gray-800">
             
             <!-- Counter 1: Years -->
             <div class="p-4">
@@ -19,7 +20,7 @@
                 <div class="text-gray-500 dark:text-gray-400 font-semibold text-sm tracking-widest uppercase">YOUTH EMPOWERED</div>
             </div>
 
-            <!-- Counter 3: Active Programmes -->
+            <!-- Counter 3: Active Programmes (Imekuwa 4) -->
             <div class="p-4">
                 <div class="text-4xl md:text-5xl font-bold text-primary mb-2">
                     <span x-text="counts.programmes">0</span>
@@ -35,6 +36,14 @@
                 <div class="text-gray-500 dark:text-gray-400 font-semibold text-sm tracking-widest uppercase">PARTNERS & FUNDERS</div>
             </div>
 
+            <!-- Counter 5: Alumni (MPYA) -->
+            <div class="p-4">
+                <div class="text-4xl md:text-5xl font-bold text-primary mb-2">
+                    <span x-text="counts.alumni">0</span>+
+                </div>
+                <div class="text-gray-500 dark:text-gray-400 font-semibold text-sm tracking-widest uppercase">ALUMNI</div>
+            </div>
+
         </div>
     </div>
 </section>
@@ -48,13 +57,15 @@
                 years: 0,
                 youth: 0,
                 programmes: 0,
-                partners: 0
+                partners: 0,
+                alumni: 0 // Tumeongeza variable ya alumni hapa
             },
             targets: {
                 years: 30,       // Miaka 30 ya impact
                 youth: 15000,    // Mfano: Vijana elfu 15
-                programmes: 3,   // Course 4, Kijana Fursa, Soma na Matumaini
-                partners: 50     // Mfano: Partners 50
+                programmes: 4,   // Imesasishwa kuwa 4
+                partners: 50,    // Mfano: Partners 50
+                alumni: 850      // Imesasishwa kuwa 850
             },
             initObserver() {
                 // Hii inachunguza kama element imeonekana kwenye screen
@@ -65,6 +76,7 @@
                         this.animateCounter('youth', this.targets.youth, 2500);
                         this.animateCounter('programmes', this.targets.programmes, 1500);
                         this.animateCounter('partners', this.targets.partners, 2000);
+                        this.animateCounter('alumni', this.targets.alumni, 2300); // Animation ya alumni
                     }
                 }, { threshold: 0.5 }); // Ina-trigger ikionekana kwa nusu (50%)
                 

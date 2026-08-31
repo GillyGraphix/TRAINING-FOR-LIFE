@@ -28,6 +28,12 @@
         <!-- Programme Highlights Section -->
         @include('partials.programme-highlights')
 
+        <!-- Why The Youth Section (Mpya hapa kati) -->
+        @include('partials.why-the-youth')
+
+        <!-- Our Approach Section (Mpya hapa) -->
+        @include('partials.our-approach')
+
         <!-- Alumni Story Section -->
         @include('partials.alumni-story')
 
@@ -36,6 +42,9 @@
 
         <!-- Partner Logos Section -->
         @include('partials.partner-logos')
+
+        <!-- Interactive WhatsApp Chat Widget -->
+        @include('partials.whatsapp-float')
     </main>
 
     <!-- Footer Section -->
@@ -52,7 +61,7 @@
             x-transition:leave="transition ease-in duration-300"
             x-transition:leave-start="opacity-100 translate-y-0"
             x-transition:leave-end="opacity-0 translate-y-10"
-            class="fixed bottom-8 right-8 z-50 p-3 rounded-full bg-primary hover:bg-orange-600 text-white shadow-xl focus:outline-none transform transition-transform hover:-translate-y-1 cursor-pointer"
+            class="fixed bottom-24 right-6 z-40 p-3 rounded-full bg-primary hover:bg-orange-600 text-white shadow-xl focus:outline-none transform transition-transform hover:-translate-y-1 cursor-pointer"
             style="display: none;"
             aria-label="Scroll to top">
         <!-- Up Arrow Icon -->
