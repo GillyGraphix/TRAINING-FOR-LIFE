@@ -5,13 +5,13 @@
             
             <!-- Column 1: About TFL -->
             <div>
-                <a href="/" class="inline-block mb-6 hover:scale-105 transition-transform duration-300">
+                <a href="{{ route('home') }}" class="inline-block mb-6 hover:scale-105 transition-transform duration-300">
                     <img src="{{ asset('images/footer.logo.png') }}" alt="Training For Life Logo" class="h-16 w-auto object-contain brightness-0 invert">
                 </a>
-                <p class="text-gray-400 leading-relaxed mb-6">
-                    Training For Life (TFL) is a registered NGO in Tanzania under Non-Governmental Organization act,2002 with registration No.00NGO/0245,dedicated to transforming youth into empowered leaders by closing the gaps of awareness, access, and marketable skills.
+                <p class="text-gray-400 leading-relaxed mb-6 text-align-left">
+                    Training For Life (TFL) is a registered NGO in Tanzania under Non-Governmental Organization act, 2002 with registration No. 00NGO/0245, dedicated to transforming youth into empowered leaders by closing the gaps of awareness, access, and marketable skills.
                 </p>
-                <a href="#" class="bg-primary hover:bg-orange-600 text-white font-semibold py-2 px-6 rounded-md shadow transition inline-block">
+                <a href="{{ route('get-involved') }}" class="bg-primary hover:bg-orange-600 text-white font-semibold py-2 px-6 rounded-md shadow transition inline-block">
                     Donate Now
                 </a>
             </div>
@@ -20,11 +20,11 @@
             <div>
                 <h4 class="text-lg font-bold mb-6 border-b border-gray-700 pb-2">Quick Links</h4>
                 <ul class="space-y-3">
-                    <li><a href="#" class="text-gray-400 hover:text-primary transition flex items-center"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg> About Us</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-primary transition flex items-center"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg> Our Programmes</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-primary transition flex items-center"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg> Alumni Stories</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-primary transition flex items-center"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg> News & Events</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-primary transition flex items-center"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg> Contact Us</a></li>
+                    <li><a href="{{ route('about') }}" class="text-gray-400 hover:text-primary transition flex items-center"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg> About Us</a></li>
+                    <li><a href="{{ route('programmes') }}" class="text-gray-400 hover:text-primary transition flex items-center"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg> Our Programmes</a></li>
+                    <li><a href="{{ route('impact') }}" class="text-gray-400 hover:text-primary transition flex items-center"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg> Alumni Stories</a></li>
+                    <li><a href="{{ route('news-stories') }}" class="text-gray-400 hover:text-primary transition flex items-center"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg> News & Events</a></li>
+                    <li><a href="{{ route('contact') }}" class="text-gray-400 hover:text-primary transition flex items-center"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg> Contact Us</a></li>
                 </ul>
             </div>
 
@@ -33,16 +33,16 @@
                 <h4 class="text-lg font-bold mb-6 border-b border-gray-700 pb-2">Contact Us</h4>
                 <ul class="space-y-4 text-gray-400">
                     <li class="flex items-start">
-                        <svg class="w-5 h-5 text-primary mt-1 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                        <span>Moshi-Kilimanjaro,Tanzania<br>P.O. Box 12345</span>
+                        <svg class="w-5 h-5 text-primary mt-1 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                        <span>Moshi-Kilimanjaro, Tanzania<br>P.O. Box 12345</span>
                     </li>
                     <li class="flex items-center">
-                        <svg class="w-5 h-5 text-primary mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                        <a href="mailto:info@trainingforlife.or.tz" class="hover:text-white transition">info@trainingforlife.or.tz</a>
+                        <svg class="w-5 h-5 text-primary mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        <a href="mailto:tfltanzania@gmail.com" class="hover:text-white transition">tfltanzania@gmail.com</a>
                     </li>
                     <li class="flex items-center">
-                        <svg class="w-5 h-5 text-primary mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
-                        <span>+255 123 456 789</span>
+                        <svg class="w-5 h-5 text-primary mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                        <a href="tel:+255765082693" class="hover:text-white transition">+255 765 082 693</a>
                     </li>
                 </ul>
             </div>
@@ -52,6 +52,7 @@
                 <h4 class="text-lg font-bold mb-6 border-b border-gray-700 pb-2">Stay Updated</h4>
                 <p class="text-gray-400 mb-4">Subscribe to our newsletter to receive the latest updates on our programmes and impact.</p>
                 <form action="#" method="POST" class="flex flex-col space-y-3">
+                    @csrf
                     <input type="email" placeholder="Enter your email" class="bg-gray-800 border border-gray-700 text-white rounded-md px-4 py-2 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary">
                     <button type="submit" class="bg-white text-gray-900 hover:bg-gray-100 font-bold py-2 rounded-md transition">Subscribe</button>
                 </form>

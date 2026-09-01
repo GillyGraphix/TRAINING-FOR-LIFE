@@ -5,8 +5,8 @@
             
             <!-- Upande wa Picha -->
             <div class="lg:w-2/5 h-72 lg:h-auto relative">
-                <!-- Tumeweka picha ya mfano (placeholder) inayoendana na ushuhuda -->
-                <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=800&q=80" alt="Alumni Success Story" class="absolute inset-0 w-full h-full object-cover">
+                <!-- Picha Halisi Kutoka Folda ya Local -->
+                <img src="{{ asset('images/alumni_cover/alumni.jpg') }}" alt="Alumni Success Story" class="absolute inset-0 w-full h-full object-cover">
             </div>
 
             <!-- Upande wa Ushuhuda (Content) -->

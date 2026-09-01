@@ -14,7 +14,7 @@
     <!-- Galaxy Background Elements (Nebulas & Stars) -->
     <div class="absolute inset-0 pointer-events-none overflow-hidden">
         
-        <!-- 1. Starry Night Effect (Inaonekana Dark Mode pekee) -->
+        <!-- 1. Starry Night Effect -->
         <div class="absolute inset-0 hidden dark:block opacity-20" 
              style="background-image: radial-gradient(white 1px, transparent 1px); background-size: 50px 50px;">
         </div>
@@ -22,10 +22,10 @@
              style="background-image: radial-gradient(white 1px, transparent 1px); background-size: 70px 70px; background-position: 25px 25px;">
         </div>
 
-        <!-- 2. Main Orange Galaxy Glow (Top Right) - Ina animate taratibu -->
+        <!-- 2. Main Orange Galaxy Glow (Top Right) -->
         <div class="absolute -top-32 -right-32 w-[500px] h-[500px] bg-primary/30 dark:bg-primary/20 rounded-full blur-[120px] mix-blend-multiply dark:mix-blend-screen animate-pulse" style="animation-duration: 7s;"></div>
         
-        <!-- 3. Deep Cosmic Blue Glow (Bottom Left) - Kuleta uwiano wa anga -->
+        <!-- 3. Deep Cosmic Blue Glow (Bottom Left) -->
         <div class="absolute -bottom-48 -left-20 w-[600px] h-[600px] bg-blue-400/20 dark:bg-indigo-600/20 rounded-full blur-[150px] mix-blend-multiply dark:mix-blend-screen"></div>
         
         <!-- 4. Center Soft Orange Highlight -->
@@ -33,7 +33,7 @@
         
     </div>
 
-    <!-- Main Content Container (z-10 ili ikae juu ya Galaxy) -->
+    <!-- Main Content Container -->
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <!-- Section Header -->
@@ -60,19 +60,15 @@
             <div class="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-xl shadow-sm hover:shadow-xl transition-all duration-1000 ease-out transform delay-100 overflow-hidden border border-gray-100 dark:border-gray-700 flex flex-col group"
                  :class="shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'">
                 <div class="h-48 overflow-hidden relative">
-                    <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=800&q=80" alt="News Image" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <img src="{{ asset('images/news_photos/news1.jpg') }}" alt="News Image" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     <div class="absolute top-4 left-4 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide shadow-md">Education</div>
                 </div>
                 <div class="p-6 flex flex-col flex-grow relative">
                     <div class="text-sm text-gray-500 dark:text-gray-400 mb-2 font-medium">July 20, 2026</div>
                     <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-primary transition-colors cursor-pointer">TFL Launches New Community Library</h3>
-                    <p class="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3 flex-grow">
+                    <p class="text-gray-600 dark:text-gray-300 line-clamp-3 flex-grow">
                         In our continuous effort to bridge the educational gap, we have successfully opened a new modern library accessible to over 500 students.
                     </p>
-                    <a href="#" class="text-primary font-semibold hover:text-orange-600 transition-colors mt-auto inline-flex items-center">
-                        Read Article 
-                        <svg class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                    </a>
                 </div>
             </div>
 
@@ -80,19 +76,15 @@
             <div class="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-xl shadow-sm hover:shadow-xl transition-all duration-1000 ease-out transform delay-300 overflow-hidden border border-gray-100 dark:border-gray-700 flex flex-col group"
                  :class="shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'">
                 <div class="h-48 overflow-hidden relative">
-                    <img src="https://images.unsplash.com/photo-1542810634-71277d95dcbb?auto=format&fit=crop&w=800&q=80" alt="News Image" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <img src="{{ asset('images/news_photos/news2.jpg') }}" alt="News Image" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     <div class="absolute top-4 left-4 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide shadow-md">Empowerment</div>
                 </div>
                 <div class="p-6 flex flex-col flex-grow relative">
                     <div class="text-sm text-gray-500 dark:text-gray-400 mb-2 font-medium">July 15, 2026</div>
                     <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-primary transition-colors cursor-pointer">Youth Entrepreneurship Workshop Highlights</h3>
-                    <p class="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3 flex-grow">
+                    <p class="text-gray-600 dark:text-gray-300 line-clamp-3 flex-grow">
                         Over 100 young entrepreneurs gathered for a 3-day intensive workshop focused on digital marketing and business management.
                     </p>
-                    <a href="#" class="text-primary font-semibold hover:text-orange-600 transition-colors mt-auto inline-flex items-center">
-                        Read Article 
-                        <svg class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                    </a>
                 </div>
             </div>
 
@@ -100,19 +92,15 @@
             <div class="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-xl shadow-sm hover:shadow-xl transition-all duration-1000 ease-out transform delay-500 overflow-hidden border border-gray-100 dark:border-gray-700 flex flex-col group"
                  :class="shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'">
                 <div class="h-48 overflow-hidden relative">
-                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80" alt="News Image" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <img src="{{ asset('images/news_photos/news3.jpg') }}" alt="News Image" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     <div class="absolute top-4 left-4 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide shadow-md">Partnerships</div>
                 </div>
                 <div class="p-6 flex flex-col flex-grow relative">
                     <div class="text-sm text-gray-500 dark:text-gray-400 mb-2 font-medium">July 5, 2026</div>
                     <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-primary transition-colors cursor-pointer">New Partnership Announced for 2026</h3>
-                    <p class="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3 flex-grow">
+                    <p class="text-gray-600 dark:text-gray-300 line-clamp-3 flex-grow">
                         TFL is proud to announce a strategic partnership with local tech hubs to provide free coding bootcamps for high school graduates.
                     </p>
-                    <a href="#" class="text-primary font-semibold hover:text-orange-600 transition-colors mt-auto inline-flex items-center">
-                        Read Article 
-                        <svg class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                    </a>
                 </div>
             </div>
 
