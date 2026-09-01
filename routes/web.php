@@ -6,31 +6,35 @@ use Illuminate\Support\Facades\Route;
 // Public Routes
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 Route::get('/about', function () {
     return view('about');
-});
+})->name('about');
 
 Route::get('/programmes', function () {
     return view('our-programmes');
-});
+})->name('programmes');
 
 Route::get('/impact', function () {
     return view('impact');
-});
+})->name('impact');
 
 Route::get('/get-involved', function () {
     return view('get-involved');
-});
+})->name('get-involved');
 
 Route::get('/news-stories', function () {
     return view('news-stories');
-});
+})->name('news-stories');
+
+Route::get('/gallery', function () {
+    return view('gallery');
+})->name('gallery');
 
 Route::get('/contact', function () {
     return view('contact');
-});
+})->name('contact');
 
 // Authenticated Routes
 Route::get('/dashboard', function () {
@@ -43,7 +47,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/gallery', function () {
-    return view('gallery');
-});
 require __DIR__.'/auth.php';
