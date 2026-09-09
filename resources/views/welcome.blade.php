@@ -15,6 +15,9 @@
 </head>
 <body class="font-sans antialiased bg-white text-gray-800 dark:bg-slate-900 dark:text-gray-200 transition-colors duration-300">
 
+    <!-- Preloader: logo (public/images/logo.png) + progress bar 0->100% kabla site haijafunguka -->
+    @include('partials.preloader')
+
     <!-- Header Navigation -->
     @include('partials.header')
 
