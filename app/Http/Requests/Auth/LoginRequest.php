@@ -12,6 +12,9 @@ use Illuminate\Validation\ValidationException;
 
 class LoginRequest extends FormRequest
 {
+    private const MAX_ATTEMPTS = 5;
+    private const LOCKOUT_SECONDS = 120;
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -28,7 +31,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email'],
+            'username' => ['required', 'string'],
             'password' => ['required', 'string'],
         ];
     }
@@ -42,11 +45,32 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
-            RateLimiter::hit($this->throttleKey());
+        if (! Auth::attempt(
+            $this->only('username', 'password'),
+            $this->boolean('remember')
+        )) {
+            RateLimiter::hit($this->throttleKey(), self::LOCKOUT_SECONDS);
+
+            if (RateLimiter::tooManyAttempts(
+                $this->throttleKey(),
+                self::MAX_ATTEMPTS
+            )) {
+                /*
+                 * Anzisha muda mpya wa sekunde 120 kuanzia jaribio la tano.
+                 * Tunaweka attempts kwenye kiwango cha lockout baada ya kusafisha
+                 * counter ili muda wote wa kusubiri uwe sekunde 120 kamili.
+                 */
+                RateLimiter::clear($this->throttleKey());
+
+                for ($attempt = 0; $attempt < self::MAX_ATTEMPTS; $attempt++) {
+                    RateLimiter::hit($this->throttleKey(), self::LOCKOUT_SECONDS);
+                }
+
+                $this->ensureIsNotRateLimited();
+            }
 
             throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
+                'username' => trans('auth.failed'),
             ]);
         }
 
@@ -60,7 +84,10 @@ class LoginRequest extends FormRequest
      */
     public function ensureIsNotRateLimited(): void
     {
-        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
+        if (! RateLimiter::tooManyAttempts(
+            $this->throttleKey(),
+            self::MAX_ATTEMPTS
+        )) {
             return;
         }
 
@@ -69,7 +96,7 @@ class LoginRequest extends FormRequest
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
         throw ValidationException::withMessages([
-            'email' => trans('auth.throttle', [
+            'username' => trans('auth.throttle', [
                 'seconds' => $seconds,
                 'minutes' => ceil($seconds / 60),
             ]),
@@ -81,6 +108,8 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->string('email')).'|'.$this->ip());
+        return Str::transliterate(
+            Str::lower($this->string('username')) . '|' . $this->ip()
+        );
     }
 }

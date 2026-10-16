@@ -1,24 +1,3 @@
-{{--
-    TFL Preloader / Intro Splash
-    ----------------------------
-    Weka include hii mara moja tu, mara baada ya <body> kufunguka kwenye layout
-    kuu (kwa mfano resources/views/layouts/app.blade.php), KABLA ya @include('partials.header'):
-
-        <body ...>
-            @include('partials.preloader')
-            @include('partials.header')
-            ...
-
-    Badilisha src ya logo hapa chini kuelekeza kwenye logo halisi ya site (public/images/logo.png
-    au njia yoyote uliyo nayo). Progress bar inapanda 0 -> 100% moja kwa moja (bila namba
-    kuonyeshwa), kisha intro inafifia (fade out) na kujiondoa mara tovuti ikisha-load kabisa.
-
-    NOTE: Mara loader inapoanza ku-fade (hideLoader), tunatuma event 'preloader:done'
-    kwenye window. Hero section (partials.hero au popote unapotumia
-    data-hero-animate / class .hero-anim-ready) inasikiliza event hii kuanzisha
-    animations zake za maandishi/buttons/cards mara moja preloader inapoanza kutoweka.
---}}
-
 <style>
     #tfl-preloader {
         position: fixed;
@@ -30,9 +9,11 @@
         background-color: #ffffff;
         transition: opacity 0.5s ease, visibility 0.5s ease;
     }
+
     .dark #tfl-preloader {
         background-color: rgb(15 23 42);
     }
+
     #tfl-preloader.tfl-preloader--hidden {
         opacity: 0;
         visibility: hidden;
@@ -54,9 +35,6 @@
     }
 
     .tfl-preloader__bar {
-        /* Namba hii inaweza kuwa NEGATIVE ili kuvuta bar juu zaidi, karibu na logo —
-           hasa kama faili la logo lina transparent padding ndani yake.
-           Jaribu -10px, -20px, -30px n.k. kutegemea unavyoona kwenye browser. */
         margin-top: -100px;
         width: 360px;
         height: 5px;
@@ -74,12 +52,21 @@
     }
 
     @keyframes tfl-pulse {
-        0%, 100% { transform: scale(1); opacity: 1; }
-        50% { transform: scale(1.06); opacity: 0.85; }
+        0%, 100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        50% {
+            transform: scale(1.06);
+            opacity: 0.85;
+        }
     }
 
     @media (prefers-reduced-motion: reduce) {
-        .tfl-preloader__logo { animation: none; }
+        .tfl-preloader__logo {
+            animation: none;
+        }
     }
 </style>
 
@@ -90,8 +77,12 @@
             alt="Training For Life"
             class="tfl-preloader__logo"
         >
+
         <div class="tfl-preloader__bar">
-            <div class="tfl-preloader__bar-fill" id="tfl-preloader-fill"></div>
+            <div
+                class="tfl-preloader__bar-fill"
+                id="tfl-preloader-fill"
+            ></div>
         </div>
     </div>
 </div>
@@ -100,20 +91,37 @@
     (function () {
         var fill = document.getElementById('tfl-preloader-fill');
         var loader = document.getElementById('tfl-preloader');
+
         if (!fill || !loader) return;
 
-        // Muda mdogo zaidi (milliseconds) preloader inatakiwa ionekane, hata kama
-        // page ime-load haraka zaidi ya hapo. Badilisha namba hii ukitaka muda tofauti.
+        var storageKey = 'tfl_preloader_seen';
+        var hasSeenPreloader = false;
+
+        try {
+            hasSeenPreloader = sessionStorage.getItem(storageKey) === '1';
+        } catch (error) {
+            // Ikiwa sessionStorage haipatikani, preloader itaendelea kawaida.
+        }
+
+        // Ameshauona preloader kwenye tab hii: ondoa mara moja.
+        if (hasSeenPreloader) {
+            loader.remove();
+            window.dispatchEvent(new Event('preloader:done'));
+            return;
+        }
+
         var MIN_DISPLAY_TIME = 3000;
         var startTime = Date.now();
         var pageLoaded = false;
         var progress = 0;
 
-        // Inches progress toward ~90% while real assets are still loading,
-        // so the bar never looks "stuck" at 100% before the page is actually ready.
         var ticker = setInterval(function () {
             progress += (90 - progress) / 12 + 0.6;
-            if (progress > 90) progress = 90;
+
+            if (progress > 90) {
+                progress = 90;
+            }
+
             fill.style.width = progress + '%';
         }, 90);
 
@@ -121,13 +129,15 @@
             clearInterval(ticker);
             fill.style.width = '100%';
 
+            // Hifadhi kuwa preloader imeonekana; kurasa zinazofuata zitauruka.
+            try {
+                sessionStorage.setItem(storageKey, '1');
+            } catch (error) {
+                // Endelea hata kama sessionStorage haipatikani.
+            }
+
             setTimeout(function () {
                 loader.classList.add('tfl-preloader--hidden');
-
-                // 🔔 Hapa ndipo tunaambia hero section "nianze kutembea" —
-                // hii inatokea wakati huo huo preloader inapoanza kufifia (fade),
-                // hivyo hero animations zinaanza "kwa siri" chini ya preloader
-                // na zinapoonekana ni smooth, sio za ghafla/za kuchelewa.
                 window.dispatchEvent(new Event('preloader:done'));
 
                 setTimeout(function () {
@@ -138,6 +148,7 @@
 
         function finishLoading() {
             if (pageLoaded) return;
+
             pageLoaded = true;
 
             var elapsed = Date.now() - startTime;

@@ -42,6 +42,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        // Mpeleke mtumiaji kwenye login baada ya kutoka.
+        return redirect()->route('login');
     }
 }

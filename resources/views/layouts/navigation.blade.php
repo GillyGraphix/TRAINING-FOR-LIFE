@@ -13,8 +13,14 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                        {{ __('Dashboar') }}
                     </x-nav-link>
+
+                    <!-- Ongeza Hii Link Mpya ya Admin Applications -->
+    <x-nav-link :href="route('admin.applications.index')" :active="request()->routeIs('admin.applications.*')">
+        {{ __('View Applications') }}
+    </x-nav-link>
+</div>
                 </div>
             </div>
 

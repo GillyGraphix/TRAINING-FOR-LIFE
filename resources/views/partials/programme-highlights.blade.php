@@ -144,20 +144,11 @@
                         <h3 class="text-xl font-black text-slate-900 dark:text-white mb-3">TFL Farm</h3>
                         <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed text-left transition-all duration-300"
                            :class="expanded ? '' : 'line-clamp-3'">
-                            TFL Farm was established in 2025 on approximately five acres of land in Kawawa, Kilimanjaro. The farm is intended to develop sustainable income-generating enterprises that can progressively contribute to financing TFL community-driven programmes and strengthen the organization. The farm will initially focus on irrigated horticulture; poultry, goats, pigs, and fish will be introduced progressively after the initial enterprises demonstrate sufficient technical support.
+                            TFL Farm was established in 2025 on approximately five acres of land in Kawawa, Kilimanjaro. The farm is intended to develop.
                         </p>
                     </div>
 
                     <!-- Read More / Read Less Toggle Button -->
-                    <button @click="expanded = !expanded" 
-                            class="mt-4 inline-flex items-center text-xs font-bold text-primary hover:text-orange-600 transition-colors focus:outline-none">
-                        <span x-text="expanded ? 'Read Less' : 'Read More'"></span>
-                        <svg class="w-3.5 h-3.5 ml-1 transition-transform duration-300" 
-                             :class="expanded ? 'rotate-180' : ''" 
-                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path>
-                        </svg>
-                    </button>
                 </div>
             </div>
 
