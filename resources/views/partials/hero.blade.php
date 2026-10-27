@@ -1,20 +1,57 @@
 @php
-    // Kusoma picha zote zilizopo kwenye public/images/gallery/hero/
-    $heroPath = public_path('images/gallery/hero');
+    // Picha za zamani zilizopo kwenye public/images/gallery/hero/
+    $legacyHeroPath = public_path('images/gallery/hero');
+    $legacyHeroFiles = [];
+
+    if (\Illuminate\Support\Facades\File::isDirectory($legacyHeroPath)) {
+        $legacyHeroFiles = collect(\Illuminate\Support\Facades\File::files($legacyHeroPath))
+            ->filter(function ($file) {
+                return in_array(strtolower($file->getExtension()), ['jpg', 'jpeg', 'png', 'webp']);
+            })
+            ->sortBy(function ($file) {
+                return $file->getFilename();
+            })
+            ->values();
+    }
+
+    // Tumia picha za admin; nafasi zisizo na picha mpya zitumie picha za zamani.
     $heroImages = [];
 
-    if (\Illuminate\Support\Facades\File::isDirectory($heroPath)) {
-        foreach (\Illuminate\Support\Facades\File::files($heroPath) as $file) {
-            if (in_array(strtolower($file->getExtension()), ['jpg', 'jpeg', 'png', 'webp'])) {
-                $heroImages[] = asset('images/gallery/hero/' . $file->getFilename());
-            }
+    for ($slot = 1; $slot <= 6; $slot++) {
+        $databaseImagePath = $heroSetting->{'image_' . $slot . '_path'} ?? null;
+
+        if ($databaseImagePath && \Illuminate\Support\Facades\Storage::disk('public')->exists($databaseImagePath)) {
+            $heroImages[] = url('/storage/' . ltrim($databaseImagePath, '/'));
+            continue;
+        }
+
+        $legacyImage = $legacyHeroFiles->get($slot - 1);
+
+        if ($legacyImage) {
+            $heroImages[] = asset('images/gallery/hero/' . $legacyImage->getFilename());
         }
     }
 
-    // Tumia 1.jpg ikiwa folda haina picha zinazotambulika
+    // Picha ya fallback ikiwa hakuna picha nyingine.
     if (empty($heroImages)) {
         $heroImages[] = asset('images/gallery/hero/1.jpg');
     }
+
+    $heroTitle = filled($heroSetting->title ?? null)
+        ? $heroSetting->title
+        : 'TRANSFORMING YOUTH INTO EMPOWERED LEADERS';
+
+    $heroSubtitle = filled($heroSetting->subtitle ?? null)
+        ? $heroSetting->subtitle
+        : 'We equip young Tanzanians from disadvantaged families with the skills, confidence, and opportunities to build productive lives, launch enterprises, and lead their communities.';
+
+    $heroHighlightText = trim($heroSetting->highlight_text ?? 'EMPOWERED LEADERS');
+    $heroHighlightColor = $heroSetting->highlight_color ?? '#f97316';
+
+    // Tafuta sehemu ya kwanza ya heading inayolingana na maneno yaliyochaguliwa.
+    $heroHighlightPosition = $heroHighlightText !== ''
+        ? mb_stripos($heroTitle, $heroHighlightText)
+        : false;
 @endphp
 
 <div class="bg-gray-100 dark:bg-slate-950 min-h-screen p-3 md:p-6 lg:p-8 font-sans transition-colors duration-300">
@@ -54,15 +91,18 @@
         <div class="relative z-20 flex flex-col justify-center h-full px-5 sm:px-6 md:px-12 lg:px-20 max-w-4xl pt-24 sm:pt-16 lg:pt-20 pb-32 text-center sm:text-left">
             <h1 class="italic text-2xl md:text-6xl lg:text-6xl font-extrabold text-white mb-6 leading-[1.1] tracking-tight drop-shadow-[0_4px_6px_rgba(0,0,0,0.8)]">
                 <span class="mask-reveal-line" style="--mrl-delay:0.1s;">
-                    <span>TRANSFORMING YOUTH INTO</span>
-                </span>
-                <span class="mask-reveal-line" style="--mrl-delay:0.19s;">
-                    <span class="text-orange-500">EMPOWERED LEADERS</span>
+                    <span>
+                        @if ($heroHighlightPosition !== false)
+                            {{ mb_substr($heroTitle, 0, $heroHighlightPosition) }}<span data-hero-highlight-color="{{ $heroHighlightColor }}">{{ mb_substr($heroTitle, $heroHighlightPosition, mb_strlen($heroHighlightText)) }}</span>{{ mb_substr($heroTitle, $heroHighlightPosition + mb_strlen($heroHighlightText)) }}
+                        @else
+                            {{ $heroTitle }}
+                        @endif
+                    </span>
                 </span>
             </h1>
 
             <p class="hero-fade-up text-sm sm:text-base md:text-lg text-gray-200 font-medium max-w-2xl mx-auto sm:mx-0 leading-relaxed drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] mb-8">
-                We equip young Tanzanians from disadvantaged families with the skills, confidence, and opportunities to build productive lives, launch enterprises, and lead their communities.
+                {{ $heroSubtitle }}
             </p>
 
             <div class="flex flex-wrap items-center justify-center sm:justify-start gap-3 sm:gap-4">
@@ -209,41 +249,62 @@
             </div>
 
             <div class="lg:col-span-3 order-1 lg:order-2">
-                <div class="magicpattern-wrap relative isolate rounded-tl-[64px] rounded-2xl shadow-xl border border-white/10 p-4 md:p-5 flex gap-4 md:gap-5 overflow-x-auto momentum-x overscroll-x-contain hide-scrollbar md:grid md:grid-cols-3 md:overflow-visible transition-colors duration-300">
+                <div class="magicpattern-wrap relative isolate rounded-tl-[64px] rounded-2xl shadow-xl border border-white/30 dark:border-white/10 p-4 md:p-5 flex gap-4 md:gap-5 overflow-x-auto momentum-x overscroll-x-contain hide-scrollbar md:grid md:grid-cols-3 md:overflow-visible transition-colors duration-300">
 
-                    <!-- Kadi 1 -->
+                    <!-- Kadi 1: Skill Building -->
                     <div class="scroll-reveal group relative z-10 min-w-[200px] sm:min-w-[220px] md:min-w-0 h-[220px] md:h-[240px] rounded-[28px] overflow-hidden shrink-0 md:shrink shadow-md" style="transition-delay:100ms;">
                         <img src="{{ asset('images/gallery/home/skill-building.jpg') }}" alt="Skill Building" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent"></div>
-                        <div class="absolute top-3 left-3 w-9 h-9 rounded-full bg-orange-500/90 flex items-center justify-center text-white shadow-lg">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 014 15v3H1v-3a3 3 0 013.75-2.906z"></path></svg>
+
+                        <div class="absolute top-3 left-3 w-10 h-10 rounded-full bg-orange-500/95 flex items-center justify-center text-white shadow-lg">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="10" cy="7" r="4"></circle>
+                                <path d="M20 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
                         </div>
+
                         <div class="absolute bottom-0 left-0 p-4 w-full">
                             <h3 class="text-white font-bold text-base mb-1">Skill Building</h3>
                             <p class="text-gray-300 text-xs line-clamp-2">Equipping youth with practical technical and soft skills.</p>
                         </div>
                     </div>
 
-                    <!-- Kadi 2 -->
+                    <!-- Kadi 2: Launch Enterprises -->
                     <div class="scroll-reveal group relative z-10 min-w-[200px] sm:min-w-[220px] md:min-w-0 h-[220px] md:h-[240px] rounded-[28px] overflow-hidden shrink-0 md:shrink shadow-md" style="transition-delay:250ms;">
                         <img src="{{ asset('images/gallery/home/launch-enterprises.jpg') }}" alt="Launch Enterprises" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent"></div>
-                        <div class="absolute top-3 left-3 w-9 h-9 rounded-full bg-orange-500/90 flex items-center justify-center text-white shadow-lg">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a2 2 0 01-2 2H6V4zm2 0v12h8V4H6zm2 2a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1zm0 4a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
+
+                        <div class="absolute top-3 left-3 w-10 h-10 rounded-full bg-orange-500/95 flex items-center justify-center text-white shadow-lg">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <rect x="3" y="7" width="18" height="13" rx="2"></rect>
+                                <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                <path d="M3 12h18"></path>
+                                <path d="M10 12v2h4v-2"></path>
+                            </svg>
                         </div>
+
                         <div class="absolute bottom-0 left-0 p-4 w-full">
                             <h3 class="text-white font-bold text-base mb-1">Launch Enterprises</h3>
                             <p class="text-gray-300 text-xs line-clamp-2">Supporting young entrepreneurs to build businesses.</p>
                         </div>
                     </div>
 
-                    <!-- Kadi 3 -->
+                    <!-- Kadi 3: Lead Communities -->
                     <div class="scroll-reveal group relative z-10 min-w-[200px] sm:min-w-[220px] md:min-w-0 h-[220px] md:h-[240px] rounded-[28px] overflow-hidden shrink-0 md:shrink shadow-md" style="transition-delay:400ms;">
                         <img src="{{ asset('images/gallery/home/lead-communities.jpg') }}" alt="Lead Communities" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent"></div>
-                        <div class="absolute top-3 left-3 w-9 h-9 rounded-full bg-orange-500/90 flex items-center justify-center text-white shadow-lg">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path></svg>
+
+                        <div class="absolute top-3 left-3 w-10 h-10 rounded-full bg-orange-500/95 flex items-center justify-center text-white shadow-lg">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M18 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="10" cy="7" r="4"></circle>
+                                <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
                         </div>
+
                         <div class="absolute bottom-0 left-0 p-4 w-full">
                             <h3 class="text-white font-bold text-base mb-1">Lead Communities</h3>
                             <p class="text-gray-300 text-xs line-clamp-2">Creating impactful changes in local communities.</p>
@@ -282,30 +343,28 @@
         box-shadow: 0 0 10px rgba(249, 115, 22, 0.8);
     }
 
-    .hide-scrollbar::-webkit-scrollbar { display: none; }
-    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    .momentum-x { -webkit-overflow-scrolling: touch; touch-action: pan-x; }
-
-    .magicpattern-wrap::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        z-index: 0;
-        border-radius: inherit;
-        background-color: #E5E5F7;
-        opacity: 0.2;
-        background-image:
-            repeating-radial-gradient(circle at 0 0, transparent 0, #E5E5F7 23px),
-            repeating-linear-gradient(#444CF755, #444CF7);
-        transition: background-color 0.3s ease, opacity 0.3s ease;
+    .hide-scrollbar::-webkit-scrollbar {
+        display: none;
     }
 
-    .dark .magicpattern-wrap::before {
-        background-color: #0f172a;
-        opacity: 0.3;
-        background-image:
-            repeating-radial-gradient(circle at 0 0, transparent 0, #0f172a 23px),
-            repeating-linear-gradient(#6366f155, #6366f1);
+    .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    .momentum-x {
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-x pan-y pinch-zoom;
+        overscroll-behavior-x: contain;
+    }
+
+    .magicpattern-wrap {
+        background: linear-gradient(135deg, rgba(224, 231, 255, 0.9), rgba(255, 247, 237, 0.9));
+        background-size: 100% 100%;
+    }
+
+    .dark .magicpattern-wrap {
+        background: linear-gradient(135deg, rgba(15, 23, 42, 0.98), rgba(30, 41, 59, 0.98));
     }
 
     .apply-dialog {
@@ -322,12 +381,12 @@
     @keyframes pantingBreath {
         0%, 100% {
             transform: scale(1);
-            box-shadow: 0 4px 10px rgba(249,115,22,0.4), 0 0 0 0 rgba(249,115,22,0.6);
+            box-shadow: 0 4px 10px rgba(249, 115, 22, 0.4), 0 0 0 0 rgba(249, 115, 22, 0.6);
         }
 
         50% {
             transform: scale(1.08);
-            box-shadow: 0 10px 25px rgba(249,115,22,0.8), 0 0 0 8px rgba(249,115,22,0.15);
+            box-shadow: 0 10px 25px rgba(249, 115, 22, 0.8), 0 0 0 8px rgba(249, 115, 22, 0.15);
         }
     }
 
@@ -340,8 +399,17 @@
     }
 
     @keyframes heroMaskRevealUp {
-        0% { opacity: 0; transform: translateY(30px); filter: blur(6px); }
-        100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+        0% {
+            opacity: 0;
+            transform: translateY(30px);
+            filter: blur(6px);
+        }
+
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
+        }
     }
 
     .mask-reveal-line {
@@ -356,8 +424,17 @@
     }
 
     @keyframes heroFadeUp {
-        0% { opacity: 0; transform: translateY(16px); filter: blur(4px); }
-        100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+        0% {
+            opacity: 0;
+            transform: translateY(16px);
+            filter: blur(4px);
+        }
+
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
+        }
     }
 
     .hero-fade-up {
@@ -366,8 +443,15 @@
     }
 
     @keyframes btnSlideInFromRight {
-        0% { opacity: 0; transform: translateX(70px); }
-        100% { opacity: 1; transform: translateX(0); }
+        0% {
+            opacity: 0;
+            transform: translateX(70px);
+        }
+
+        100% {
+            opacity: 1;
+            transform: translateX(0);
+        }
     }
 
     .btn-slide-in {
@@ -384,6 +468,18 @@
     .scroll-reveal.visible {
         opacity: 1;
         transform: translateY(0);
+    }
+
+    @media (max-width: 767px) {
+        .magicpattern-wrap {
+            min-height: 250px;
+            touch-action: pan-x pan-y pinch-zoom;
+        }
+
+        .magicpattern-wrap > article,
+        .magicpattern-wrap > div {
+            scroll-snap-align: start;
+        }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -406,7 +502,16 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        // Fungua na funga modal ya kuchagua programu
+        // Tumia rangi iliyohifadhiwa kwenye database kwa kipande cha heading.
+        document.querySelectorAll('[data-hero-highlight-color]').forEach(function (element) {
+            const selectedColor = element.dataset.heroHighlightColor;
+
+            if (selectedColor && /^#[0-9A-Fa-f]{6}$/.test(selectedColor)) {
+                element.style.color = selectedColor;
+            }
+        });
+
+        // Fungua na funga modal ya kuchagua programu.
         const applyDialog = document.getElementById('apply-program-modal');
 
         document.querySelectorAll('[data-open-apply-modal]').forEach(function (button) {
@@ -433,7 +538,7 @@
             });
         }
 
-        // Carousel ya picha za hero bila Alpine.js
+        // Carousel ya picha za hero bila Alpine.js.
         document.querySelectorAll('.hero-carousel').forEach(function (carousel) {
             const slides = Array.from(carousel.querySelectorAll('.hero-slide'));
             const indicators = Array.from(carousel.querySelectorAll('.hero-indicator'));
@@ -468,7 +573,7 @@
             }
         });
 
-        // Anzisha animations za maandishi baada ya preloader
+        // Anzisha animations za maandishi baada ya preloader.
         function markHeroReady() {
             document.body.classList.add('hero-ready');
         }
@@ -479,7 +584,7 @@
             markHeroReady();
         }
 
-        // Animations za vitu vinapoingia kwenye eneo linaloonekana
+        // Animations za vitu vinapoingia kwenye eneo linaloonekana.
         if ('IntersectionObserver' in window) {
             const observer = new IntersectionObserver(function (entries, currentObserver) {
                 entries.forEach(function (entry) {

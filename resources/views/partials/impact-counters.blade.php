@@ -28,12 +28,12 @@
                 <div class="text-gray-500 dark:text-gray-400 font-bold text-[10px] md:text-[11px] tracking-wider uppercase">Alumni Network</div>
             </div>
 
-            <!-- Counter 4: Businesses Launched -->
+            <!-- Counter 4: Businesses Planned -->
             <div class="py-2 px-2">
                 <div class="text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white mb-1">
                     <span x-text="counts.businesses">0</span>
                 </div>
-                <div class="text-gray-500 dark:text-gray-400 font-bold text-[10px] md:text-[11px] tracking-wider uppercase">Businesses Launched</div>
+                <div class="text-gray-500 dark:text-gray-400 font-bold text-[10px] md:text-[11px] tracking-wider uppercase">Businesses Planned</div>
             </div>
 
             <!-- Counter 5: Active Programmes -->

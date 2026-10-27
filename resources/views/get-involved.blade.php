@@ -1,411 +1,681 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Get Involved & Donate - Training For Life (TFL)</title>
+    <title>Get Involved - Training For Life (TFL)</title>
+    <meta name="description" content="Support Training For Life and help young people in Tanzania build skills, livelihoods, and brighter futures.">
+
+    <script>document.documentElement.classList.add('js');</script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <style>
+        .js .involved-reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity .6s ease, transform .6s ease;
+        }
+
+        .js .involved-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .involved-card {
+            transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+        }
+
+        .involved-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(247, 145, 32, .55);
+            box-shadow: 0 18px 36px -18px rgba(15, 23, 42, .28);
+        }
+
+        .dark .involved-card:hover {
+            box-shadow: 0 18px 36px -18px rgba(0, 0, 0, .65);
+        }
+
+        .involved-title-underline {
+            position: relative;
+            display: inline-block;
+            padding-bottom: .35rem;
+        }
+
+        .involved-title-underline::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 100%;
+            height: 3px;
+            border-radius: 9999px;
+            background: linear-gradient(90deg, #f79120, #fb923c);
+        }
+
+        .involved-hero-title {
+            background: linear-gradient(90deg, #ffffff, #fbbf24, #ffffff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: involvedShimmer 7s linear infinite;
+        }
+
+        @keyframes involvedShimmer {
+            to { background-position: 200% center; }
+        }
+
+        #involved-hero {
+            background-attachment: fixed;
+        }
+
+        /* ---------- Spacing helpers (do not depend on the Tailwind build) ---------- */
+        .involved-lead {
+            margin-top: 1.75rem;
+        }
+
+        .involved-pad {
+            padding: 1.75rem;
+        }
+
+        /* ---------- Sponsor cards ---------- */
+        .involved-plan {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 2rem 1.75rem 1.75rem;
+        }
+
+        .involved-plan-label {
+            margin: 0;
+            font-size: .75rem;
+            font-weight: 700;
+            line-height: 1.4;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+        }
+
+        .involved-plan-price {
+            margin: 1rem 0 0;
+            font-size: 2.25rem;
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -.02em;
+        }
+
+        .involved-plan-text {
+            flex: 1 1 auto;
+            margin: 1rem 0 0;
+            font-size: .9375rem;
+            line-height: 1.7;
+        }
+
+        .involved-plan-btn {
+            margin-top: 1.75rem;
+        }
+
+        .involved-plan-badge {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            white-space: nowrap;
+        }
+
+        @media (max-width: 767px) {
+            #involved-hero {
+                background-attachment: scroll;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .involved-card,
+            .involved-hero-title {
+                animation: none !important;
+                transition: none !important;
+            }
+
+            .js .involved-reveal {
+                opacity: 1 !important;
+                transform: none !important;
+                transition: none !important;
+            }
+
+            #involved-hero {
+                background-attachment: scroll;
+            }
+        }
+    </style>
 </head>
 
-<body class="font-sans antialiased bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-gray-100 min-h-screen relative overflow-x-hidden transition-colors duration-300">
+<body class="bg-white font-sans antialiased text-slate-800 transition-colors duration-300 dark:bg-slate-950 dark:text-slate-200">
 
     @include('partials.header')
 
-    <!-- Background Decorative Elements -->
-    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <div class="absolute -top-40 -left-40 w-96 h-96 bg-orange-100 dark:bg-primary/20 rounded-full blur-[140px]"></div>
-        <div class="absolute top-1/3 -right-20 w-[500px] h-[500px] bg-amber-100 dark:bg-orange-600/15 rounded-full blur-[160px]"></div>
-        <div class="absolute -bottom-40 left-1/3 w-[600px] h-[600px] bg-orange-50 dark:bg-amber-500/10 rounded-full blur-[180px]"></div>
+    <main class="min-h-screen bg-slate-50 pt-24 text-slate-800 transition-colors duration-500 dark:bg-slate-950 dark:text-slate-200">
 
-        <!-- Subtle Pattern Overlay (Light Mode) -->
-        <div class="absolute inset-0 opacity-[0.03] dark:hidden"
-             style="background-image: radial-gradient(#000 1px, transparent 1px); background-size: 32px 32px;">
-        </div>
+        {{-- ============ HERO ============ --}}
+        @php
+            $heroImage = asset('images/impact/getinvolved-hero.jpg');
+        @endphp
 
-        <!-- Subtle Pattern Overlay (Dark Mode) -->
-        <div class="absolute inset-0 opacity-[0.03] hidden dark:block"
-             style="background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 32px 32px;">
-        </div>
-    </div>
+        <section
+            id="involved-hero"
+            class="relative isolate flex min-h-[520px] items-center overflow-hidden bg-[#070049] bg-cover bg-center"
+            style="background-image: linear-gradient(110deg, rgba(7, 0, 73, .92) 0%, rgba(7, 0, 73, .78) 55%, rgba(7, 0, 73, .62) 100%), url('{{ $heroImage }}');"
+        >
+            <div class="pointer-events-none absolute inset-0 z-0 bg-gradient-to-t from-[#070049]/60 via-transparent to-[#070049]/20"></div>
 
-    <main class="relative z-10 pt-32 pb-24">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="relative z-10 mx-auto w-full max-w-7xl px-4 py-20 text-center sm:px-6 lg:px-8">
+                <p class="mb-4 text-sm font-bold uppercase tracking-[0.2em] text-orange-200">
+                    Support our mission
+                </p>
 
-            <!-- Hero Header -->
-            <div class="text-center max-w-3xl mx-auto mb-20">
-                <div class="inline-flex items-center gap-2 bg-orange-100/80 dark:bg-primary/10 border border-orange-200 dark:border-primary/30 text-orange-600 dark:text-primary px-4 py-2 rounded-full text-sm font-semibold mb-6 shadow-sm backdrop-blur-md">
-                    <svg class="w-5 h-5 animate-pulse" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                    </svg>
-                    <span>Support Our Mission</span>
-                </div>
-
-                <h1 class="text-4xl sm:text-6xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-6 leading-tight">
-                    Get Involved &
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-amber-500 dark:from-primary dark:to-amber-400">
+                <h1 class="mx-auto max-w-4xl text-4xl font-extrabold leading-tight text-white sm:text-6xl">
+                    Get Involved
+                    <span class="involved-hero-title mt-2 block pb-1">
                         Shape the Future
                     </span>
                 </h1>
 
-                <p class="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
-                    Your generous donation directly equips young people in Tanzania with market-relevant skills, leadership training, and sustainable opportunities.
+                <p class="mx-auto mt-6 max-w-2xl text-base font-medium leading-relaxed text-white sm:text-lg">
+                    Help young people in Tanzania gain practical skills, confidence, and opportunities
+                    to build sustainable livelihoods and contribute to their communities.
                 </p>
 
-                <div class="w-24 h-1.5 bg-gradient-to-r from-orange-500 to-amber-400 dark:from-primary dark:to-amber-400 mx-auto mt-8 rounded-full"></div>
+                <div class="mt-8 flex flex-wrap justify-center gap-3">
+                    <a href="#sponsor"
+                       class="inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-bold text-[#070049] shadow-lg transition hover:bg-orange-400 focus:outline-none focus-visible:ring-4 focus-visible:ring-orange-200">
+                        Sponsor a young person
+                    </a>
+                    <a href="#donate"
+                       class="inline-flex items-center justify-center rounded-full border border-white/70 bg-white/10 px-6 py-3 text-sm font-bold text-white transition hover:bg-white hover:text-[#070049] focus:outline-none focus-visible:ring-4 focus-visible:ring-white/50">
+                        See ways to donate
+                    </a>
+                </div>
             </div>
+        </section>
 
-            <!-- Donate -->
-            <section class="mb-24">
-                <div class="max-w-3xl mx-auto text-center mb-14">
-                    <h2 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mt-1 mb-4">
-                        Support
+        <div class="mx-auto max-w-7xl px-4 pb-24 sm:px-6 lg:px-8">
+
+            {{-- ============ PAGE NAVIGATION ============ --}}
+            <nav aria-label="Get involved page sections"
+                 class="relative z-10 -mt-6 mb-16 flex flex-wrap justify-center gap-2 rounded-2xl border border-slate-200 bg-white p-4 shadow-lg dark:border-slate-700 dark:bg-slate-900">
+                <a href="#donate"
+                   class="rounded-full border border-slate-300 bg-slate-50 px-5 py-2 text-sm font-semibold text-slate-800 transition hover:border-primary hover:bg-primary hover:text-[#070049] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100">
+                    Donate
+                </a>
+                <a href="#sponsor"
+                   class="rounded-full border border-slate-300 bg-slate-50 px-5 py-2 text-sm font-semibold text-slate-800 transition hover:border-primary hover:bg-primary hover:text-[#070049] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100">
+                    Sponsor a Youth
+                </a>
+                <a href="#partner"
+                   class="rounded-full border border-slate-300 bg-slate-50 px-5 py-2 text-sm font-semibold text-slate-800 transition hover:border-primary hover:bg-primary hover:text-[#070049] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100">
+                    Partner with TFL
+                </a>
+                <a href="#volunteer"
+                   class="rounded-full border border-slate-300 bg-slate-50 px-5 py-2 text-sm font-semibold text-slate-800 transition hover:border-primary hover:bg-primary hover:text-[#070049] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100">
+                    Volunteer
+                </a>
+            </nav>
+
+            {{-- ============ DONATE ============ --}}
+            <section id="donate"
+                     class="involved-reveal mb-24 scroll-mt-32"
+                     data-involved-reveal>
+                <div class="mx-auto mb-10 max-w-3xl text-center">
+                    <p class="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-orange-800 dark:text-primary">
+                        Make a contribution
+                    </p>
+
+                    <h2 class="text-2xl font-bold text-slate-950 dark:text-white md:text-3xl">
+                        <span class="involved-title-underline">Donate to TFL</span>
                     </h2>
-                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
-                        Every shilling you give goes toward closing three gaps for a young Tanzanian: awareness of opportunity, access to capital, and marketable skills. In 2025, 89% of every donation went directly into programmes.
+
+                    <p class="involved-lead leading-relaxed text-slate-700 dark:text-slate-300">
+                        Your contribution helps make training, education, and livelihood opportunities
+                        available to young people. In 2025, 89% of donations went directly to programmes.
                     </p>
                 </div>
 
-                <!-- Donation Methods Grid: two Tanzania donation methods -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                {{-- How donations help --}}
+                <div class="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
+                    <article class="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-900">
+                        <p class="text-sm font-bold text-slate-950 dark:text-white">Training and skills</p>
+                        <p class="mt-2 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                            Help provide learning materials and practical training for young people.
+                        </p>
+                    </article>
 
-                    <!-- CARD 1: Mobile Money -->
-                    <div class="bg-white dark:bg-slate-800/80 backdrop-blur-xl rounded-3xl p-8 border border-slate-200 dark:border-slate-700/80 shadow-xl dark:shadow-2xl relative overflow-hidden flex flex-col justify-between group hover:border-sky-500/40 dark:hover:border-sky-500/50 transition-all duration-300">
+                    <article class="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-900">
+                        <p class="text-sm font-bold text-slate-950 dark:text-white">Education and transition</p>
+                        <p class="mt-2 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                            Support students to return to school and move toward further opportunities.
+                        </p>
+                    </article>
 
-                        <div class="absolute -right-10 -bottom-10 opacity-5 group-hover:opacity-10 transition-opacity pointer-events-none">
-                            <svg class="w-64 h-64 text-slate-900 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
-                            </svg>
-                        </div>
-
-                        <div>
-                            <div class="flex items-center gap-4 mb-6">
-                                <div class="w-14 h-14 bg-gradient-to-br from-sky-500 to-blue-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-sky-500/20 shrink-0">
-                                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h3 class="text-xl font-bold text-slate-900 dark:text-white">Mobile Money</h3>
-                                    <p class="text-xs text-slate-500 dark:text-slate-400">Fastest way to give from Tanzania</p>
-                                </div>
-                            </div>
-
-                            <p class="text-sm text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
-                                Send directly via M-Pesa — no bank visit required.
-                            </p>
-
-                            <div class="bg-slate-50 dark:bg-slate-900/90 rounded-2xl p-5 border border-slate-200 dark:border-slate-700/60">
-                                <span class="text-xs font-bold text-slate-500 dark:text-slate-400 block mb-2">
-                                    M-PESA NUMBER
-                                </span>
-
-                                <div class="flex justify-between items-center bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-transparent px-3.5 py-2.5 rounded-xl"
-                                     x-data="{ copied: false }">
-                                    <span class="font-mono font-bold text-slate-900 dark:text-white">+255 765 082 693</span>
-                                    <button @click="navigator.clipboard.writeText('+255765082693'); copied = true; setTimeout(() => copied = false, 2000)"
-                                            class="text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition p-1"
-                                            title="Copy Number"
-                                            aria-label="Copy M-Pesa number">
-                                        <svg x-show="!copied" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
-                                        </svg>
-                                        <svg x-show="copied" class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-700/60 text-xs text-slate-500 dark:text-slate-400">
-                            Registered to:
-                            <strong class="text-slate-900 dark:text-white">Training For Life (TFL)</strong>
-                        </div>
-                    </div>
-
-                    <!-- CARD 2: KCB Bank Transfer -->
-                    <div class="bg-white dark:bg-slate-800/80 backdrop-blur-xl rounded-3xl p-8 border border-slate-200 dark:border-slate-700/80 shadow-xl dark:shadow-2xl relative overflow-hidden flex flex-col justify-between group hover:border-orange-500/40 dark:hover:border-primary/50 transition-all duration-300">
-
-                        <div class="absolute -right-10 -bottom-10 opacity-5 group-hover:opacity-10 transition-opacity pointer-events-none">
-                            <svg class="w-64 h-64 text-slate-900 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5m0 0h4m-4 0V3m0 18v-6a2 2 0 012-2h2a2 2 0 012 2v6"></path>
-                            </svg>
-                        </div>
-
-                        <div>
-                            <div class="flex items-center gap-4 mb-6">
-                                <div class="w-14 h-14 bg-gradient-to-br from-orange-500 to-amber-600 dark:from-primary dark:to-orange-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-orange-500/20 shrink-0">
-                                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h3 class="text-xl font-bold text-slate-900 dark:text-white">Bank Transfer</h3>
-                                    <p class="text-xs text-slate-500 dark:text-slate-400">Direct wire / deposit (TZS &amp; USD)</p>
-                                </div>
-                            </div>
-
-                            <div class="bg-slate-50 dark:bg-slate-900/90 rounded-2xl p-5 border border-slate-200 dark:border-slate-700/60 shadow-inner">
-                                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3 mb-3">
-                                    <div>
-                                        <h4 class="font-bold text-slate-900 dark:text-white text-sm">
-                                            KCB BANK (TANZANIA) LTD
-                                        </h4>
-                                        <p class="text-xs text-slate-500 dark:text-slate-400">
-                                            Branch: Moshi (Boma Rd)
-                                        </p>
-                                    </div>
-
-                                    <span class="self-start text-[10px] uppercase font-bold tracking-wider px-2.5 py-1 rounded-md bg-orange-100 dark:bg-amber-500/10 text-orange-700 dark:text-amber-400 border border-orange-200 dark:border-amber-500/20">
-                                        SWIFT: KCBLTZTZ
-                                    </span>
-                                </div>
-
-                                <div class="space-y-2 mt-4 text-sm font-mono">
-                                    <div class="flex justify-between items-center gap-3 bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-transparent px-3.5 py-2.5 rounded-xl"
-                                         x-data="{ copied: false }">
-                                        <span class="text-slate-500 dark:text-slate-400 text-xs font-sans">TZS Account:</span>
-                                        <div class="flex items-center gap-2">
-                                            <span class="font-bold text-slate-900 dark:text-white">3391669756</span>
-                                            <button @click="navigator.clipboard.writeText('3391669756'); copied = true; setTimeout(() => copied = false, 2000)"
-                                                    class="text-slate-400 hover:text-orange-600 dark:hover:text-primary transition p-1"
-                                                    title="Copy TZS account"
-                                                    aria-label="Copy TZS account number">
-                                                <svg x-show="!copied" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
-                                                </svg>
-                                                <svg x-show="copied" class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    <div class="flex justify-between items-center gap-3 bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-transparent px-3.5 py-2.5 rounded-xl"
-                                         x-data="{ copied: false }">
-                                        <span class="text-slate-500 dark:text-slate-400 text-xs font-sans">USD Account:</span>
-                                        <div class="flex items-center gap-2">
-                                            <span class="font-bold text-slate-900 dark:text-white">3391669764</span>
-                                            <button @click="navigator.clipboard.writeText('3391669764'); copied = true; setTimeout(() => copied = false, 2000)"
-                                                    class="text-slate-400 hover:text-orange-600 dark:hover:text-primary transition p-1"
-                                                    title="Copy USD account"
-                                                    aria-label="Copy USD account number">
-                                                <svg x-show="!copied" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
-                                                </svg>
-                                                <svg x-show="copied" class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-700/60 text-xs text-slate-500 dark:text-slate-400">
-                            Account Name:
-                            <strong class="text-slate-900 dark:text-white">TRAINING FOR LIFE (TFL)</strong>
-                        </div>
-                    </div>
+                    <article class="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-900">
+                        <p class="text-sm font-bold text-slate-950 dark:text-white">Livelihoods and opportunity</p>
+                        <p class="mt-2 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                            Contribute to employability, entrepreneurship, and sustainable livelihoods.
+                        </p>
+                    </article>
                 </div>
 
-                <!-- US Tax-Deductible Donation -->
-                <div class="grid grid-cols-1 max-w-5xl mx-auto mt-8">
-                    <div class="bg-white dark:bg-slate-800/80 backdrop-blur-xl rounded-3xl p-8 border border-slate-200 dark:border-slate-700/80 shadow-xl dark:shadow-2xl relative overflow-hidden flex flex-col justify-between group hover:border-emerald-500/40 dark:hover:border-emerald-500/50 transition-all duration-300">
+                <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
 
-                        <div class="absolute -right-10 -bottom-10 opacity-5 group-hover:opacity-10 transition-opacity pointer-events-none">
-                            <svg class="w-64 h-64 text-slate-900 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 002 2h1.5a2.5 2.5 0 002.5-2.5V11a2 2 0 012-2h1.055M11 20.055V18a2 2 0 00-2-2h-1a2 2 0 01-2-2v-1a2 2 0 00-2-2H3.055"></path>
-                            </svg>
+                    {{-- M-PESA --}}
+                    <article class="involved-card involved-pad rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-800">
+                        <div class="flex items-center gap-4">
+                            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-orange-100 text-xl font-extrabold text-orange-800 dark:bg-slate-700 dark:text-primary" aria-hidden="true">
+                                M
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-slate-950 dark:text-white">Mobile Money</h3>
+                                <p class="text-sm text-slate-600 dark:text-slate-300">M-Pesa in Tanzania</p>
+                            </div>
                         </div>
 
-                        <div>
-                            <div class="flex items-center gap-4 mb-6">
-                                <div class="w-14 h-14 bg-gradient-to-br from-emerald-500 to-teal-600 dark:to-teal-700 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-emerald-500/20 shrink-0">
-                                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                    </svg>
-                                </div>
+                        <p class="mt-5 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                            Send your contribution using the M-Pesa number below. Please keep your
+                            transaction reference so TFL can confirm receipt.
+                        </p>
+
+                        <div class="mt-5 flex flex-wrap items-center justify-between gap-3 rounded-xl bg-slate-50 p-4 dark:bg-slate-900"
+                             x-data="{ copied: false }">
+                            <div>
+                                <span class="block text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300">
+                                    M-Pesa number
+                                </span>
+                                <strong class="mt-1 block font-mono text-lg text-slate-950 dark:text-white">
+                                    +255 765 082 693
+                                </strong>
+                            </div>
+                            <button type="button"
+                                    @click="navigator.clipboard.writeText('+255765082693'); copied = true; setTimeout(() => copied = false, 2000)"
+                                    class="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-800 transition hover:border-primary hover:text-orange-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100">
+                                <span x-show="!copied">Copy number</span>
+                                <span x-show="copied">Copied</span>
+                            </button>
+                        </div>
+
+                        <p class="mt-4 text-xs text-slate-600 dark:text-slate-300">
+                            Registered to <strong class="text-slate-800 dark:text-white">Training For Life (TFL)</strong>.
+                        </p>
+                    </article>
+
+                    {{-- TANZANIA BANK ACCOUNTS --}}
+                    <article class="involved-card involved-pad rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-800">
+                        <div class="flex items-center gap-4">
+                            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-orange-100 text-xl font-extrabold text-orange-800 dark:bg-slate-700 dark:text-primary" aria-hidden="true">
+                                T
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-slate-950 dark:text-white">Bank Transfer</h3>
+                                <p class="text-sm text-slate-600 dark:text-slate-300">Tanzania TZS and USD accounts</p>
+                            </div>
+                        </div>
+
+                        <div class="mt-5 rounded-xl bg-slate-50 p-5 dark:bg-slate-900">
+                            <div class="flex flex-wrap items-start justify-between gap-3 border-b border-slate-200 pb-4 dark:border-slate-700">
                                 <div>
-                                    <h3 class="text-xl font-bold text-slate-900 dark:text-white">US Tax-Deductible</h3>
-                                    <p class="text-xs text-slate-500 dark:text-primary font-medium">
-                                        Via Fiscal Sponsor: Mama Hope International
+                                    <h4 class="text-sm font-bold text-slate-950 dark:text-white">
+                                        KCB BANK (TANZANIA) LTD
+                                    </h4>
+                                    <p class="mt-1 text-xs text-slate-600 dark:text-slate-300">
+                                        Branch: Moshi (Boma Rd)
                                     </p>
                                 </div>
+                                <span class="rounded-md bg-orange-100 px-2.5 py-1 text-xs font-bold text-orange-900 dark:bg-slate-800 dark:text-primary">
+                                    SWIFT: KCBLTZTZ
+                                </span>
                             </div>
 
-                            <p class="text-sm text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
-                                Give easily via Donor-Advised Funds (DAF) or a direct contribution through our US 501(c)(3) fiscal sponsor.
+                            <div class="mt-4 space-y-3">
+                                <div class="flex flex-wrap items-center justify-between gap-3 rounded-lg bg-white p-3 dark:bg-slate-800"
+                                     x-data="{ copied: false }">
+                                    <span class="text-sm text-slate-600 dark:text-slate-300">TZS Account</span>
+                                    <div class="flex items-center gap-3">
+                                        <strong class="font-mono text-slate-950 dark:text-white">3391669756</strong>
+                                        <button type="button"
+                                                @click="navigator.clipboard.writeText('3391669756'); copied = true; setTimeout(() => copied = false, 2000)"
+                                                class="text-xs font-bold text-orange-800 hover:underline dark:text-primary">
+                                            <span x-show="!copied">Copy</span>
+                                            <span x-show="copied">Copied</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="flex flex-wrap items-center justify-between gap-3 rounded-lg bg-white p-3 dark:bg-slate-800"
+                                     x-data="{ copied: false }">
+                                    <span class="text-sm text-slate-600 dark:text-slate-300">USD Account</span>
+                                    <div class="flex items-center gap-3">
+                                        <strong class="font-mono text-slate-950 dark:text-white">3391669764</strong>
+                                        <button type="button"
+                                                @click="navigator.clipboard.writeText('3391669764'); copied = true; setTimeout(() => copied = false, 2000)"
+                                                class="text-xs font-bold text-orange-800 hover:underline dark:text-primary">
+                                            <span x-show="!copied">Copy</span>
+                                            <span x-show="copied">Copied</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <p class="mt-4 text-xs text-slate-600 dark:text-slate-300">
+                                Account name: <strong class="text-slate-800 dark:text-white">TRAINING FOR LIFE (TFL)</strong>
                             </p>
-
-                            <div class="bg-slate-50 dark:bg-slate-900/90 rounded-2xl p-5 border border-slate-200 dark:border-slate-700/60 space-y-3 font-mono text-sm">
-                                <div class="flex justify-between items-center gap-4 border-b border-slate-200 dark:border-slate-800 pb-2 font-sans">
-                                    <span class="text-xs text-slate-500 dark:text-slate-400">Bank Name:</span>
-                                    <span class="font-bold text-slate-900 dark:text-white text-right">JPMorgan Chase Bank, N.A.</span>
-                                </div>
-
-                                <div class="flex justify-between items-center gap-3 bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-transparent px-3.5 py-2.5 rounded-xl"
-                                     x-data="{ copied: false }">
-                                    <span class="text-slate-500 dark:text-slate-400 text-xs font-sans">Routing No.:</span>
-                                    <div class="flex items-center gap-2">
-                                        <span class="font-bold text-slate-900 dark:text-white">322271627</span>
-                                        <button @click="navigator.clipboard.writeText('322271627'); copied = true; setTimeout(() => copied = false, 2000)"
-                                                class="text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition p-1"
-                                                aria-label="Copy routing number">
-                                            <svg x-show="!copied" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
-                                            </svg>
-                                            <svg x-show="copied" class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div class="flex justify-between items-center gap-3 bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-transparent px-3.5 py-2.5 rounded-xl"
-                                     x-data="{ copied: false }">
-                                    <span class="text-slate-500 dark:text-slate-400 text-xs font-sans">Account No.:</span>
-                                    <div class="flex items-center gap-2">
-                                        <span class="font-bold text-slate-900 dark:text-white">478801082</span>
-                                        <button @click="navigator.clipboard.writeText('478801082'); copied = true; setTimeout(() => copied = false, 2000)"
-                                                class="text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition p-1"
-                                                aria-label="Copy account number">
-                                            <svg x-show="!copied" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
-                                            </svg>
-                                            <svg x-show="copied" class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div class="text-xs text-slate-500 dark:text-slate-400 pt-2 font-sans">
-                                    <strong>Address:</strong> 276 5th Avenue, Suite 704 #722, New York, NY 10001
-                                </div>
-                            </div>
                         </div>
-
-                        <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-700/60 text-xs text-slate-500 dark:text-slate-400">
-                            * Eligible for 501(c)(3) tax deduction for US taxpayers.
-                        </div>
-                    </div>
+                    </article>
                 </div>
 
-                <!-- Transparency / Trust Banner -->
-                <div class="mt-10 max-w-6xl mx-auto bg-white dark:bg-gradient-to-r dark:from-slate-800 dark:to-slate-800/80 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-md dark:shadow-none text-center flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <div class="flex items-center gap-4 text-left">
-                        <div class="p-3 bg-orange-100 dark:bg-primary/20 text-orange-600 dark:text-primary rounded-2xl shrink-0">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-                            </svg>
-                        </div>
+
+                {{-- DONATION STEPS AND CONFIRMATION --}}
+                <div class="mt-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900 sm:p-8">
+                    <h3 class="text-lg font-bold text-slate-950 dark:text-white">
+                        How to complete and confirm your donation
+                    </h3>
+
+                    <ol class="mt-5 grid grid-cols-1 gap-4 md:grid-cols-3">
+                        <li class="flex gap-3">
+                            <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-extrabold text-[#070049]">1</span>
+                            <span class="text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                                Choose M-Pesa, a TFL bank account, or the US giving option that suits you.
+                            </span>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-extrabold text-[#070049]">2</span>
+                            <span class="text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                                Complete the transfer and save the transaction reference or payment receipt.
+                            </span>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-extrabold text-[#070049]">3</span>
+                            <span class="text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                                Send TFL the date, amount, payment method, and reference to confirm receipt.
+                            </span>
+                        </li>
+                    </ol>
+
+                    <div class="mt-6 flex flex-col gap-4 rounded-xl border border-orange-200 bg-orange-50 p-5 sm:flex-row sm:items-center sm:justify-between dark:border-slate-700 dark:bg-slate-800">
                         <div>
-                            <h4 class="font-bold text-slate-900 dark:text-white text-sm">Transparency &amp; Accountability</h4>
-                            <p class="text-xs text-slate-500 dark:text-slate-400">
-                                Reg No. 00NGO/0245 — All funds are directly audited and dedicated to youth empowerment programs.
+                            <h4 class="font-bold text-slate-950 dark:text-white">Need help or want to confirm a donation?</h4>
+                            <p class="mt-1 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                                Contact TFL and include your payment details so the team can assist.
                             </p>
                         </div>
+                        <a href="{{ route('contact') }}"
+                           class="inline-flex shrink-0 justify-center rounded-full bg-primary px-5 py-3 text-sm font-bold text-[#070049] transition hover:bg-orange-400 focus:outline-none focus-visible:ring-4 focus-visible:ring-orange-300/60">
+                            Contact TFL
+                        </a>
                     </div>
-                    <a href="{{ route('contact') }}"
-                       class="text-xs font-bold bg-slate-900 dark:bg-slate-700 hover:bg-slate-800 dark:hover:bg-slate-600 text-white px-5 py-3 rounded-xl transition whitespace-nowrap shadow-md dark:shadow-none">
-                        Need Assistance? Contact Us
-                    </a>
                 </div>
             </section>
 
-            <!-- Become a Partner -->
-            <section class="mb-24 max-w-6xl mx-auto">
-                <div class="mb-10 text-center max-w-3xl mx-auto">
-                    <h2 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mt-1">
-                        Become a Partner
+            {{-- ============ SPONSOR A YOUTH ============ --}}
+            <section id="sponsor"
+                     class="involved-reveal mb-24 scroll-mt-32"
+                     data-involved-reveal>
+                <div class="mb-12 text-center">
+                    <p class="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-orange-800 dark:text-primary">
+                        Sponsor a youth
+                    </p>
+
+                    <h2 class="text-2xl font-bold text-slate-950 dark:text-white md:text-3xl">
+                        <span class="involved-title-underline">Choose how you would like to help</span>
                     </h2>
+
+                    <p class="involved-lead mx-auto max-w-2xl leading-relaxed text-slate-700 dark:text-slate-300">
+                        You can contribute toward training materials, support one young person through
+                        a programme cohort, or help a student return to secondary school.
+                    </p>
                 </div>
 
-                <div class="bg-white dark:bg-slate-800/80 backdrop-blur-xl rounded-3xl border border-slate-200 dark:border-slate-700/80 shadow-xl dark:shadow-2xl p-8 md:p-12 grid grid-cols-1 lg:grid-cols-5 gap-10 items-center">
-                    <div class="lg:col-span-3">
-                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
-                            TFL partners with foundations, corporates, government bodies, and international organisations who share our belief that poverty should never determine destiny. Our partnership with CRDB Bank Foundation created a zero interest seed capital fund for our graduates; our fiscal sponsorship with Mama Hope International opened the door to US tax deductible giving.
+                <div class="grid grid-cols-1 items-stretch gap-8 md:grid-cols-3 md:gap-6">
+
+                    {{-- 1. Support youth training --}}
+                    <article class="involved-card involved-plan rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
+                        <p class="involved-plan-label text-orange-800 dark:text-primary">
+                            1. Support youth training
                         </p>
 
-                        <p class="text-slate-800 dark:text-white font-medium mb-8">
-                            If your organisation wants to invest in a proven, youth led model, would like to talk.
+                        <p class="involved-plan-price text-slate-950 dark:text-white">
+                            $100
+                        </p>
+
+                        <p class="involved-plan-text text-slate-700 dark:text-slate-300">
+                            Provide essential training materials for Kijana Fursa Programme participants.
+                        </p>
+
+                        <a href="#donate"
+                           class="involved-plan-btn inline-flex w-full items-center justify-center rounded-full bg-primary px-5 py-3 text-sm font-bold text-[#070049] transition hover:bg-orange-400 focus:outline-none focus-visible:ring-4 focus-visible:ring-orange-300/60">
+                            Donate $100
+                        </a>
+                    </article>
+
+                    {{-- 2. Empower a young person (featured) --}}
+                    <article class="involved-card involved-plan rounded-2xl border-2 border-primary bg-white shadow-md dark:bg-slate-900">
+                        <span class="involved-plan-badge rounded-full bg-primary px-4 py-1.5 text-xs font-bold text-[#070049] shadow">
+                            Sponsor a youth
+                        </span>
+
+                        <p class="involved-plan-label text-orange-800 dark:text-primary">
+                            2. Empower a young person
+                        </p>
+
+                        <p class="involved-plan-price text-slate-950 dark:text-white">
+                            $1,000
+                        </p>
+
+                        <p class="involved-plan-text text-slate-700 dark:text-slate-300">
+                            Support one young person through the entire Kijana Fursa Programme cohort.
+                        </p>
+
+                        <a href="#donate"
+                           class="involved-plan-btn inline-flex w-full items-center justify-center rounded-full bg-primary px-5 py-3 text-sm font-bold text-[#070049] transition hover:bg-orange-400 focus:outline-none focus-visible:ring-4 focus-visible:ring-orange-300/60">
+                            Sponsor a youth
+                        </a>
+                    </article>
+
+                    {{-- 3. Return a student to school --}}
+                    <article class="involved-card involved-plan rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
+                        <p class="involved-plan-label text-orange-800 dark:text-primary">
+                            3. Return a student to school
+                        </p>
+
+                        <p class="involved-plan-price text-slate-950 dark:text-white">
+                            $1,500
+                        </p>
+
+                        <p class="involved-plan-text text-slate-700 dark:text-slate-300">
+                            Help one school dropout return to secondary school and complete a year of education.
+                        </p>
+
+                        <a href="#donate"
+                           class="involved-plan-btn inline-flex w-full items-center justify-center rounded-full bg-primary px-5 py-3 text-sm font-bold text-[#070049] transition hover:bg-orange-400 focus:outline-none focus-visible:ring-4 focus-visible:ring-orange-300/60">
+                            Support a student
+                        </a>
+                    </article>
+                </div>
+
+                <p class="mx-auto mt-8 max-w-3xl text-center text-xs leading-relaxed text-slate-600 dark:text-slate-300">
+                    To arrange a sponsorship, make a donation using one of the options above and contact TFL
+                    with your preferred sponsorship option and payment reference.
+                </p>
+            </section>
+
+            {{-- ============ PARTNER WITH TFL ============ --}}
+            <section id="partner"
+                     class="involved-reveal mb-24 scroll-mt-32"
+                     data-involved-reveal>
+                <div class="mb-10 text-center">
+                    <p class="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-orange-800 dark:text-primary">
+                        An opportunity to partner
+                    </p>
+
+                    <h2 class="text-2xl font-bold text-slate-950 dark:text-white md:text-3xl">
+                        <span class="involved-title-underline">Why partner with TFL?</span>
+                    </h2>
+
+                    <p class="involved-lead mx-auto max-w-3xl leading-relaxed text-slate-700 dark:text-slate-300">
+                        TFL brings more than 30 years of youth development experience. Our work is
+                        locally led, practical, integrated, youth-centred, and grounded in evidence.
+                        We welcome partners who want to expand opportunities for young people.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    <article class="involved-card rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+                        <span class="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-orange-100 font-extrabold text-orange-900 dark:bg-slate-800 dark:text-primary" aria-hidden="true">01</span>
+                        <h3 class="font-bold text-slate-950 dark:text-white">Locally led</h3>
+                        <p class="mt-2 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                            Rooted in local experience and community priorities.
+                        </p>
+                    </article>
+
+                    <article class="involved-card rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+                        <span class="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-orange-100 font-extrabold text-orange-900 dark:bg-slate-800 dark:text-primary" aria-hidden="true">30+</span>
+                        <h3 class="font-bold text-slate-950 dark:text-white">Years of experience</h3>
+                        <p class="mt-2 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                            More than three decades of youth development work.
+                        </p>
+                    </article>
+
+                    <article class="involved-card rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+                        <span class="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-orange-100 font-extrabold text-orange-900 dark:bg-slate-800 dark:text-primary" aria-hidden="true">02</span>
+                        <h3 class="font-bold text-slate-950 dark:text-white">Practical</h3>
+                        <p class="mt-2 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                            Builds usable skills and experience for life and work.
+                        </p>
+                    </article>
+
+                    <article class="involved-card rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+                        <span class="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-orange-100 font-extrabold text-orange-900 dark:bg-slate-800 dark:text-primary" aria-hidden="true">03</span>
+                        <h3 class="font-bold text-slate-950 dark:text-white">Integrated</h3>
+                        <p class="mt-2 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                            Connects learning, skills, opportunity, and self-reliance.
+                        </p>
+                    </article>
+
+                    <article class="involved-card rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+                        <span class="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-orange-100 font-extrabold text-orange-900 dark:bg-slate-800 dark:text-primary" aria-hidden="true">04</span>
+                        <h3 class="font-bold text-slate-950 dark:text-white">Youth-centred</h3>
+                        <p class="mt-2 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                            Puts young people’s needs, voices, and potential at the centre.
+                        </p>
+                    </article>
+
+                    <article class="involved-card rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+                        <span class="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-orange-100 font-extrabold text-orange-900 dark:bg-slate-800 dark:text-primary" aria-hidden="true">05</span>
+                        <h3 class="font-bold text-slate-950 dark:text-white">Evidence-informed</h3>
+                        <p class="mt-2 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                            Uses learning and evidence to guide and strengthen programmes.
+                        </p>
+                    </article>
+                </div>
+
+                <div class="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-5">
+                    <article class="involved-card involved-pad rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900 lg:col-span-2">
+                        <h3 class="text-xl font-bold text-slate-950 dark:text-white">
+                            An opportunity to partner
+                        </h3>
+
+                        <p class="mt-4 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                            We are seeking partners interested in youth development, life skills,
+                            education, employability, entrepreneurship, poverty reduction, sustainable
+                            livelihoods, green skills, environmental responsibility, and youth innovation.
                         </p>
 
                         <a href="{{ route('contact') }}"
-                           class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-orange-600 to-amber-500 dark:from-primary dark:to-amber-400 text-white font-semibold rounded-full shadow-lg shadow-orange-500/20 hover:shadow-orange-500/30 hover:-translate-y-0.5 transition-all duration-300">
+                           class="mt-6 inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-bold text-[#070049] transition hover:bg-orange-400 focus:outline-none focus-visible:ring-4 focus-visible:ring-orange-300/60">
                             Talk to us about partnering
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                            </svg>
+                            <span aria-hidden="true">→</span>
                         </a>
-                    </div>
+                    </article>
 
-                    <div class="lg:col-span-2 grid grid-cols-1 gap-4">
-                        <div class="flex items-center gap-4 bg-slate-50 dark:bg-slate-900/90 rounded-2xl p-5 border border-slate-200 dark:border-slate-700/60">
-                            <div class="w-11 h-11 rounded-xl bg-orange-100 dark:bg-primary/10 text-orange-600 dark:text-primary flex items-center justify-center shrink-0">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="text-sm font-semibold text-slate-900 dark:text-white">CRDB Bank Foundation</p>
-                                <p class="text-xs text-slate-500 dark:text-slate-400">Zero-interest seed capital fund</p>
-                            </div>
-                        </div>
+                    <article class="involved-card involved-pad rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900 lg:col-span-3">
+                        <h3 class="text-xl font-bold text-slate-950 dark:text-white">
+                            Partnership can support
+                        </h3>
 
-                        <div class="flex items-center gap-4 bg-slate-50 dark:bg-slate-900/90 rounded-2xl p-5 border border-slate-200 dark:border-slate-700/60">
-                            <div class="w-11 h-11 rounded-xl bg-orange-100 dark:bg-primary/10 text-orange-600 dark:text-primary flex items-center justify-center shrink-0">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="text-sm font-semibold text-slate-900 dark:text-white">Mama Hope International</p>
-                                <p class="text-xs text-slate-500 dark:text-slate-400">US fiscal sponsorship</p>
-                            </div>
-                        </div>
-                    </div>
+                        <ul class="mt-5 grid grid-cols-1 gap-3 text-sm sm:grid-cols-2">
+                            <li class="rounded-xl bg-slate-50 p-4 leading-relaxed text-slate-800 dark:bg-slate-800 dark:text-slate-200">Youth scholarships and transition programmes</li>
+                            <li class="rounded-xl bg-slate-50 p-4 leading-relaxed text-slate-800 dark:bg-slate-800 dark:text-slate-200">Life-skills and employability training</li>
+                            <li class="rounded-xl bg-slate-50 p-4 leading-relaxed text-slate-800 dark:bg-slate-800 dark:text-slate-200">Entrepreneurship and business incubation</li>
+                            <li class="rounded-xl bg-slate-50 p-4 leading-relaxed text-slate-800 dark:bg-slate-800 dark:text-slate-200">Practical and digital skills</li>
+                            <li class="rounded-xl bg-slate-50 p-4 leading-relaxed text-slate-800 dark:bg-slate-800 dark:text-slate-200">Green skills and environmental action</li>
+                            <li class="rounded-xl bg-slate-50 p-4 leading-relaxed text-slate-800 dark:bg-slate-800 dark:text-slate-200">Youth innovation and community projects</li>
+                            <li class="rounded-xl bg-slate-50 p-4 leading-relaxed text-slate-800 dark:bg-slate-800 dark:text-slate-200">Development of the TFL youth innovation campus</li>
+                            <li class="rounded-xl bg-slate-50 p-4 leading-relaxed text-slate-800 dark:bg-slate-800 dark:text-slate-200">Organisational and programme strengthening</li>
+                        </ul>
+                    </article>
+                </div>
+
+                <div class="mt-8 rounded-2xl bg-[#070049] px-6 py-7 text-center text-white sm:px-10">
+                    <p class="text-sm font-bold tracking-wide text-orange-300">
+                        Education → Skills → Opportunity → Self-Reliance
+                    </p>
+                    <p class="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-slate-200">
+                        Partner with TFL to help young people progress along this pathway.
+                    </p>
                 </div>
             </section>
 
-            <!-- Volunteer & Careers -->
-           {{-- <section class="max-w-6xl mx-auto">
-                <div class="mb-10 text-center max-w-3xl mx-auto">
-                    <h2 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mt-1">
-                        Volunteer &amp; Careers
+            {{-- ============ VOLUNTEER ============ --}}
+            <section id="volunteer"
+                     class="involved-reveal scroll-mt-32"
+                     data-involved-reveal>
+                <div class="rounded-2xl bg-[#070049] px-6 py-12 text-center text-white sm:px-10">
+                    <p class="text-sm font-bold uppercase tracking-[0.18em] text-orange-300">
+                        Give your time and skills
+                    </p>
+
+                    <h2 class="mt-3 text-2xl font-bold md:text-3xl">
+                        Volunteer with TFL
                     </h2>
-                </div>
 
-                <div class="bg-white dark:bg-slate-800/80 backdrop-blur-xl rounded-3xl border border-dashed border-slate-300 dark:border-slate-700 p-10 md:p-14 text-center">
-                    <div class="w-14 h-14 mx-auto mb-6 rounded-2xl bg-orange-100 dark:bg-primary/10 text-orange-600 dark:text-primary flex items-center justify-center">
-                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                        </svg>
-                    </div>
-
-                    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">
-                        This page is being built
-                    </h3>
-
-                    <p class="text-slate-600 dark:text-slate-300 max-w-xl mx-auto mb-8">
-                        We're putting together current volunteer roles and open positions so we can share accurate, up-to-date opportunities — not just a placeholder list. Check back soon, or reach out directly and our team will point you in the right direction.
+                    <p class="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-slate-200">
+                        Contact our team to discuss volunteering, careers, or other ways you can
+                        contribute to the work of Training For Life.
                     </p>
 
                     <a href="{{ route('contact') }}"
-                       class="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 dark:bg-slate-700 hover:bg-slate-800 dark:hover:bg-slate-600 text-white font-semibold rounded-full transition-colors">
-                        Contact us about volunteering
+                       class="mt-6 inline-flex rounded-full bg-primary px-6 py-3 text-sm font-bold text-[#070049] transition hover:bg-orange-400 focus:outline-none focus-visible:ring-4 focus-visible:ring-white/50">
+                        Contact TFL
                     </a>
                 </div>
-            </section> --}}
+            </section>
 
         </div>
     </main>
 
     @include('partials.footer')
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const sections = document.querySelectorAll('[data-involved-reveal]');
+
+            if (!('IntersectionObserver' in window)) {
+                sections.forEach(section => section.classList.add('active'));
+                return;
+            }
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+
+            sections.forEach(section => observer.observe(section));
+        });
+    </script>
 </body>
 </html>

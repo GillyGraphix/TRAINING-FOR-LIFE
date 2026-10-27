@@ -26,11 +26,13 @@
 
             <div class="flex items-center gap-3 sm:gap-5">
                 <button id="theme-toggle" type="button" class="text-yellow-400 hover:text-yellow-300 focus:outline-none rounded-full p-2 bg-white/10 dark:bg-gray-800 transition-colors shadow-sm" aria-label="Badili mwonekano">
-                    <svg id="theme-toggle-dark-icon" class="hidden w-6 h-6 text-gray-200" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                    {{-- Mwezi: huonekana kwenye light mode --}}
+                    <svg id="theme-toggle-dark-icon" class="w-6 h-6 text-yellow-300" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"></path>
                     </svg>
 
-                    <svg id="theme-toggle-light-icon" class="hidden w-7 h-7 transition-transform duration-500 hover:rotate-45" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    {{-- Jua: huonekana kwenye dark mode --}}
+                    <svg id="theme-toggle-light-icon" class="hidden w-7 h-7 transition-transform duration-500 hover:rotate-45" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <defs>
                             <radialGradient id="tflSunCore" cx="35%" cy="35%" r="70%">
                                 <stop offset="0%" stop-color="#FFFDE7"/>
@@ -98,6 +100,26 @@
                         <span class="px-3 text-xs font-bold text-gray-500 uppercase tracking-wider dark:text-gray-400">Content Management</span>
                     </li>
 
+                    {{-- HERO SECTION --}}
+                    <li>
+                        <a href="#" onclick="switchTab('hero-settings-tab', this, event)" class="tfl-nav-link flex items-center p-3 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 border-l-4 border-transparent group transition-all">
+                            <svg class="w-5 h-5 nav-icon text-gray-500 group-hover:text-[#f79120]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a2 2 0 012-2h12a2 2 0 012 2v14H6a2 2 0 01-2-2V5zm4 3h8m-8 4h8m-8 4h5"></path>
+                            </svg>
+                            <span class="ml-3 font-semibold">Hero Section</span>
+                        </a>
+                    </li>
+
+                    {{-- PARTNERS --}}
+                    <li>
+                        <a href="#" onclick="switchTab('partners-tab', this, event)" class="tfl-nav-link flex items-center p-3 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 border-l-4 border-transparent group transition-all">
+                            <svg class="w-5 h-5 nav-icon text-gray-500 group-hover:text-[#f79120]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2a5 5 0 0110 0v2"></path>
+                            </svg>
+                            <span class="ml-3 font-semibold">Partners</span>
+                        </a>
+                    </li>
+
                     <li>
                         <a href="#" onclick="switchTab('news-tab', this, event)" class="tfl-nav-link flex items-center p-3 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 border-l-4 border-transparent group transition-all">
                             <svg class="w-5 h-5 nav-icon text-gray-500 group-hover:text-[#070049]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -113,6 +135,23 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                             </svg>
                             <span class="ml-3 font-semibold">Our Programmes</span>
+                        </a>
+                    </li>
+
+                    {{-- GALLERY, chini ya Our Programmes --}}
+                    <li>
+                        <a href="#" onclick="switchTab('gallery-tab', this, event)" class="tfl-nav-link flex items-center justify-between p-3 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 border-l-4 border-transparent group transition-all">
+                            <span class="flex items-center">
+                                <svg class="w-5 h-5 nav-icon text-gray-500 group-hover:text-[#f79120]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" stroke-width="2"></rect>
+                                    <circle cx="8.5" cy="8.5" r="1.5" stroke-width="2"></circle>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 15l-5-5L5 21"></path>
+                                </svg>
+                                <span class="ml-3 font-semibold">Gallery</span>
+                            </span>
+                            <span class="inline-flex items-center justify-center min-w-6 h-6 px-1 ml-3 text-xs font-bold text-[#f79120] bg-[#f79120]/10 rounded-full">
+                                {{ $totalGalleryImages ?? 0 }}
+                            </span>
                         </a>
                     </li>
 
@@ -151,7 +190,7 @@
                             <span class="flex items-center">
                                 <svg class="w-5 h-5 nav-icon text-gray-500 group-hover:text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"></path>
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0112 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
                                 </svg>
                                 <span class="ml-3 font-semibold">Scholarship</span>
                             </span>
@@ -233,18 +272,27 @@
                         <div class="p-4 bg-purple-50 dark:bg-purple-900/30 text-purple-600 rounded-full">
                             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"></path>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0112 20.055a11.952 11.952 0 01-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
                             </svg>
                         </div>
                     </div>
                 </div>
             </div>
 
+            {{-- TAB: HERO SECTION --}}
+            @include('admin.dashboard.partials.hero-settings')
+
+            {{-- TAB: PARTNERS --}}
+            @include('admin.dashboard.partials.partners')
+
             {{-- TAB: NEWS & UPDATES --}}
             @include('admin.dashboard.partials.news')
 
             {{-- TAB: OUR PROGRAMMES --}}
             @include('admin.dashboard.partials.programmes')
+
+            {{-- TAB: GALLERY --}}
+            @includeIf('admin.dashboard.partials.gallery')
 
             {{-- Kila partial ina tab yake kamili; usiizungushie div nyingine hapa --}}
             @include('admin.dashboard.partials.kijana-fursa')
@@ -314,25 +362,24 @@
             const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
             const themeToggleBtn = document.getElementById('theme-toggle');
 
+            const savedTheme = localStorage.getItem('color-theme');
+            const isDark = savedTheme === 'dark' ||
+                (savedTheme === null && window.matchMedia('(prefers-color-scheme: dark)').matches);
+
+            document.documentElement.classList.toggle('dark', isDark);
+
             if (themeToggleDarkIcon && themeToggleLightIcon) {
-                if (
-                    localStorage.getItem('color-theme') === 'dark' ||
-                    (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
-                ) {
-                    themeToggleLightIcon.classList.remove('hidden');
-                    document.documentElement.classList.add('dark');
-                } else {
-                    themeToggleDarkIcon.classList.remove('hidden');
-                    document.documentElement.classList.remove('dark');
-                }
+                themeToggleDarkIcon.classList.toggle('hidden', isDark);
+                themeToggleLightIcon.classList.toggle('hidden', !isDark);
             }
 
             if (themeToggleBtn && themeToggleDarkIcon && themeToggleLightIcon) {
                 themeToggleBtn.addEventListener('click', function () {
-                    const isDark = document.documentElement.classList.toggle('dark');
-                    localStorage.setItem('color-theme', isDark ? 'dark' : 'light');
-                    themeToggleDarkIcon.classList.toggle('hidden', isDark);
-                    themeToggleLightIcon.classList.toggle('hidden', !isDark);
+                    const darkModeEnabled = document.documentElement.classList.toggle('dark');
+
+                    localStorage.setItem('color-theme', darkModeEnabled ? 'dark' : 'light');
+                    themeToggleDarkIcon.classList.toggle('hidden', darkModeEnabled);
+                    themeToggleLightIcon.classList.toggle('hidden', !darkModeEnabled);
                 });
             }
 

@@ -3,230 +3,290 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Gallery - Training for Life (TFL)</title>
-    <!-- Tailwind CSS & AlpineJS via Vite -->
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-gray-100 font-sans antialiased transition-colors duration-300">
+
+<body class="bg-slate-50 font-sans text-slate-800 antialiased transition-colors duration-300 dark:bg-slate-900 dark:text-gray-100">
 
     @php
-        // Function ya kusoma picha zote zilizopo kwenye folder kiotomatiki
-        $getCategoryImages = function($folderName) {
-            $path = public_path("images/gallery/{$folderName}");
-            if (!\Illuminate\Support\Facades\File::exists($path)) {
-                return [];
-            }
-            
-            $files = \Illuminate\Support\Facades\File::files($path);
-            $imageUrls = [];
-            
-            foreach ($files as $file) {
-                $ext = strtolower($file->getExtension());
-                if (in_array($ext, ['jpg', 'jpeg', 'png', 'webp', 'gif'])) {
-                    $imageUrls[] = asset("images/gallery/{$folderName}/" . $file->getFilename());
-                }
-            }
-            
-            return $imageUrls;
-        };
+        $galleryData = collect($galleryCategories ?? [])
+            ->map(function ($category) use ($galleryImages) {
+                $categoryImages = collect($galleryImages[$category->slug] ?? [])
+                    ->map(function ($image) {
+                        return [
+                            'url' => \Illuminate\Support\Facades\Storage::url($image->image_path),
+                            'description' => $image->description,
+                        ];
+                    })
+                    ->values();
 
-        // Kujenga categories data kiotomatiki bila ku-hardcode majina ya picha
-        $galleryCategories = [
-            'outreach' => [
-                'title' => 'Community Outreach',
-                'desc' => 'Educational seminars, health awareness campaigns, and community engagement programs across local villages.',
-                'images' => $getCategoryImages('outreach')
-            ],
-            'clinical' => [
-                'title' => 'Clinical Care & Support',
-                'desc' => 'Health check-ups, specialized consultations, and medical assistance provided by our expert practitioners.',
-                'images' => $getCategoryImages('clinical')
-            ],
-            'empowerment' => [
-                'title' => 'Empowerment & Impact',
-                'desc' => 'Workshops, maternal welfare sessions, and initiatives designed to build sustainable community growth.',
-                'images' => $getCategoryImages('empowerment')
-            ],
-            'agriculture' => [
-                'title' => 'TFL Farm & Agriculture',
-                'desc' => 'Hands-on training in smart farming, greenhouse management, and agribusiness for youth sustainability.',
-                'images' => $getCategoryImages('agriculture')
-            ],
-            'members' => [
-                'title' => 'Community Members',
-                'desc' => 'The inspiring faces of our youth, mentors, staff, and the resilient individuals driving change in our society.',
-                'images' => $getCategoryImages('members')
-            ]
-        ];
+                return [
+                    'slug' => $category->slug,
+                    'title' => $category->name,
+                    'desc' => $category->description ?? '',
+                    'images' => $categoryImages,
+                ];
+            })
+            ->values();
     @endphp
 
-    <!-- 1. HEADER SECTION -->
     @include('partials.header')
 
-    <!-- 2. MAIN GALLERY CONTENT -->
-    <main class="pt-32 pb-24" 
-          x-data="{ 
-              currentCategory: null, 
-              activeImageIndex: null,
-              categories: {{ json_encode($galleryCategories) }},
+    <main
+        class="pb-24 pt-32"
+        x-data="{
+            categories: {{ \Illuminate\Support\Js::from($galleryData) }},
+            currentCategory: null,
+            activeImageIndex: null,
 
-              openLightbox(index) {
-                  this.activeImageIndex = index;
-              },
-              closeLightbox() {
-                  this.activeImageIndex = null;
-              },
-              nextImage() {
-                  if (this.currentCategory && this.currentCategory.images.length > 0) {
-                      this.activeImageIndex = (this.activeImageIndex + 1) % this.currentCategory.images.length;
-                  }
-              },
-              prevImage() {
-                  if (this.currentCategory && this.currentCategory.images.length > 0) {
-                      this.activeImageIndex = (this.activeImageIndex - 1 + this.currentCategory.images.length) % this.currentCategory.images.length;
-                  }
-              }
-          }"
-          @keydown.window.escape="closeLightbox()"
-          @keydown.window.arrow-right="if(activeImageIndex !== null) nextImage()"
-          @keydown.window.arrow-left="if(activeImageIndex !== null) prevImage()">
-        
-        <!-- PAGE TITLE -->
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-12 text-center">
-            <span class="text-primary font-bold text-xs uppercase tracking-[0.25em] bg-primary/10 px-4 py-1.5 rounded-full">Our Visual Journey</span>
-            <h1 class="text-4xl sm:text-5xl font-extrabold text-slate-900 dark:text-white mt-6 tracking-tight">Impact & Community Gallery</h1>
-            <p class="text-slate-600 dark:text-slate-400 mt-4 max-w-2xl mx-auto text-base sm:text-lg">
-                Explore our moments in action, youth empowerment programs, and the smiling faces of the communities we serve. Click any category below to view its collection.
+            openCategory(category) {
+                this.currentCategory = category;
+                this.activeImageIndex = null;
+            },
+
+            closeCategory() {
+                this.currentCategory = null;
+                this.activeImageIndex = null;
+            },
+
+            openLightbox(index) {
+                this.activeImageIndex = index;
+            },
+
+            closeLightbox() {
+                this.activeImageIndex = null;
+            },
+
+            nextImage() {
+                if (this.currentCategory && this.currentCategory.images.length > 0) {
+                    this.activeImageIndex =
+                        (this.activeImageIndex + 1) % this.currentCategory.images.length;
+                }
+            },
+
+            prevImage() {
+                if (this.currentCategory && this.currentCategory.images.length > 0) {
+                    this.activeImageIndex =
+                        (this.activeImageIndex - 1 + this.currentCategory.images.length)
+                        % this.currentCategory.images.length;
+                }
+            }
+        }"
+        @keydown.window.escape="activeImageIndex !== null ? closeLightbox() : closeCategory()"
+        @keydown.window.arrow-right="if (activeImageIndex !== null) nextImage()"
+        @keydown.window.arrow-left="if (activeImageIndex !== null) prevImage()"
+    >
+
+        {{-- Kichwa cha ukurasa --}}
+        <section class="mx-auto max-w-7xl px-4 pb-12 pt-8 text-center sm:px-6 lg:px-8">
+            <span class="rounded-full bg-primary/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.25em] text-primary">
+                Our Visual Journey
+            </span>
+
+            <h1 class="mt-6 text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-5xl">
+                Impact &amp; Community Gallery
+            </h1>
+
+            <p class="mx-auto mt-4 max-w-2xl text-base text-slate-600 dark:text-slate-400 sm:text-lg">
+                Explore our moments in action, youth empowerment programs, and the smiling faces
+                of the communities we serve. Click a category to view its collection.
             </p>
-        </div>
+        </section>
 
-        <!-- CATEGORIES GRID -->
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                
-                <!-- Kadi Zinazojiunda Kiotomatiki kulingana na Alpine Data -->
-                <template x-for="(category, key) in categories" :key="key">
-                    <div @click="currentCategory = category" class="group relative bg-white dark:bg-slate-800 rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 cursor-pointer flex flex-col h-[380px] transform hover:-translate-y-2 border border-gray-100 dark:border-slate-700/80">
-                        <!-- Background Image (Inachukua picha ya kwanza kama Cover) -->
-                        <div class="absolute inset-0 w-full h-full overflow-hidden bg-slate-200 dark:bg-slate-700 flex items-center justify-center">
+        {{-- Categories kutoka database --}}
+        <section class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <template x-if="categories.length === 0">
+                <div class="rounded-2xl bg-white p-10 text-center shadow dark:bg-slate-800">
+                    <p class="text-lg font-semibold text-slate-700 dark:text-slate-200">
+                        The gallery will be added soon.
+                    </p>
+                </div>
+            </template>
+
+            <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+                <template x-for="category in categories" :key="category.slug">
+                    <button
+                        type="button"
+                        @click="openCategory(category)"
+                        class="group relative flex h-[380px] flex-col overflow-hidden rounded-3xl border border-gray-100 bg-white text-left shadow-xl transition duration-500 hover:-translate-y-2 hover:shadow-2xl dark:border-slate-700/80 dark:bg-slate-800"
+                    >
+                        <div class="absolute inset-0 flex items-center justify-center overflow-hidden bg-slate-200 dark:bg-slate-700">
                             <template x-if="category.images.length > 0">
-                                <img :src="category.images[0]" :alt="category.title" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                                <img
+                                    :src="category.images[0].url"
+                                    :alt="category.title"
+                                    class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                >
                             </template>
+
                             <template x-if="category.images.length === 0">
-                                <div class="text-slate-400 text-sm font-medium">Hakuna Picha</div>
+                                <span class="text-sm font-medium text-slate-500">
+                                    No Photo
+                                </span>
                             </template>
                         </div>
-                        <!-- Gradient Overlay For Readability -->
+
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent"></div>
-                        
-                        <!-- Top Badges (Inahesabu Picha Kiotomatiki) -->
-                        <div class="relative z-10 p-6 flex justify-between items-start">
-                            <div class="flex items-center space-x-2 bg-primary/90 text-white text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full shadow-lg backdrop-blur-sm">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+
+                        <div class="relative z-10 flex items-start justify-between p-6">
+                            <span class="rounded-full bg-primary/90 px-4 py-1.5 text-[11px] font-black uppercase tracking-widest text-white shadow-lg">
                                 <span x-text="category.images.length + ' Photos'"></span>
-                            </div>
-                            <span class="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white group-hover:bg-primary transition-colors shadow-lg">
-                                <svg class="w-5 h-5 transform group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+                            </span>
+
+                            <span class="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 text-white shadow-lg transition-colors group-hover:bg-primary">
+                                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
+                                </svg>
                             </span>
                         </div>
 
-                        <!-- Content Bottom -->
                         <div class="relative z-10 mt-auto p-6">
-                            <span class="text-orange-400 text-[10px] font-bold uppercase tracking-widest block mb-1">Explore Collection</span>
-                            <h3 class="text-white text-2xl font-black group-hover:text-orange-300 transition-colors leading-tight" x-text="category.title"></h3>
-                            <p class="text-slate-300 text-sm mt-3 line-clamp-2 leading-relaxed" x-text="category.desc"></p>
+                            <span class="mb-1 block text-[10px] font-bold uppercase tracking-widest text-orange-400">
+                                Explore Collection
+                            </span>
+
+                            <h2
+                                class="text-2xl font-black leading-tight text-white transition-colors group-hover:text-orange-300"
+                                x-text="category.title"
+                            ></h2>
+
+                            <p
+                                class="mt-3 line-clamp-2 text-sm leading-relaxed text-slate-300"
+                                x-text="category.desc"
+                            ></p>
                         </div>
-                    </div>
+                    </button>
                 </template>
-
             </div>
-        </div>
+        </section>
 
-        <!-- 3. MODAL: UNFURLS WHEN A CATEGORY IS CLICKED -->
-        <div x-show="currentCategory" 
-             style="display: none;"
-             x-transition:enter="transition ease-out duration-300"
-             x-transition:enter-start="opacity-0"
-             x-transition:enter-end="opacity-100"
-             x-transition:leave="transition ease-in duration-200"
-             x-transition:leave-start="opacity-100"
-             x-transition:leave-end="opacity-0"
-             class="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-md overflow-y-auto px-4 py-12">
-            
-            <div class="max-w-7xl mx-auto relative">
-                <!-- Close Modal Button -->
-                <button @click="currentCategory = null" class="absolute -top-6 right-0 md:-right-4 rounded-full bg-white/10 text-white hover:bg-primary p-3 transition-colors z-50 shadow-lg">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+        {{-- Category popup --}}
+        <div
+            x-cloak
+            x-show="currentCategory !== null"
+            style="display: none;"
+            x-transition.opacity
+            class="fixed inset-0 z-50 overflow-y-auto bg-slate-950/95 px-4 py-12 backdrop-blur-md"
+        >
+            <div class="relative mx-auto max-w-7xl">
+                <button
+                    type="button"
+                    @click="closeCategory()"
+                    aria-label="Funga category"
+                    class="absolute right-0 top-0 z-50 rounded-full bg-white/10 p-3 text-white transition-colors hover:bg-primary md:-right-4"
+                >
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
                 </button>
 
-                <!-- Modal Header -->
-                <div class="mb-12 text-center mt-8">
-                    <span class="text-orange-400 font-bold text-xs uppercase tracking-widest">Category Collection</span>
-                    <h2 class="text-3xl sm:text-5xl font-extrabold text-white mt-2" x-text="currentCategory?.title"></h2>
-                    <p class="text-slate-400 mt-4 max-w-2xl mx-auto text-base" x-text="currentCategory?.desc"></p>
+                <div class="mb-12 mt-8 text-center">
+                    <span class="text-xs font-bold uppercase tracking-widest text-orange-400">
+                        Category Collection
+                    </span>
+
+                    <h2
+                        class="mt-2 text-3xl font-extrabold text-white sm:text-5xl"
+                        x-text="currentCategory?.title"
+                    ></h2>
+
+                    <p
+                        class="mx-auto mt-4 max-w-2xl text-base text-slate-400"
+                        x-text="currentCategory?.desc"
+                    ></p>
                 </div>
 
-                <!-- Inner Gallery Grid -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    <template x-for="(img, index) in currentCategory?.images" :key="index">
-                        <div @click="openLightbox(index)" class="group relative bg-slate-800 rounded-3xl overflow-hidden shadow-lg cursor-pointer h-64 border border-white/10">
-                            <img :src="img" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
-                                <span class="bg-white/95 text-slate-900 text-xs font-bold px-5 py-2.5 rounded-full shadow-xl flex items-center transform scale-95 group-hover:scale-100 transition-transform">
-                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
-                                    Enlarge Image
-                                </span>
-                            </div>
-                        </div>
+                <template x-if="currentCategory && currentCategory.images.length === 0">
+                    <p class="text-center text-slate-300">No photo in this category.</p>
+                </template>
+
+                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                    <template x-for="(image, index) in currentCategory?.images ?? []" :key="index">
+                        <button
+                            type="button"
+                            @click="openLightbox(index)"
+                            class="group relative h-64 cursor-pointer overflow-hidden rounded-3xl border border-white/10 bg-slate-800 shadow-lg"
+                        >
+                            <img
+                                :src="image.url"
+                                :alt="image.description || currentCategory.title"
+                                class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                            >
+
+                            <span
+                                x-show="image.description"
+                                class="absolute inset-x-0 bottom-0 bg-black/65 p-3 text-left text-sm text-white"
+                                x-text="image.description"
+                            ></span>
+                        </button>
                     </template>
                 </div>
             </div>
         </div>
 
-        <!-- 4. LIGHTBOX MODAL (Slider yenye Navigation ya Next / Prev) -->
-        <div x-show="activeImageIndex !== null" 
-             style="display: none;"
-             x-transition.opacity
-             class="fixed inset-0 z-[60] bg-black/98 backdrop-blur-3xl flex items-center justify-center p-4 select-none"
-             @click.self="closeLightbox()">
-            
-            <!-- Close Button -->
-            <button @click="closeLightbox()" class="absolute top-6 right-6 text-white hover:text-orange-400 p-3 bg-white/10 hover:bg-white/20 rounded-full transition-all z-50">
-                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+        {{-- Lightbox ya picha --}}
+        <div
+            x-cloak
+            x-show="activeImageIndex !== null"
+            style="display: none;"
+            x-transition.opacity
+            class="fixed inset-0 z-[60] flex select-none items-center justify-center bg-black/95 p-4 backdrop-blur-3xl"
+            @click.self="closeLightbox()"
+        >
+            <button
+                type="button"
+                @click="closeLightbox()"
+                aria-label="Funga picha"
+                class="absolute right-6 top-6 z-50 rounded-full bg-white/10 p-3 text-white transition hover:bg-white/20 hover:text-orange-400"
+            >
+                <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
             </button>
 
-            <!-- Image Counter Badge (Mfano: 2 / 7) -->
-            <div class="absolute top-6 left-6 bg-white/10 backdrop-blur-md px-4 py-1.5 rounded-full text-white text-xs font-bold border border-white/10">
-                <span x-text="(activeImageIndex + 1) + ' / ' + currentCategory?.images.length"></span>
+            <div class="absolute left-6 top-6 rounded-full border border-white/10 bg-white/10 px-4 py-1.5 text-xs font-bold text-white">
+                <span x-text="activeImageIndex + 1"></span>
+                /
+                <span x-text="currentCategory?.images.length"></span>
             </div>
 
-            <!-- Previous Button (Kushoto) -->
-            <button @click="prevImage()" 
-                    x-show="currentCategory?.images.length > 1"
-                    class="absolute left-4 md:left-8 text-white hover:text-orange-400 p-3 bg-white/10 hover:bg-white/20 rounded-full transition-all z-50 focus:outline-none">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+            <button
+                type="button"
+                x-show="currentCategory?.images.length > 1"
+                @click="prevImage()"
+                aria-label="Picha iliyotangulia"
+                class="absolute left-4 z-50 rounded-full bg-white/10 p-3 text-white transition hover:bg-white/20 hover:text-orange-400 md:left-8"
+            >
+                <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/>
+                </svg>
             </button>
 
-            <!-- Main Enlarged Image -->
-            <div class="relative max-w-6xl w-full max-h-[85vh] flex items-center justify-center px-12">
-                <template x-if="activeImageIndex !== null && currentCategory?.images[activeImageIndex]">
-                    <img :src="currentCategory.images[activeImageIndex]" 
-                         class="max-h-[85vh] max-w-full rounded-2xl shadow-2xl object-contain border border-white/5 transition-all duration-300">
-                </template>
-            </div>
+            <template x-if="activeImageIndex !== null && currentCategory?.images[activeImageIndex]">
+                <img
+                    :src="currentCategory.images[activeImageIndex].url"
+                    :alt="currentCategory.images[activeImageIndex].description || currentCategory.title"
+                    class="max-h-[85vh] max-w-full rounded-2xl border border-white/5 object-contain shadow-2xl"
+                >
+            </template>
 
-            <!-- Next Button (Kulia) -->
-            <button @click="nextImage()" 
-                    x-show="currentCategory?.images.length > 1"
-                    class="absolute right-4 md:right-8 text-white hover:text-orange-400 p-3 bg-white/10 hover:bg-white/20 rounded-full transition-all z-50 focus:outline-none">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+            <button
+                type="button"
+                x-show="currentCategory?.images.length > 1"
+                @click="nextImage()"
+                aria-label="Picha inayofuata"
+                class="absolute right-4 z-50 rounded-full bg-white/10 p-3 text-white transition hover:bg-white/20 hover:text-orange-400 md:right-8"
+            >
+                <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
+                </svg>
             </button>
-
         </div>
-
     </main>
-    
-    <!-- FOOTER SECTION -->
+
     @include('partials.footer')
 
 </body>

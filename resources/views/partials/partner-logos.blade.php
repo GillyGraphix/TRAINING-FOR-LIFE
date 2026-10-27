@@ -1,227 +1,123 @@
-<style>
-    @keyframes partner-marquee {
-        from {
-            transform: translateX(0);
+@if (isset($partners) && $partners->isNotEmpty())
+    <style>
+        .partner-logo-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1rem;
         }
-        to {
-            transform: translateX(-25%);
-        }
-    }
 
-    .partner-marquee-track {
-        display: flex;
-        width: max-content;
-        animation: partner-marquee 12s linear infinite;
-        will-change: transform;
-    }
-
-    .partner-marquee-group {
-        display: flex;
-        flex: none;
-        align-items: center;
-        justify-content: space-evenly;
-        width: 50vw;
-        gap: 1.5rem;
-        padding: 0 0.75rem;
-    }
-
-    .partner-marquee:hover .partner-marquee-track {
-        animation-play-state: paused;
-    }
-
-    .crdb-logo-mark {
-        display: flex;
-        width: 8rem;
-        height: 8rem;
-        flex: none;
-        align-items: center;
-        justify-content: center;
-        border: 3px solid #16834a;
-        border-radius: 9999px;
-        color: #16834a;
-        text-align: center;
-    }
-
-    .crdb-logo-text {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        line-height: 1;
-    }
-
-    .crdb-logo-name {
-        font-family: Georgia, "Times New Roman", serif;
-        font-size: 1.1rem;
-        font-weight: 900;
-        letter-spacing: -0.08em;
-    }
-
-    .crdb-logo-bank {
-        margin-top: 0.15rem;
-        padding: 0.15rem 0.35rem;
-        background: #16834a;
-        color: white;
-        font-size: 0.9rem;
-        font-weight: 900;
-        letter-spacing: 0.04em;
-    }
-
-    .crdb-logo-foundation {
-        margin-top: 0.2rem;
-        font-size: 0.9rem;
-        font-weight: 800;
-        letter-spacing: -0.04em;
-    }
-
-    .crdb-logo-lines {
-        display: flex;
-        align-items: center;
-        gap: 0.25rem;
-        margin-top: 0.2rem;
-    }
-
-    .crdb-logo-lines::before,
-    .crdb-logo-lines::after {
-        content: "";
-        display: block;
-        width: 1rem;
-        height: 0.4rem;
-        border-top: 2px solid currentColor;
-        border-bottom: 2px solid currentColor;
-    }
-
-    .mama-hope-logo {
-        flex: none;
-        color: #6b7280;
-        font-size: 1.5rem;
-        font-weight: 800;
-        font-style: italic;
-        letter-spacing: -0.04em;
-        white-space: nowrap;
-    }
-
-    .mama-hope-logo span {
-        color: #f97316;
-        font-style: normal;
-    }
-
-    @media (max-width: 640px) {
-        .partner-marquee-group {
-            width: 50vw;
+        .partner-logo-card {
+            display: flex;
+            min-height: 9rem;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             gap: 0.75rem;
-            padding: 0 0.4rem;
+            padding: 1.25rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.75rem;
+            background: #ffffff;
+            color: #374151;
+            text-align: center;
+            text-decoration: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
         }
 
-        .crdb-logo-mark {
-            width: 6rem;
-            height: 6rem;
+        a.partner-logo-card {
+            cursor: pointer;
         }
 
-        .crdb-logo-name {
-            font-size: 0.85rem;
+        a.partner-logo-card:hover {
+            transform: translateY(-2px);
+            border-color: #f79120;
+            box-shadow: 0 8px 20px rgb(7 0 73 / 10%);
         }
 
-        .crdb-logo-bank,
-        .crdb-logo-foundation {
-            font-size: 0.7rem;
+        a.partner-logo-card:focus-visible {
+            outline: 3px solid #f79120;
+            outline-offset: 3px;
         }
 
-        .crdb-logo-lines::before,
-        .crdb-logo-lines::after {
-            width: 0.7rem;
+        .partner-logo-image {
+            display: block;
+            width: 10rem;
+            height: 5rem;
+            object-fit: contain;
         }
 
-        .mama-hope-logo {
-            font-size: 1rem;
+        .partner-logo-name {
+            max-width: 14rem;
+            font-size: 0.95rem;
+            font-weight: 700;
+            line-height: 1.35;
         }
-    }
 
-    @media (prefers-reduced-motion: reduce) {
-        .partner-marquee-track {
-            animation: none;
+        html.dark .partner-logo-card {
+            border-color: #374151;
+            background: #1f2937;
+            color: #f3f4f6;
         }
-    }
-</style>
 
-<section class="py-12 bg-white dark:bg-secondary border-t border-gray-100 dark:border-gray-800 overflow-hidden transition-colors duration-500">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6 md:mb-8">
-        <p class="text-center text-xs md:text-sm font-semibold text-gray-400 dark:text-gray-400 uppercase tracking-widest">
-            Trusted by our partners
-        </p>
-    </div>
+        html.dark a.partner-logo-card:hover {
+            border-color: #f79120;
+        }
 
-    <div class="partner-marquee w-full overflow-hidden"
-         aria-label="Our partners: CRDB Bank Foundation and Mama Hope">
-        <div class="partner-marquee-track">
+        @media (min-width: 640px) {
+            .partner-logo-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 1.25rem;
+            }
+        }
 
-            <!-- Partner group 1 -->
-            <div class="partner-marquee-group">
-                <div class="crdb-logo-mark" role="img" aria-label="CRDB Bank Foundation">
-                    <div class="crdb-logo-text">
-                        <span class="crdb-logo-name">CRDB</span>
-                        <span class="crdb-logo-lines">
-                            <span class="crdb-logo-bank">BANK</span>
-                        </span>
-                        <span class="crdb-logo-foundation">Foundation</span>
-                    </div>
-                </div>
+        @media (min-width: 1024px) {
+            .partner-logo-grid {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+                gap: 1.5rem;
+            }
+        }
+    </style>
 
-                <div class="mama-hope-logo" role="img" aria-label="Mama Hope">
-                    MAMA <span>HOPE</span>
-                </div>
+    <section class="py-12 bg-white dark:bg-secondary border-t border-gray-100 dark:border-gray-800 transition-colors duration-500">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-8">
+                <p class="text-center text-xs md:text-sm font-semibold text-gray-400 dark:text-gray-400 uppercase tracking-widest">
+                    Trusted by our partners
+                </p>
             </div>
 
-            <!-- Partner group 2 -->
-            <div class="partner-marquee-group" aria-hidden="true">
-                <div class="crdb-logo-mark">
-                    <div class="crdb-logo-text">
-                        <span class="crdb-logo-name">CRDB</span>
-                        <span class="crdb-logo-lines">
-                            <span class="crdb-logo-bank">BANK</span>
-                        </span>
-                        <span class="crdb-logo-foundation">Foundation</span>
-                    </div>
-                </div>
+            <div class="partner-logo-grid">
+                @foreach ($partners as $partner)
+                    @php
+                        $partnerLabel = $partner->name ?: 'Partner';
+                    @endphp
 
-                <div class="mama-hope-logo">
-                    MAMA <span>HOPE</span>
-                </div>
+                    @if ($partner->website_url)
+                        <a href="{{ $partner->website_url }}"
+                           class="partner-logo-card"
+                           aria-label="Tembelea website ya {{ $partnerLabel }}">
+                    @else
+                        <div class="partner-logo-card">
+                    @endif
+
+                        @if ($partner->logo_path)
+                            <img
+                                src="{{ asset('storage/' . $partner->logo_path) }}"
+                                alt="{{ $partnerLabel }}"
+                                class="partner-logo-image"
+                                loading="lazy">
+                        @endif
+
+                        @if ($partner->name)
+                            <span class="partner-logo-name">{{ $partner->name }}</span>
+                        @endif
+
+                    @if ($partner->website_url)
+                        </a>
+                    @else
+                        </div>
+                    @endif
+                @endforeach
             </div>
-
-            <!-- Partner group 3 -->
-            <div class="partner-marquee-group">
-                <div class="crdb-logo-mark" role="img" aria-label="CRDB Bank Foundation">
-                    <div class="crdb-logo-text">
-                        <span class="crdb-logo-name">CRDB</span>
-                        <span class="crdb-logo-lines">
-                            <span class="crdb-logo-bank">BANK</span>
-                        </span>
-                        <span class="crdb-logo-foundation">Foundation</span>
-                    </div>
-                </div>
-
-                <div class="mama-hope-logo" role="img" aria-label="Mama Hope">
-                    MAMA <span>HOPE</span>
-                </div>
-            </div>
-
-            <!-- Partner group 4 -->
-            <div class="partner-marquee-group" aria-hidden="true">
-                <div class="crdb-logo-mark">
-                    <div class="crdb-logo-text">
-                        <span class="crdb-logo-name">CRDB</span>
-                        <span class="crdb-logo-lines">
-                            <span class="crdb-logo-bank">BANK</span>
-                        </span>
-                        <span class="crdb-logo-foundation">Foundation</span>
-                    </div>
-                </div>
-
-                <div class="mama-hope-logo">
-                    MAMA <span>HOPE</span>
-                </div>
-            </div>
-
         </div>
-    </div>
-</section>
+    </section>
+@endif

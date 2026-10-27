@@ -7,6 +7,9 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
+        <!-- Favicon -->
+        <link rel="icon" type="image/jpeg" href="{{ asset('favicon.jpg') }}">
+
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link
@@ -38,8 +41,6 @@
     </head>
 
     <body class="font-sans antialiased text-gray-900 dark:text-gray-100 transition-colors duration-500">
-    
-
         <div class="min-h-screen bg-gray-100 dark:bg-slate-900 transition-colors duration-500">
             <!-- Page Heading -->
             @isset($header)

@@ -1,220 +1,519 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Our Impact - Training For Life (TFL)</title>
+
+    {{-- Hide reveal-elements only when JS is running, so content is never lost if JS fails --}}
+    <script>document.documentElement.classList.add('js');</script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
-        /* Page-wide subtle dotted/grid background (low opacity so it stays quiet behind content) */
-        .tfl-page-bg {
-            position: relative;
-        }
-        .tfl-page-bg::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            z-index: 0;
-            pointer-events: none;
-            background-color: #E5E5F7;
-            opacity: 0.1;
-            background-image:
-                repeating-radial-gradient(circle at 0 0, transparent 0, #E5E5F7 23px),
-                repeating-linear-gradient(#444CF755, #444CF7);
-        }
-        .tfl-page-bg > * {
-            position: relative;
-            z-index: 1;
+        /* ---------- Reveal on scroll (only when JS is available) ---------- */
+        .js .impact-reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity .6s ease, transform .6s ease;
         }
 
-        /* Soft orange -> dark blue gradient for stat / content cards (kept gentle, not glossy) */
-        .tfl-card-gradient {
-            background-image: linear-gradient(135deg, rgba(249, 115, 22, 0.10) 0%, rgba(30, 41, 59, 0.10) 100%);
-            background-color: #ffffff;
+        .js .impact-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
-        .dark .tfl-card-gradient {
-            background-image: linear-gradient(135deg, rgba(249, 115, 22, 0.18) 0%, rgba(15, 23, 42, 0.55) 100%);
-            background-color: rgb(30 41 59);
+
+        @keyframes impactFadeInUp {
+            from { opacity: 0; transform: translateY(18px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .js .impact-reveal-stagger > * { opacity: 0; }
+
+        .js .impact-reveal-stagger.active > * {
+            animation: impactFadeInUp .5s ease both;
+        }
+
+        .impact-reveal-stagger.active > *:nth-child(1) { animation-delay: .04s; }
+        .impact-reveal-stagger.active > *:nth-child(2) { animation-delay: .10s; }
+        .impact-reveal-stagger.active > *:nth-child(3) { animation-delay: .16s; }
+        .impact-reveal-stagger.active > *:nth-child(4) { animation-delay: .22s; }
+        .impact-reveal-stagger.active > *:nth-child(5) { animation-delay: .28s; }
+        .impact-reveal-stagger.active > *:nth-child(6) { animation-delay: .34s; }
+        .impact-reveal-stagger.active > *:nth-child(7) { animation-delay: .40s; }
+        .impact-reveal-stagger.active > *:nth-child(8) { animation-delay: .46s; }
+
+        /* ---------- Hero headline shimmer ---------- */
+        .impact-gradient-text {
+            background: linear-gradient(90deg, #ffffff, #f79120, #ffffff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: impactShimmer 7s linear infinite;
+        }
+
+        @keyframes impactShimmer {
+            to { background-position: 200% center; }
+        }
+
+        /* ---------- Hero image stays fixed while the page content scrolls ---------- */
+        #impact-hero {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        /*
+         * Keep the background fixed on mobile too.
+         * The hero text and all following sections remain in normal page flow.
+         */
+        @media (max-width: 767px) {
+            #impact-hero {
+                background-attachment: fixed;
+            }
+        }
+
+        /* ---------- Cards ---------- */
+        .impact-card {
+            transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+        }
+
+        .impact-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(247, 145, 32, .55);
+            box-shadow: 0 18px 36px -18px rgba(15, 23, 42, .28);
+        }
+
+        .dark .impact-card:hover {
+            box-shadow: 0 18px 36px -18px rgba(0, 0, 0, .7);
+        }
+
+        /* ---------- Section title underline ---------- */
+        .impact-title-underline {
+            position: relative;
+            display: inline-block;
+        }
+
+        .impact-title-underline::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: -10px;
+            width: 56px;
+            height: 3px;
+            transform: translateX(-50%);
+            border-radius: 9999px;
+            background: linear-gradient(90deg, #f79120, #fb923c);
+        }
+
+        /* ---------- Reduced motion ---------- */
+        @media (prefers-reduced-motion: reduce) {
+            .impact-card,
+            .impact-gradient-text {
+                animation: none !important;
+                transition: none !important;
+            }
+
+            .js .impact-reveal,
+            .js .impact-reveal-stagger > *,
+            .js .impact-reveal-stagger.active > * {
+                opacity: 1 !important;
+                transform: none !important;
+                animation: none !important;
+                transition: none !important;
+            }
+
+            #impact-hero {
+                background-attachment: scroll;
+            }
         }
     </style>
 </head>
-<body class="font-sans antialiased bg-white text-gray-800 dark:bg-slate-900 dark:text-gray-200 transition-colors duration-300">
+
+<body class="bg-white font-sans antialiased text-slate-800 transition-colors duration-300 dark:bg-slate-950 dark:text-slate-200">
 
     @include('partials.header')
 
-    <main class="tfl-page-bg pt-32 pb-20 bg-gray-50 dark:bg-slate-900 min-h-screen transition-colors duration-500">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <main class="min-h-screen bg-slate-50 pt-24 text-slate-800 transition-colors duration-500 dark:bg-slate-950 dark:text-slate-200">
 
-            <div class="text-center mb-16">
-                <h1 class="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">Our 2025 Impact</h1>
-                <div class="w-24 h-1 bg-primary mx-auto rounded-full"></div>
-                <p class="mt-6 text-lg text-slate-600 dark:text-gray-400 max-w-3xl mx-auto">
-                    Measuring our commitment to youth empowerment through tangible assets and powerful partnerships.
+        {{-- ============ HERO ============ --}}
+        @php
+            $heroImage = asset('images/impact/impact-hero.jpg');
+        @endphp
+
+        <section
+            id="impact-hero"
+            class="relative isolate flex min-h-[540px] items-center overflow-hidden bg-[#070049] bg-cover bg-center"
+            style="background-image: linear-gradient(110deg, rgba(7, 0, 73, .92) 0%, rgba(7, 0, 73, .78) 55%, rgba(7, 0, 73, .62) 100%), url('{{ $heroImage }}');"
+        >
+            <div class="pointer-events-none absolute inset-0 z-0 bg-gradient-to-t from-[#070049]/60 via-transparent to-[#070049]/20"></div>
+
+            <div class="relative z-10 mx-auto w-full max-w-7xl px-4 py-20 text-center sm:px-6 lg:px-8">
+                <h1 class="mx-auto max-w-4xl text-4xl font-extrabold leading-tight text-white sm:text-6xl">
+                    Our Impact
+                    <span class="impact-gradient-text mt-1 block pb-1">
+                        Young people. Stronger communities.
+                    </span>
+                </h1>
+
+                <p class="mx-auto mt-6 max-w-2xl text-base font-medium leading-relaxed text-white sm:text-lg">
+                    Since 1996, TFL has helped young people build practical skills, confidence,
+                    livelihoods, and opportunities to contribute to their communities.
                 </p>
             </div>
+        </section>
 
-            {{-- 4.1 TFL at a Glance --}}
-            <section class="mb-24">
-                <div class="mb-10">
-                    <h2 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mt-1">Results — TFL at a Glance (2025)</h2>
-                </div>
-
-                <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div class="tfl-card-gradient p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 text-center">
-                        <div class="text-4xl font-bold text-primary mb-2">52</div>
-                        <p class="text-slate-600 dark:text-gray-300 font-medium">Youth Trained in 2025</p>
-                        <p class="text-sm text-slate-500 dark:text-gray-400 mt-2">26 Course 4 &amp; 26 Kijana Fursa graduates.</p>
-                    </div>
-                    <div class="tfl-card-gradient p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 text-center">
-                        <div class="text-4xl font-bold text-primary mb-2">845+</div>
-                        <p class="text-slate-600 dark:text-gray-300 font-medium">Alumni Strong</p>
-                        <p class="text-sm text-slate-500 dark:text-gray-400 mt-2">Grew by 52 members in 2025.</p>
-                    </div>
-                    <div class="tfl-card-gradient p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 text-center">
-                        <div class="text-4xl font-bold text-primary mb-2">13</div>
-                        <p class="text-slate-600 dark:text-gray-300 font-medium">Businesses Launched</p>
-                        <p class="text-sm text-slate-500 dark:text-gray-400 mt-2">Started by 2025 graduates.</p>
-                    </div>
-                    <div class="tfl-card-gradient p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 text-center">
-                        <div class="text-4xl font-bold text-primary mb-2">89%</div>
-                        <p class="text-slate-600 dark:text-gray-300 font-medium">To Programmes</p>
-                        <p class="text-sm text-slate-500 dark:text-gray-400 mt-2">Of every shilling spent — only 11% went to administration.</p>
-                    </div>
-                </div>
-
-                {{-- Legacy strip: founding year + land --}}
-                <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div class="tfl-card-gradient flex items-center gap-6 rounded-2xl p-8 border border-primary/20 dark:border-gray-700">
-                        <div class="text-5xl font-bold text-primary leading-none">30</div>
-                        <div>
-                            <p class="text-slate-800 dark:text-gray-200 font-medium">Years of TFL</p>
-                            <p class="text-sm text-slate-500 dark:text-gray-400 mt-1">Founded in 1996, still opening doors for young people in 2026.</p>
-                        </div>
-                    </div>
-                    <div class="tfl-card-gradient flex items-center gap-6 rounded-2xl p-8 border border-primary/20 dark:border-gray-700">
-                        <div class="text-5xl font-bold text-primary leading-none">5</div>
-                        <div>
-                            <p class="text-slate-800 dark:text-gray-200 font-medium">Acres in Kawawa Village</p>
-                            <p class="text-sm text-slate-500 dark:text-gray-400 mt-1">Farmland purchased outright by TFL's alumni community.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {{-- Strategic Asset Development & Partnerships --}}
-            <section class="mb-24">
-                <div class="tfl-card-gradient rounded-3xl p-8 md:p-12 border border-primary/20 dark:border-gray-700">
-                    <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-6">Strategic Asset Development &amp; Partnerships</h2>
-                    <ul class="space-y-4 text-slate-600 dark:text-gray-300">
-                        <li class="flex items-start">
-                            <svg class="w-6 h-6 text-primary mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            <span>Our Alumni Collective purchased a 5-acre plot of land in Kawawa Village for TZS 30 Million.</span>
-                        </li>
-                        <li class="flex items-start">
-                            <svg class="w-6 h-6 text-primary mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            <span>In its first cultivation cycle on the new land, we successfully harvested 33 bags of maize.</span>
-                        </li>
-                        <li class="flex items-start">
-                            <svg class="w-6 h-6 text-primary mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            <span>Collaboration with CRDB Bank Foundation established a Seed Capital zero-interest Loan Fund, providing graduates TZS 500,000 to TZS 5 million.</span>
-                        </li>
-                    </ul>
-                </div>
-            </section>
-
-            {{-- 4.2 Success Stories --}}
-            <section class="mb-24">
-                <div class="mb-10">
-                    <h2 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mt-1">Success Stories</h2>
-                </div>
-
-                <!-- Adjusted grid gap to 6 for a more compact look -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    
-                    {{-- Aingaya Lema --}}
-                    <!-- Reduced padding from p-8 to p-6 to make card smaller -->
-                    <article class="tfl-card-gradient relative rounded-2xl border border-gray-100 dark:border-gray-800 p-6 overflow-hidden">
-                        
-                        <!-- New Quote Icon positioned on the right side -->
-                        <svg class="absolute right-4 top-1/2 -translate-y-1/2 w-20 h-20 text-primary/50 dark:text-primary/30 pointer-events-none z-0" fill="currentColor" viewBox="0 0 290 290">
-                            <path d="M267.88 145V47.35h-97.65V145h48.82c0 26.92-21.9 48.82-48.82 48.82v48.82c53.93.01 97.65-43.71 97.65-97.64zM22.12 193.82v48.82c53.93 0 97.65-43.72 97.65-97.65V47.35H22.12V145h48.82c.01 26.92-21.89 48.82-48.82 48.82z"></path>
-                        </svg>
-
-                        <!-- Added z-10 and relative so text stays above the background quote -->
-                        <div class="relative z-10 pr-6">
-                            <!-- Reduced avatar size to w-12 h-12 -->
-                            <div class="flex items-center gap-4 mb-4">
-                                <div class="w-12 h-12 rounded-full bg-primary/30 text-primary flex items-center justify-center font-semibold text-lg flex-shrink-0">AL</div>
-                                <div>
-                                    <p class="font-semibold text-slate-900 dark:text-white">Aingaya Lema</p>
-                                    <p class="text-sm text-slate-500 dark:text-gray-400">Kijana Fursa Alumnus, 2024</p>
-                                </div>
-                            </div>
-                            <p class="text-slate-600 dark:text-gray-300 mb-3 text-sm md:text-base">
-                                Aingaya is now a trainee facilitator with TFL, guiding new Kijana Fursa students through the same programme that shaped his own path.
-                            </p>
-                            <p class="text-slate-800 dark:text-gray-200 font-medium italic">"I want to give back what was given to me."</p>
-                        </div>
-                    </article>
-
-                    {{-- Victoria Kessy --}}
-                    <article class="tfl-card-gradient relative rounded-2xl border border-gray-100 dark:border-gray-800 p-6 overflow-hidden">
-                        
-                        <!-- New Quote Icon positioned on the right side -->
-                        <svg class="absolute right-4 top-1/2 -translate-y-1/2 w-20 h-20 text-primary/50 dark:text-primary/30 pointer-events-none z-0" fill="currentColor" viewBox="0 0 290 290">
-                            <path d="M267.88 145V47.35h-97.65V145h48.82c0 26.92-21.9 48.82-48.82 48.82v48.82c53.93.01 97.65-43.71 97.65-97.64zM22.12 193.82v48.82c53.93 0 97.65-43.72 97.65-97.65V47.35H22.12V145h48.82c.01 26.92-21.89 48.82-48.82 48.82z"></path>
-                        </svg>
-
-                        <div class="relative z-10 pr-6">
-                            <div class="flex items-center gap-4 mb-4">
-                                <div class="w-12 h-12 rounded-full bg-primary/30 text-primary flex items-center justify-center font-semibold text-lg flex-shrink-0">VK</div>
-                                <div>
-                                    <p class="font-semibold text-slate-900 dark:text-white">Victoria Kessy</p>
-                                    <p class="text-sm text-slate-500 dark:text-gray-400">Class of 2019 Alumna</p>
-                                </div>
-                            </div>
-                            <p class="text-slate-600 dark:text-gray-300 mb-3 text-sm md:text-base">
-                                Victoria is now a teacher at New Beginning Primary School in Mwereni, shaping the next generation of learners.
-                            </p>
-                            <p class="text-slate-800 dark:text-gray-200 font-medium italic">"TFL equipped me with self-management skills, courage, and resilience."</p>
-                        </div>
-                    </article>
-                </div>
-            </section>
-
-            {{-- 4.3 Alumni --}}
-            <section>
-                <div class="mb-10">
-                    <h2 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mt-1">Alumni</h2>
-                </div>
-
-                <div class="tfl-card-gradient rounded-3xl border border-gray-100 dark:border-gray-800 p-8 md:p-12">
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-10 items-start">
-                        <div class="lg:col-span-2">
-                            <p class="text-slate-600 dark:text-gray-300 leading-relaxed">
-                                TFL's alumni network has grown to more than 845 members — our most powerful proof of impact. In 2025, alumni didn't just stay connected: they raised the funds to purchase 5 acres of land for TFL's farm, and they volunteered as mentors for the newest Course 4 and Kijana Fursa cohorts.
-                            </p>
-                            <a href="#" class="inline-flex items-center gap-2 mt-6 px-6 py-3 bg-primary text-white font-medium rounded-full hover:bg-primary/90 transition-colors">
-                                Become an alumni member
-                            </a>
-                        </div>
-                        <div class="border-t lg:border-t-0 lg:border-l border-gray-100 dark:border-gray-700 pt-8 lg:pt-0 lg:pl-10">
-                            <div class="text-4xl font-bold text-primary mb-1">845+</div>
-                            <p class="text-sm text-slate-500 dark:text-gray-400 mb-6">Members strong</p>
-                            <div class="text-4xl font-bold text-primary mb-1">52</div>
-                            <p class="text-sm text-slate-500 dark:text-gray-400">New members in 2025</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
+        {{-- ============ SECTION NAVIGATION ============ --}}
+        <div class="relative z-10 border-b border-slate-200 bg-white px-4 py-5 dark:border-slate-800 dark:bg-slate-900 sm:px-6 lg:px-8">
+            <nav aria-label="Impact page sections"
+                 class="mx-auto flex max-w-5xl flex-wrap justify-center gap-2.5">
+                @foreach ([
+                    ['#results', 'Results'],
+                    ['#stories', 'Impact Stories'],
+                    ['#challenge', 'The Challenge'],
+                ] as [$href, $label])
+                    <a href="{{ $href }}"
+                       class="rounded-full border border-slate-300 bg-slate-50 px-5 py-2 text-sm font-semibold text-slate-800 transition hover:border-primary hover:bg-primary hover:text-[#070049] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:hover:border-primary dark:hover:bg-primary dark:hover:text-[#070049]">
+                        {{ $label }}
+                    </a>
+                @endforeach
+            </nav>
         </div>
+
+        {{-- ============ RESULTS ============ --}}
+        <section id="results"
+                 class="impact-reveal relative z-10 scroll-mt-32 bg-slate-50 px-4 py-20 text-slate-800 dark:bg-slate-950 dark:text-slate-200 sm:px-6 lg:px-8"
+                 data-impact-reveal>
+            <div class="mx-auto max-w-7xl">
+                <div class="mb-14 text-center">
+                    <p class="mb-3 text-sm font-semibold text-orange-800 dark:text-primary">
+                        What we have achieved
+                    </p>
+
+                    <h2 class="text-2xl font-bold text-slate-950 dark:text-white md:text-3xl">
+                        <span class="impact-title-underline">TFL at a glance</span>
+                    </h2>
+
+                    <p class="mx-auto mt-8 max-w-2xl text-base leading-relaxed text-slate-700 dark:text-slate-300">
+                        Our experience, reach, and outcomes show how young people are building
+                        skills and creating new opportunities.
+                    </p>
+                </div>
+
+                @php
+                    $impactStats = [
+                        [
+                            'value' => '30+',
+                            'label' => 'Years of experience',
+                            'detail' => 'Continuous youth development work since 1996.',
+                        ],
+                        [
+                            'value' => '900+',
+                            'label' => 'Alumni and youth community',
+                            'detail' => 'TFL alumni and young people in our wider community.',
+                        ],
+                        [
+                            'value' => '64',
+                            'label' => 'Young people reached in 2026',
+                            'detail' => 'Through TFL’s flagship programmes.',
+                        ],
+                        [
+                            'value' => '17',
+                            'label' => 'Students supported to return',
+                            'detail' => 'Secondary school dropouts supported through Soma na Matumaini.',
+                        ],
+                        [
+                            'value' => '60%',
+                            'label' => 'In employment or self-employment',
+                            'detail' => 'Share of tracked alumni in work or self-employment.',
+                        ],
+                        [
+                            'value' => '30%',
+                            'label' => 'Started their own businesses',
+                            'detail' => 'Share of tracked alumni who have started businesses.',
+                        ],
+                        [
+                            'value' => '30%',
+                            'label' => 'Giving back as mentors',
+                            'detail' => 'Tracked alumni who returned as mentors or board members.',
+                        ],
+                        [
+                            'value' => '50',
+                            'label' => 'Alumni trained in green skills',
+                            'detail' => 'Alumni building knowledge for sustainable livelihoods.',
+                        ],
+                    ];
+                @endphp
+
+                <div class="impact-reveal-stagger grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4"
+                     data-impact-reveal>
+                    @foreach($impactStats as $stat)
+                        <article class="impact-card relative h-full overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+                            <span class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary to-orange-300" aria-hidden="true"></span>
+
+                            <p class="text-4xl font-extrabold tracking-tight text-orange-800 dark:text-primary">
+                                {{ $stat['value'] }}
+                            </p>
+
+                            <h3 class="mt-3 font-bold leading-snug text-slate-950 dark:text-white">
+                                {{ $stat['label'] }}
+                            </h3>
+
+                            <p class="mt-2 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                                {{ $stat['detail'] }}
+                            </p>
+                        </article>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+
+        {{-- ============ IMPACT STORIES ============ --}}
+        <section id="stories"
+                 class="impact-reveal relative z-10 scroll-mt-32 bg-white px-4 py-20 text-slate-800 dark:bg-slate-900 dark:text-slate-200 sm:px-6 lg:px-8"
+                 data-impact-reveal>
+            <div class="mx-auto max-w-7xl">
+                <div class="mb-14 text-center">
+                    <p class="mb-3 text-sm font-semibold text-orange-800 dark:text-primary">
+                        Voices from our community
+                    </p>
+
+                    <h2 class="text-2xl font-bold text-slate-950 dark:text-white md:text-3xl">
+                        <span class="impact-title-underline">Impact Stories</span>
+                    </h2>
+
+                    <p class="mx-auto mt-8 max-w-2xl text-base leading-relaxed text-slate-700 dark:text-slate-300">
+                        The value of the work is seen in the confidence, skills, and choices
+                        young people build for themselves.
+                    </p>
+                </div>
+
+                {{-- Three equally sized cards on large screens; stacked on small screens --}}
+                <div class="grid grid-cols-1 items-stretch gap-6 md:grid-cols-2 lg:grid-cols-3">
+
+                    {{-- Ariel David Swai --}}
+                    <article class="impact-card flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+                        <div class="relative aspect-[16/9] w-full shrink-0 overflow-hidden bg-gradient-to-br from-orange-100 to-orange-200 dark:from-slate-700 dark:to-slate-800">
+                            <span class="absolute inset-0 flex items-center justify-center text-6xl font-extrabold text-orange-700/60 dark:text-primary/60" aria-hidden="true">AS</span>
+
+                            <img src="{{ asset('images/impact/stories/ariel-david-swai.jpg') }}"
+                                 alt="Ariel David Swai"
+                                 loading="lazy"
+                                 class="relative h-full w-full object-cover object-top"
+                                 onerror="this.remove()">
+
+                            <span class="absolute left-4 top-4 z-10 rounded-full bg-primary px-4 py-2 text-xs font-bold uppercase tracking-wide text-[#070049] shadow">
+                                TFL participant
+                            </span>
+                        </div>
+
+                        <div class="flex flex-1 flex-col p-6 sm:p-7">
+                            <p class="text-sm font-semibold text-orange-800 dark:text-primary">
+                                TFL participant, 2024
+                            </p>
+
+                            <h3 class="mt-2 text-xl font-bold leading-snug text-slate-950 dark:text-white">
+                                Ariel David Swai
+                            </h3>
+
+                            <h4 class="mt-3 text-base font-semibold text-slate-900 dark:text-slate-100">
+                                Learning skills for personal growth
+                            </h4>
+
+                            <p class="mt-4 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                                During my time at Training For Life in 2024, I acquired valuable
+                                skills and knowledge that greatly impacted my personal growth.
+                                I learned critical thinking, creativity, collaboration, commitment,
+                                and how to create new opportunities.
+                            </p>
+
+                            <p class="mt-3 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                                I learned to analyse and evaluate information, explore different
+                                perspectives, and collaborate effectively with diverse teams.
+                                The experience equipped me to navigate personal and professional
+                                challenges.
+                            </p>
+                        </div>
+                    </article>
+
+                    {{-- Genevieve Noel Kimaro --}}
+                    <article class="impact-card flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+                        <div class="relative aspect-[16/9] w-full shrink-0 overflow-hidden bg-gradient-to-br from-orange-100 to-orange-200 dark:from-slate-700 dark:to-slate-800">
+                            <span class="absolute inset-0 flex items-center justify-center text-6xl font-extrabold text-orange-700/60 dark:text-primary/60" aria-hidden="true">GK</span>
+
+                            <img src="{{ asset('images/impact/stories/genevieve-noel-kimaro.jpg') }}"
+                                 alt="Genevieve Noel Kimaro"
+                                 loading="lazy"
+                                 class="relative h-full w-full object-cover object-top"
+                                 onerror="this.remove()">
+
+                            <span class="absolute left-4 top-4 z-10 rounded-full bg-primary px-4 py-2 text-xs font-bold uppercase tracking-wide text-[#070049] shadow">
+                                TFL participant
+                            </span>
+                        </div>
+
+                        <div class="flex flex-1 flex-col p-6 sm:p-7">
+                            <p class="text-sm font-semibold text-orange-800 dark:text-primary">
+                                TFL participant
+                            </p>
+
+                            <h3 class="mt-2 text-xl font-bold leading-snug text-slate-950 dark:text-white">
+                                Genevieve Noel Kimaro
+                            </h3>
+
+                            <h4 class="mt-3 text-base font-semibold text-slate-900 dark:text-slate-100">
+                                Finding direction and purpose
+                            </h4>
+
+                            <p class="mt-4 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                                The TFL course helped me understand my career and set a clearer
+                                direction for my future. It expanded my knowledge and gave me
+                                opportunities to practise what I learned in real-life situations.
+                            </p>
+
+                            <p class="mt-3 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                                I also learned to become a responsible community member, practise
+                                critical thinking, and value time in my daily activities.
+                            </p>
+                        </div>
+                    </article>
+
+                    {{-- Ester --}}
+                    <article class="impact-card flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+                        <div class="relative aspect-[16/9] w-full shrink-0 overflow-hidden bg-gradient-to-br from-orange-100 to-orange-200 dark:from-slate-700 dark:to-slate-800">
+                            <span class="absolute inset-0 flex items-center justify-center text-6xl font-extrabold text-orange-700/60 dark:text-primary/60" aria-hidden="true">E</span>
+
+                            <img src="{{ asset('images/impact/stories/ester.jpg') }}"
+                                 alt="Ester, TFL alumna"
+                                 loading="lazy"
+                                 class="relative h-full w-full object-cover object-top"
+                                 onerror="this.remove()">
+
+                            <span class="absolute left-4 top-4 z-10 rounded-full bg-primary px-4 py-2 text-xs font-bold uppercase tracking-wide text-[#070049] shadow">
+                                TFL alumna
+                            </span>
+                        </div>
+
+                        <div class="flex flex-1 flex-col p-6 sm:p-7">
+                            <p class="text-sm font-semibold text-orange-800 dark:text-primary">
+                                TFL alumna
+                            </p>
+
+                            <h3 class="mt-2 text-xl font-bold leading-snug text-slate-950 dark:text-white">
+                                Ester
+                            </h3>
+
+                            <h4 class="mt-3 text-base font-semibold text-slate-900 dark:text-slate-100">
+                                Building resilience
+                            </h4>
+
+                            <p class="mt-4 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                                TFL taught me resilience and gave me the courage to do things I
+                                never thought I could do. I hiked Mount Meru, woke up early, ran,
+                                and accomplished a lot.
+                            </p>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        {{-- ============ THE CHALLENGE ============ --}}
+        <section id="challenge"
+                 class="impact-reveal relative z-10 scroll-mt-32 bg-slate-50 px-4 py-20 text-slate-800 dark:bg-slate-950 dark:text-slate-200 sm:px-6 lg:px-8"
+                 data-impact-reveal>
+            <div class="mx-auto max-w-7xl">
+                <div class="mb-14 text-center">
+                    <p class="mb-3 text-sm font-semibold text-orange-800 dark:text-primary">
+                        Why this work matters
+                    </p>
+
+                    <h2 class="text-2xl font-bold text-slate-950 dark:text-white md:text-3xl">
+                        <span class="impact-title-underline">The Challenge</span>
+                    </h2>
+                </div>
+
+                <div class="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm dark:border-slate-700 dark:bg-slate-800 md:p-10">
+                    <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
+                        <div class="lg:col-span-2">
+                            <p class="leading-relaxed text-slate-700 dark:text-slate-300">
+                                Tanzania’s young population is a major opportunity, yet over 65% of
+                                employers report difficulty finding suitably skilled workers. At the
+                                same time, 66% of young Tanzanians aged 18–35 would like to start
+                                their own business, while 28% identify a lack of entrepreneurial
+                                skills or motivation as a barrier to employment.
+                            </p>
+
+                            <p class="mt-4 leading-relaxed text-slate-700 dark:text-slate-300">
+                                Research from the University of Dodoma shows that soft skills are
+                                important links between training and employability. As climate and
+                                environmental pressures affect livelihoods, young people also need
+                                green skills to build sustainable livelihoods and use resources
+                                responsibly.
+                            </p>
+
+                            <p class="mt-5 border-l-4 border-primary pl-4 font-semibold leading-relaxed text-slate-950 dark:text-white">
+                                The challenge is turning learning and ambition into practical skills,
+                                experience, livelihoods, and responsible action.
+                            </p>
+                        </div>
+
+                        <aside class="rounded-xl border border-slate-200 bg-slate-50 p-6 dark:border-slate-700 dark:bg-slate-900">
+                            <h3 class="font-bold text-slate-950 dark:text-white">
+                                What young people need
+                            </h3>
+
+                            <ul class="mt-4 space-y-4 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                                <li class="flex gap-3">
+                                    <span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-primary" aria-hidden="true"></span>
+                                    Practical experience and relevant skills
+                                </li>
+                                <li class="flex gap-3">
+                                    <span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-primary" aria-hidden="true"></span>
+                                    Support to turn ideas into livelihoods
+                                </li>
+                                <li class="flex gap-3">
+                                    <span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-primary" aria-hidden="true"></span>
+                                    Green skills and responsible action
+                                </li>
+                            </ul>
+                        </aside>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     @include('partials.footer')
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const sections = document.querySelectorAll('[data-impact-reveal]');
+
+            if (!('IntersectionObserver' in window)) {
+                sections.forEach(section => section.classList.add('active'));
+                return;
+            }
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
+
+            sections.forEach(section => observer.observe(section));
+        });
+    </script>
 </body>
 </html>
