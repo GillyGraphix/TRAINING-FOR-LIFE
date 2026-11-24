@@ -87,13 +87,13 @@
             </div>
         @endif
 
-        <!-- Maandishi na vitufe -->
+        <!-- Maandishi na kitufe -->
         <div class="relative z-20 flex flex-col justify-center h-full px-5 sm:px-6 md:px-12 lg:px-20 max-w-4xl pt-24 sm:pt-16 lg:pt-20 pb-32 text-center sm:text-left">
-            <h1 class="italic text-2xl md:text-6xl lg:text-6xl font-extrabold text-white mb-6 leading-[1.1] tracking-tight drop-shadow-[0_4px_6px_rgba(0,0,0,0.8)]">
+            <h1 class="italic text-xl md:text-4xl lg:text-4xl font-extrabold text-white mb-6 leading-[1.1] tracking-tight drop-shadow-[0_4px_6px_rgba(0,0,0,0.8)]">
                 <span class="mask-reveal-line" style="--mrl-delay:0.1s;">
                     <span>
                         @if ($heroHighlightPosition !== false)
-                            {{ mb_substr($heroTitle, 0, $heroHighlightPosition) }}<span data-hero-highlight-color="{{ $heroHighlightColor }}">{{ mb_substr($heroTitle, $heroHighlightPosition, mb_strlen($heroHighlightText)) }}</span>{{ mb_substr($heroTitle, $heroHighlightPosition + mb_strlen($heroHighlightText)) }}
+                            {{ mb_substr($heroTitle, 0, $heroHighlightPosition) }}<br class="hidden sm:block"><span data-hero-highlight-color="{{ $heroHighlightColor }}">{{ mb_substr($heroTitle, $heroHighlightPosition, mb_strlen($heroHighlightText)) }}</span>{{ mb_substr($heroTitle, $heroHighlightPosition + mb_strlen($heroHighlightText)) }}
                         @else
                             {{ $heroTitle }}
                         @endif
@@ -106,19 +106,7 @@
             </p>
 
             <div class="flex flex-wrap items-center justify-center sm:justify-start gap-3 sm:gap-4">
-                <a href="/impact"
-                   class="btn-slide-in bg-white/10 hover:bg-white/20 text-white border border-white/30 backdrop-blur-md px-5 sm:px-6 py-3 sm:py-3.5 rounded-full font-bold text-xs sm:text-sm tracking-wide transition-all duration-300 hover:-translate-y-0.5"
-                   style="--bsi-delay:0.5s;">
-                    Our Impact
-                </a>
-
-                <a href="/get-involved"
-                   class="btn-slide-in bg-transparent hover:bg-white text-white hover:text-slate-950 border border-white/60 px-5 sm:px-6 py-3 sm:py-3.5 rounded-full font-bold text-xs sm:text-sm tracking-wide transition-all duration-300 hover:-translate-y-0.5"
-                   style="--bsi-delay:0.62s;">
-                    Support TFL
-                </a>
-
-                <div class="btn-slide-in" style="--bsi-delay:0.74s;">
+                <div class="btn-slide-in" style="--bsi-delay:0.5s;">
                     <button
                         type="button"
                         data-open-apply-modal
@@ -135,18 +123,18 @@
     <dialog
         id="apply-program-modal"
         aria-labelledby="apply-modal-title"
-        class="apply-dialog m-auto w-[calc(100%-2rem)] max-w-5xl rounded-[28px] bg-white p-0 text-slate-900 shadow-2xl dark:bg-slate-900 dark:text-white"
+        class="apply-dialog m-auto w-[calc(100%-1rem)] max-w-5xl rounded-2xl bg-white p-0 text-slate-900 shadow-2xl dark:bg-slate-900 dark:text-white sm:w-[calc(100%-2rem)] sm:rounded-[28px]"
     >
-        <div class="p-5 sm:p-8">
-            <div class="mb-6 flex items-start justify-between gap-4">
+        <div class="p-4 sm:p-8">
+            <div class="mb-4 flex items-start justify-between gap-3 sm:mb-6 sm:gap-4">
                 <div>
-                    <p class="text-xs font-bold uppercase tracking-[0.2em] text-orange-500">
+                    <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-orange-500 sm:text-xs">
                         Training for Life
                     </p>
-                    <h2 id="apply-modal-title" class="mt-2 text-2xl font-extrabold sm:text-3xl">
+                    <h2 id="apply-modal-title" class="mt-1.5 text-xl font-extrabold sm:mt-2 sm:text-3xl">
                         Choose a program to apply for
                     </h2>
-                    <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">
+                    <p class="mt-1 text-xs text-slate-600 dark:text-slate-300 sm:mt-2 sm:text-sm">
                         Select the form for the program you wish to apply for.
                     </p>
                 </div>
@@ -155,80 +143,83 @@
                     type="button"
                     data-close-apply-modal
                     aria-label="Funga dirisha"
-                    class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-slate-100 text-xl text-slate-700 transition hover:bg-slate-200 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-700"
+                    class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-slate-100 text-xl text-slate-700 transition hover:bg-slate-200 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-700 sm:h-10 sm:w-10"
                 >
                     &times;
                 </button>
             </div>
 
-            <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+            <div class="grid grid-cols-1 gap-3 md:grid-cols-3 md:gap-4">
 
                 <!-- TFL Course 4 -->
-                <article class="flex flex-col rounded-2xl border border-slate-200 bg-slate-50 p-5 transition hover:-translate-y-1 hover:border-orange-300 hover:shadow-lg dark:border-slate-700 dark:bg-slate-800">
-                    <span class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-orange-100 text-orange-600 dark:bg-orange-500/20 dark:text-orange-400">
-                        <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <path d="M12 7v14"></path>
-                            <path d="M3 18V5a2 2 0 0 1 2-2h3a4 4 0 0 1 4 4 4 4 0 0 1 4-4h3a2 2 0 0 1 2 2v13"></path>
-                            <path d="M3 18a2 2 0 0 1 2-2h3a4 4 0 0 1 4 4 4 4 0 0 1 4-4h3a2 2 0 0 1 2 2"></path>
-                        </svg>
-                    </span>
+                <article class="flex flex-col rounded-xl border border-slate-200 bg-slate-50 p-4 transition hover:-translate-y-1 hover:border-orange-300 hover:shadow-lg dark:border-slate-700 dark:bg-slate-800 sm:rounded-2xl sm:p-5">
+                    <div class="flex items-center gap-3 sm:block">
+                        <span class="mb-0 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-orange-100 text-orange-600 dark:bg-orange-500/20 dark:text-orange-400 sm:mb-4 sm:h-12 sm:w-12 sm:rounded-xl">
+                            <svg class="h-5 w-5 sm:h-6 sm:w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M12 7v14"></path>
+                                <path d="M3 18V5a2 2 0 0 1 2-2h3a4 4 0 0 1 4 4 4 4 0 0 1 4-4h3a2 2 0 0 1 2 2v13"></path>
+                                <path d="M3 18a2 2 0 0 1 2-2h3a4 4 0 0 1 4 4 4 4 0 0 1 4-4h3a2 2 0 0 1 2 2"></path>
+                            </svg>
+                        </span>
+                        <h3 class="text-base font-bold sm:text-lg">TFL Course 4</h3>
+                    </div>
 
-                    <h3 class="text-lg font-bold">TFL Course 4</h3>
-
-                    <p class="mt-2 flex-1 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-                        Life skills and leadership training for youth..
+                    <p class="mt-2 text-xs leading-relaxed text-slate-600 dark:text-slate-300 sm:flex-1 sm:text-sm">
+                        Life skills and leadership training for youth.
                     </p>
 
                     <a
                         href="{{ route('course.apply') }}"
-                        class="mt-5 inline-flex items-center justify-center rounded-xl bg-orange-500 px-5 py-3 text-sm font-bold text-white transition hover:bg-orange-600"
+                        class="mt-3 inline-flex items-center justify-center rounded-lg bg-orange-500 px-4 py-2.5 text-xs font-bold text-white transition hover:bg-orange-600 sm:mt-5 sm:rounded-xl sm:px-5 sm:py-3 sm:text-sm"
                     >
                         Start application
                     </a>
                 </article>
 
                 <!-- Kijana Fursa -->
-                <article class="flex flex-col rounded-2xl border border-slate-200 bg-slate-50 p-5 transition hover:-translate-y-1 hover:border-blue-300 hover:shadow-lg dark:border-slate-700 dark:bg-slate-800">
-                    <span class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-400">
-                        <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <path d="m3 17 6-6 4 4 8-8"></path>
-                            <path d="M15 7h6v6"></path>
-                        </svg>
-                    </span>
+                <article class="flex flex-col rounded-xl border border-slate-200 bg-slate-50 p-4 transition hover:-translate-y-1 hover:border-blue-300 hover:shadow-lg dark:border-slate-700 dark:bg-slate-800 sm:rounded-2xl sm:p-5">
+                    <div class="flex items-center gap-3 sm:block">
+                        <span class="mb-0 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-400 sm:mb-4 sm:h-12 sm:w-12 sm:rounded-xl">
+                            <svg class="h-5 w-5 sm:h-6 sm:w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="m3 17 6-6 4 4 8-8"></path>
+                                <path d="M15 7h6v6"></path>
+                            </svg>
+                        </span>
+                        <h3 class="text-base font-bold sm:text-lg">Kijana Fursa</h3>
+                    </div>
 
-                    <h3 class="text-lg font-bold">Kijana Fursa</h3>
-
-                    <p class="mt-2 flex-1 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+                    <p class="mt-2 text-xs leading-relaxed text-slate-600 dark:text-slate-300 sm:flex-1 sm:text-sm">
                         Submit an application for the Kijana Fursa program.
                     </p>
 
                     <a
                         href="{{ url('/apply/kijana-fursa') }}"
-                        class="mt-5 inline-flex items-center justify-center rounded-xl bg-blue-700 px-5 py-3 text-sm font-bold text-white transition hover:bg-blue-800"
+                        class="mt-3 inline-flex items-center justify-center rounded-lg bg-blue-700 px-4 py-2.5 text-xs font-bold text-white transition hover:bg-blue-800 sm:mt-5 sm:rounded-xl sm:px-5 sm:py-3 sm:text-sm"
                     >
                         Start application
                     </a>
                 </article>
 
                 <!-- Soma na Matumaini Scholarship -->
-                <article class="flex flex-col rounded-2xl border border-slate-200 bg-slate-50 p-5 transition hover:-translate-y-1 hover:border-emerald-300 hover:shadow-lg dark:border-slate-700 dark:bg-slate-800">
-                    <span class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400">
-                        <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <path d="m22 10-10-5-10 5 10 5 10-5Z"></path>
-                            <path d="M6 12v5c3.5 3 8.5 3 12 0v-5"></path>
-                            <path d="M22 10v6"></path>
-                        </svg>
-                    </span>
+                <article class="flex flex-col rounded-xl border border-slate-200 bg-slate-50 p-4 transition hover:-translate-y-1 hover:border-emerald-300 hover:shadow-lg dark:border-slate-700 dark:bg-slate-800 sm:rounded-2xl sm:p-5">
+                    <div class="flex items-center gap-3 sm:block">
+                        <span class="mb-0 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400 sm:mb-4 sm:h-12 sm:w-12 sm:rounded-xl">
+                            <svg class="h-5 w-5 sm:h-6 sm:w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="m22 10-10-5-10 5 10 5 10-5Z"></path>
+                                <path d="M6 12v5c3.5 3 8.5 3 12 0v-5"></path>
+                                <path d="M22 10v6"></path>
+                            </svg>
+                        </span>
+                        <h3 class="text-base font-bold sm:text-lg">Soma na Matumaini</h3>
+                    </div>
 
-                    <h3 class="text-lg font-bold">Soma na Matumaini</h3>
-
-                    <p class="mt-2 flex-1 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+                    <p class="mt-2 text-xs leading-relaxed text-slate-600 dark:text-slate-300 sm:flex-1 sm:text-sm">
                         Scholarship application form for secondary school students.
                     </p>
 
                     <a
                         href="{{ route('snm.create') }}"
-                        class="mt-5 inline-flex items-center justify-center rounded-xl bg-emerald-700 px-5 py-3 text-sm font-bold text-white transition hover:bg-emerald-800"
+                        class="mt-3 inline-flex items-center justify-center rounded-lg bg-emerald-700 px-4 py-2.5 text-xs font-bold text-white transition hover:bg-emerald-800 sm:mt-5 sm:rounded-xl sm:px-5 sm:py-3 sm:text-sm"
                     >
                         Start application
                     </a>
@@ -237,84 +228,6 @@
             </div>
         </div>
     </dialog>
-
-    <!-- Maandishi na kadi chini ya hero -->
-    <div class="relative z-30 -mt-16 md:-mt-24 lg:-mt-28 max-w-[95%] lg:max-w-7xl mx-auto">
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-8 lg:items-end">
-
-            <div class="lg:col-span-1 order-2 lg:order-1 px-1 pt-4 lg:pt-0 scroll-reveal">
-                <p class="text-slate-600 dark:text-gray-300 text-sm leading-relaxed">
-                    Join our programs to unlock your potential. We provide the tools, mentorship, and opportunities you need to shape a better future for yourself and your community.
-                </p>
-            </div>
-
-            <div class="lg:col-span-3 order-1 lg:order-2">
-                <div class="magicpattern-wrap relative isolate rounded-tl-[64px] rounded-2xl shadow-xl border border-white/30 dark:border-white/10 p-4 md:p-5 flex gap-4 md:gap-5 overflow-x-auto momentum-x overscroll-x-contain hide-scrollbar md:grid md:grid-cols-3 md:overflow-visible transition-colors duration-300">
-
-                    <!-- Kadi 1: Skill Building -->
-                    <div class="scroll-reveal group relative z-10 min-w-[200px] sm:min-w-[220px] md:min-w-0 h-[220px] md:h-[240px] rounded-[28px] overflow-hidden shrink-0 md:shrink shadow-md" style="transition-delay:100ms;">
-                        <img src="{{ asset('images/gallery/home/skill-building.jpg') }}" alt="Skill Building" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent"></div>
-
-                        <div class="absolute top-3 left-3 w-10 h-10 rounded-full bg-orange-500/95 flex items-center justify-center text-white shadow-lg">
-                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                <path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                <circle cx="10" cy="7" r="4"></circle>
-                                <path d="M20 21v-2a4 4 0 0 0-3-3.87"></path>
-                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                            </svg>
-                        </div>
-
-                        <div class="absolute bottom-0 left-0 p-4 w-full">
-                            <h3 class="text-white font-bold text-base mb-1">Skill Building</h3>
-                            <p class="text-gray-300 text-xs line-clamp-2">Equipping youth with practical technical and soft skills.</p>
-                        </div>
-                    </div>
-
-                    <!-- Kadi 2: Launch Enterprises -->
-                    <div class="scroll-reveal group relative z-10 min-w-[200px] sm:min-w-[220px] md:min-w-0 h-[220px] md:h-[240px] rounded-[28px] overflow-hidden shrink-0 md:shrink shadow-md" style="transition-delay:250ms;">
-                        <img src="{{ asset('images/gallery/home/launch-enterprises.jpg') }}" alt="Launch Enterprises" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent"></div>
-
-                        <div class="absolute top-3 left-3 w-10 h-10 rounded-full bg-orange-500/95 flex items-center justify-center text-white shadow-lg">
-                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                <rect x="3" y="7" width="18" height="13" rx="2"></rect>
-                                <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                <path d="M3 12h18"></path>
-                                <path d="M10 12v2h4v-2"></path>
-                            </svg>
-                        </div>
-
-                        <div class="absolute bottom-0 left-0 p-4 w-full">
-                            <h3 class="text-white font-bold text-base mb-1">Launch Enterprises</h3>
-                            <p class="text-gray-300 text-xs line-clamp-2">Supporting young entrepreneurs to build businesses.</p>
-                        </div>
-                    </div>
-
-                    <!-- Kadi 3: Lead Communities -->
-                    <div class="scroll-reveal group relative z-10 min-w-[200px] sm:min-w-[220px] md:min-w-0 h-[220px] md:h-[240px] rounded-[28px] overflow-hidden shrink-0 md:shrink shadow-md" style="transition-delay:400ms;">
-                        <img src="{{ asset('images/gallery/home/lead-communities.jpg') }}" alt="Lead Communities" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent"></div>
-
-                        <div class="absolute top-3 left-3 w-10 h-10 rounded-full bg-orange-500/95 flex items-center justify-center text-white shadow-lg">
-                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                <path d="M18 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
-                                <circle cx="10" cy="7" r="4"></circle>
-                                <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
-                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                            </svg>
-                        </div>
-
-                        <div class="absolute bottom-0 left-0 p-4 w-full">
-                            <h3 class="text-white font-bold text-base mb-1">Lead Communities</h3>
-                            <p class="text-gray-300 text-xs line-clamp-2">Creating impactful changes in local communities.</p>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 
 <style>
@@ -368,9 +281,17 @@
     }
 
     .apply-dialog {
-        max-height: calc(100dvh - 2rem);
+        width: min(100% - 1rem, 64rem);
+        max-height: calc(100dvh - 1rem);
         overflow-y: auto;
         border: 0;
+    }
+
+    @media (min-width: 640px) {
+        .apply-dialog {
+            width: min(100% - 2rem, 64rem);
+            max-height: calc(100dvh - 2rem);
+        }
     }
 
     .apply-dialog::backdrop {

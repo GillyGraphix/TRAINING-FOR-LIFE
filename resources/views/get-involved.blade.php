@@ -74,6 +74,9 @@
             background-attachment: fixed;
         }
 
+        /* Sehemu zikifikiwa kutoka kwenye menyu ya header: zinasimama chini ya header */
+        .tfl-anchor { scroll-margin-top: 7rem; }
+
         /* ---------- Spacing helpers (do not depend on the Tailwind build) ---------- */
         .involved-lead {
             margin-top: 1.75rem;
@@ -184,11 +187,6 @@
                     </span>
                 </h1>
 
-                <p class="mx-auto mt-6 max-w-2xl text-base font-medium leading-relaxed text-white sm:text-lg">
-                    Help young people in Tanzania gain practical skills, confidence, and opportunities
-                    to build sustainable livelihoods and contribute to their communities.
-                </p>
-
                 <div class="mt-8 flex flex-wrap justify-center gap-3">
                     <a href="#sponsor"
                        class="inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-bold text-[#070049] shadow-lg transition hover:bg-orange-400 focus:outline-none focus-visible:ring-4 focus-visible:ring-orange-200">
@@ -227,7 +225,7 @@
 
             {{-- ============ DONATE ============ --}}
             <section id="donate"
-                     class="involved-reveal mb-24 scroll-mt-32"
+                     class="tfl-anchor involved-reveal mb-24 scroll-mt-32"
                      data-involved-reveal>
                 <div class="mx-auto mb-10 max-w-3xl text-center">
                     <p class="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-orange-800 dark:text-primary">
@@ -246,26 +244,7 @@
 
                 {{-- How donations help --}}
                 <div class="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
-                    <article class="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-900">
-                        <p class="text-sm font-bold text-slate-950 dark:text-white">Training and skills</p>
-                        <p class="mt-2 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
-                            Help provide learning materials and practical training for young people.
-                        </p>
-                    </article>
-
-                    <article class="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-900">
-                        <p class="text-sm font-bold text-slate-950 dark:text-white">Education and transition</p>
-                        <p class="mt-2 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
-                            Support students to return to school and move toward further opportunities.
-                        </p>
-                    </article>
-
-                    <article class="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-900">
-                        <p class="text-sm font-bold text-slate-950 dark:text-white">Livelihoods and opportunity</p>
-                        <p class="mt-2 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
-                            Contribute to employability, entrepreneurship, and sustainable livelihoods.
-                        </p>
-                    </article>
+                    
                 </div>
 
                 <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
@@ -419,7 +398,7 @@
 
             {{-- ============ SPONSOR A YOUTH ============ --}}
             <section id="sponsor"
-                     class="involved-reveal mb-24 scroll-mt-32"
+                     class="tfl-anchor involved-reveal mb-24 scroll-mt-32"
                      data-involved-reveal>
                 <div class="mb-12 text-center">
                     <p class="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-orange-800 dark:text-primary">
@@ -511,7 +490,7 @@
 
             {{-- ============ PARTNER WITH TFL ============ --}}
             <section id="partner"
-                     class="involved-reveal mb-24 scroll-mt-32"
+                     class="tfl-anchor involved-reveal mb-24 scroll-mt-32"
                      data-involved-reveal>
                 <div class="mb-10 text-center">
                     <p class="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-orange-800 dark:text-primary">
@@ -628,7 +607,7 @@
 
             {{-- ============ VOLUNTEER ============ --}}
             <section id="volunteer"
-                     class="involved-reveal scroll-mt-32"
+                     class="tfl-anchor involved-reveal scroll-mt-32"
                      data-involved-reveal>
                 <div class="rounded-2xl bg-[#070049] px-6 py-12 text-center text-white sm:px-10">
                     <p class="text-sm font-bold uppercase tracking-[0.18em] text-orange-300">
@@ -676,6 +655,29 @@
 
             sections.forEach(section => observer.observe(section));
         });
+    </script>
+
+    <script>
+        // Kiungo cha sehemu (#donate, #sponsor, #partner, #volunteer): nenda moja kwa moja sehemu hiyo,
+        // na urudie mara moja baada ya ukurasa kumaliza kupakia ili nafasi isibadilike.
+        (function () {
+            function target() {
+                var id = decodeURIComponent((location.hash || '').slice(1));
+                return id ? document.getElementById(id) : null;
+            }
+            function go(behavior) {
+                var el = target();
+                if (!el) return;
+                try { el.scrollIntoView({ behavior: behavior, block: 'start' }); }
+                catch (err) { el.scrollIntoView(true); }
+            }
+            window.addEventListener('load', function () {
+                if (!target()) return;
+                go('instant');
+                setTimeout(function () { go('instant'); }, 400);
+            });
+            window.addEventListener('hashchange', function () { go('smooth'); });
+        })();
     </script>
 </body>
 </html>

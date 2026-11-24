@@ -45,6 +45,7 @@ class ProgrammeController extends Controller
     public function store(Request $request)
     {
         $data = $this->validateData($request);
+        unset($data['remove_image']); // si safu ya database
 
         $data['slug'] = $this->makeSlug($request->title);
         $data['sections'] = $this->cleanSections($request->sections);
@@ -70,6 +71,7 @@ class ProgrammeController extends Controller
     public function update(Request $request, Programme $programme)
     {
         $data = $this->validateData($request);
+        unset($data['remove_image']); // si safu ya database
 
         // Badilisha slug tu kama title imebadilika
         if ($request->title !== $programme->title) {
@@ -81,10 +83,17 @@ class ProgrammeController extends Controller
         $data['order'] = $request->order ?? $programme->order;
 
         if ($request->hasFile('image')) {
+            // Picha mpya: futa ya zamani kisha hifadhi mpya
             if ($programme->image) {
                 Storage::disk('public')->delete($programme->image);
             }
             $data['image'] = $request->file('image')->store('programme_images', 'public');
+        } elseif ($request->boolean('remove_image')) {
+            // Kisanduku cha "Ondoa picha ya sasa" kimewashwa
+            if ($programme->image) {
+                Storage::disk('public')->delete($programme->image);
+            }
+            $data['image'] = null;
         }
 
         $programme->update($data);
@@ -119,10 +128,11 @@ class ProgrammeController extends Controller
     private function validateData(Request $request): array
     {
         return $request->validate([
-            'title'                 => 'required|string|max:255',
+            'title'                  => 'required|string|max:255',
             'subtitle'               => 'nullable|string|max:255',
             'summary'                => 'required|string|max:500',
             'image'                  => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'remove_image'           => 'nullable|boolean',
             'order'                  => 'nullable|integer|min:0',
             'sections'               => 'nullable|array',
             'sections.*.label'       => 'nullable|string|max:255',
@@ -136,7 +146,7 @@ class ProgrammeController extends Controller
      * ina 'label', 'content', 'highlight' (boolean) tu - muundo huu
      * ndio unaosomwa moja kwa moja na our-programmes.blade.php
      */
-    private function cleanSections($sections): array
+    private function cleanSections(array $sections): array
     {
         if (empty($sections)) {
             return [];
@@ -153,16 +163,26 @@ class ProgrammeController extends Controller
             ->all();
     }
 
+    /**
+     * Slug ya kipekee: inajaribu "title", kisha "title-1", "title-2"... hadi ipate
+     * isiyotumika. (Toleo la zamani lilihesabu slugs zinazofanana, ambalo linaweza
+     * kutoa slug iliyopo tayari ukifuta programme kisha ukaunda nyingine yenye jina hilo.)
+     */
     private function makeSlug(string $title, $ignoreId = null): string
     {
-        $slug = Str::slug($title);
+        $base = Str::slug($title) ?: 'programme';
+        $slug = $base;
+        $i = 1;
 
-        $query = Programme::where('slug', 'LIKE', "{$slug}%");
-        if ($ignoreId) {
-            $query->where('id', '!=', $ignoreId);
+        while (
+            Programme::where('slug', $slug)
+                ->when($ignoreId, fn ($q) => $q->where('id', '!=', $ignoreId))
+                ->exists()
+        ) {
+            $slug = "{$base}-{$i}";
+            $i++;
         }
-        $count = $query->count();
 
-        return $count > 0 ? "{$slug}-{$count}" : $slug;
+        return $slug;
     }
 }

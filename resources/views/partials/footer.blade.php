@@ -52,41 +52,80 @@
         from { background-position: 0 0; }
         to { background-position: 400px 400px; }
     }
+
+    /* ---------- Footer ndogo zaidi: nafasi za ziada zimepunguzwa (CSS ya kawaida, haihitaji npm run build) ---------- */
+    .tfl-footer { padding: 2.75rem 0 1.25rem; }
+
+    .tfl-footer-grid { gap: 1.75rem; margin-bottom: 1.75rem; }
+    @media (min-width: 1024px) { .tfl-footer-grid { gap: 2rem; } }
+
+    .tfl-flogo { display: block; height: 3rem; width: auto; object-fit: contain; margin-bottom: .85rem; }
+    .tfl-fp { margin: 0 0 1rem; font-size: .875rem; line-height: 1.6; text-align: left; }
+    .tfl-fp-sm { margin: 0 0 .75rem; font-size: .875rem; line-height: 1.55; }
+    .tfl-fbtn { padding: .5rem 1.25rem; font-size: .875rem; }
+
+    .tfl-fh { margin: 0 0 .85rem; padding-bottom: .4rem; font-size: 1rem; line-height: 1.3; }
+
+    .tfl-flist { display: flex; flex-direction: column; gap: .5rem; margin: 0; padding: 0; list-style: none; font-size: .9rem; }
+    .tfl-fcontact { gap: .65rem; font-size: .875rem; line-height: 1.45; }
+    .tfl-fcontact svg { margin-top: .15rem; }
+
+    .tfl-fform { display: flex; flex-direction: column; gap: .6rem; }
+    .tfl-finput { padding: .55rem .9rem; font-size: .9rem; }
+    .tfl-fsubmit { padding: .55rem 0; font-size: .9rem; }
+
+    .tfl-fbar { gap: .9rem; padding-top: 1rem; }
+    .tfl-fpriv { padding: .35rem .8rem; }
+
+    /* Kitufe cha "Back to top" ndani ya footer */
+    .tfl-top-btn {
+        display: inline-flex; align-items: center; gap: .5rem; padding: .4rem .5rem .4rem .9rem;
+        border-radius: 9999px; border: 1px solid rgba(255, 255, 255, .18); background: rgba(255, 255, 255, .06);
+        color: #e5e7eb; font-size: .78rem; font-weight: 700; letter-spacing: .04em; cursor: pointer;
+        transition: background-color .25s ease, border-color .25s ease, transform .25s ease;
+    }
+    .tfl-top-btn:hover, .tfl-top-btn:focus-visible { background: rgba(255, 255, 255, .12); border-color: rgba(247, 145, 32, .8); transform: translateY(-2px); }
+    .tfl-top-btn:focus-visible { outline: 2px solid #f79120; outline-offset: 2px; }
+    .tfl-top-btn-ico { display: flex; align-items: center; justify-content: center; width: 1.75rem; height: 1.75rem; border-radius: 9999px; }
+
+    @media (prefers-reduced-motion: reduce) {
+        .tfl-top-btn { transition: none; }
+    }
 </style>
 
-<footer class="relative stars-bg overflow-hidden pt-20 pb-8 text-white">
+<footer id="tfl-footer" class="tfl-footer relative stars-bg overflow-hidden text-white">
     <!-- Volumetric Light Rays -->
     <div class="pointer-events-none absolute -top-[20%] -right-[10%] z-0 h-[150%] w-[120%] rotate-[-15deg] transform bg-gradient-to-bl from-blue-500/30 via-blue-800/10 to-transparent blur-[80px] md:w-[70%]"></div>
     <div class="pointer-events-none absolute -top-[10%] -right-[5%] z-0 h-[120%] w-[80%] rotate-[-25deg] transform bg-gradient-to-bl from-blue-300/20 via-blue-600/5 to-transparent blur-[60px] md:w-[40%]"></div>
 
     <div class="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div class="mb-12 grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
+        <div class="tfl-footer-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
 
             <!-- Column 1: About TFL -->
             <div>
-                <a href="{{ route('home') }}" class="mb-6 inline-block transition-transform duration-300 hover:scale-105">
+                <a href="{{ route('home') }}" class="inline-block transition-transform duration-300 hover:scale-105">
                     <img src="{{ asset('images/footer.logo.png') }}"
                          alt="Training For Life Logo"
-                         class="h-16 w-auto object-contain brightness-0 invert">
+                         class="tfl-flogo brightness-0 invert">
                 </a>
 
-                <p class="mb-6 text-left leading-relaxed text-gray-300 drop-shadow-sm">
+                <p class="tfl-fp text-gray-300 drop-shadow-sm">
                     Training For Life (TFL) is a registered NGO in Tanzania under Non-Governmental Organization act, 2002 with registration No. 00NGO/0245, dedicated to transforming youth into empowered leaders by closing the gaps of awareness, access, and marketable skills.
                 </p>
 
                 <a href="{{ route('get-involved') }}"
-                   class="inline-block rounded-md bg-primary px-6 py-2.5 font-bold text-white shadow-lg shadow-primary/20 transition-all duration-300 hover:-translate-y-1 hover:bg-orange-600">
-                    Support
+                   class="tfl-fbtn inline-block rounded-md bg-primary font-bold text-white shadow-lg shadow-primary/20 transition-all duration-300 hover:-translate-y-1 hover:bg-orange-600">
+                    Donate
                 </a>
             </div>
 
             <!-- Column 2: Quick Links -->
             <div>
-                <h4 class="mb-6 border-b border-gray-700/50 pb-2 text-lg font-bold drop-shadow">
+                <h4 class="tfl-fh border-b border-gray-700/50 font-bold drop-shadow">
                     Quick Links
                 </h4>
 
-                <ul class="space-y-3">
+                <ul class="tfl-flist">
                     <li>
                         <a href="{{ route('home') }}" class="group flex items-center text-gray-400 transition hover:text-white">
                             <svg class="mr-2 h-4 w-4 text-primary transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -154,13 +193,13 @@
 
             <!-- Column 3: Contact Info -->
             <div>
-                <h4 class="mb-6 border-b border-gray-700/50 pb-2 text-lg font-bold drop-shadow">
+                <h4 class="tfl-fh border-b border-gray-700/50 font-bold drop-shadow">
                     Contact Us
                 </h4>
 
-                <ul class="space-y-4 text-gray-400">
+                <ul class="tfl-flist tfl-fcontact text-gray-400">
                     <li class="flex items-start">
-                        <svg class="mr-3 mt-1 h-5 w-5 shrink-0 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <svg class="mr-3 h-5 w-5 shrink-0 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
                         </svg>
                         <a href="tel:+255765082693" class="transition hover:text-white">
@@ -169,7 +208,7 @@
                     </li>
 
                     <li class="flex items-start">
-                        <svg class="mr-3 mt-1 h-5 w-5 shrink-0 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <svg class="mr-3 h-5 w-5 shrink-0 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                         </svg>
                         <a href="mailto:tflTanzania@gmail.com" class="break-all transition hover:text-white">
@@ -178,7 +217,7 @@
                     </li>
 
                     <li class="flex items-start">
-                        <svg class="mr-3 mt-1 h-5 w-5 shrink-0 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <svg class="mr-3 h-5 w-5 shrink-0 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <circle cx="12" cy="12" r="10" stroke-width="2"></circle>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"></path>
                         </svg>
@@ -188,7 +227,7 @@
                     </li>
 
                     <li class="flex items-start">
-                        <svg class="mr-3 mt-1 h-5 w-5 shrink-0 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <svg class="mr-3 h-5 w-5 shrink-0 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                         </svg>
@@ -198,7 +237,7 @@
                     </li>
 
                     <li class="flex items-start">
-                        <svg class="mr-3 mt-1 h-5 w-5 shrink-0 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <svg class="mr-3 h-5 w-5 shrink-0 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l9 6 9-6M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                         </svg>
                         <span>
@@ -251,24 +290,24 @@
                     });
                 }
             }">
-                <h4 class="mb-6 border-b border-gray-700/50 pb-2 text-lg font-bold drop-shadow">
+                <h4 class="tfl-fh border-b border-gray-700/50 font-bold drop-shadow">
                     Stay Updated
                 </h4>
 
-                <p class="mb-4 text-gray-400">
+                <p class="tfl-fp-sm text-gray-400">
                     Subscribe to our newsletter to receive the latest updates on our programmes and impact.
                 </p>
 
-                <form @submit.prevent="submitNewsletter" class="relative z-20 flex flex-col space-y-3">
+                <form @submit.prevent="submitNewsletter" class="tfl-fform relative z-20">
                     <input type="email"
                            x-model="email"
                            required
                            placeholder="Enter your email"
-                           class="rounded-md border border-gray-700/50 bg-gray-900/60 px-4 py-2.5 text-white backdrop-blur-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary">
+                           class="tfl-finput rounded-md border border-gray-700/50 bg-gray-900/60 text-white backdrop-blur-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary">
 
                     <button type="submit"
                             :disabled="loading"
-                            class="flex items-center justify-center rounded-md bg-white py-2.5 font-bold text-gray-900 shadow-md transition hover:bg-gray-100">
+                            class="tfl-fsubmit flex items-center justify-center rounded-md bg-white font-bold text-gray-900 shadow-md transition hover:bg-gray-100">
                         <span x-show="!loading">Subscribe</span>
                         <span x-show="loading" class="flex items-center gap-2" style="display: none;">
                             <svg class="h-5 w-5 animate-spin text-gray-900" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
@@ -288,22 +327,22 @@
             </div>
         </div>
 
-        <!-- Copyright, Privacy Policy & Social Media -->
-        <div class="flex flex-col items-center justify-between gap-6 border-t border-gray-800/60 pt-8 md:flex-row">
-            <div class="flex flex-col items-center gap-4 sm:flex-row">
+        <!-- Copyright, Privacy Policy, Social Media & Back to top -->
+        <div class="tfl-fbar flex flex-col items-center justify-between border-t border-gray-800/60 md:flex-row">
+            <div class="flex flex-col items-center gap-3 sm:flex-row sm:gap-4">
                 <p class="text-center text-sm text-gray-500 drop-shadow-sm md:text-left">
                     &copy; {{ date('Y') }} Training For Life. All rights reserved.
                 </p>
 
                 <!-- Privacy Policy Button -->
                 <a href="{{ route('privacy-policy') }}"
-                   class="inline-flex items-center rounded-md border border-gray-700/70 px-4 py-2 text-sm text-gray-300 transition hover:border-primary hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                   class="tfl-fpriv inline-flex items-center rounded-md border border-gray-700/70 text-sm text-gray-300 transition hover:border-primary hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                    aria-label="Read the Training For Life Privacy Policy">
                     Privacy Policy
                 </a>
             </div>
 
-            <div class="flex flex-col items-center gap-4 sm:flex-row">
+            <div class="flex flex-col items-center gap-3 sm:flex-row sm:gap-4">
                 <span class="text-xs font-bold uppercase tracking-widest text-gray-500">
                     Our Social Media:
                 </span>
@@ -342,7 +381,47 @@
                         </svg>
                     </a>
                 </div>
+
+                <!-- Back to top (ndani ya footer: inaonekana kila mtu akifika mwisho wa ukurasa) -->
+                <button type="button"
+                        onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+                        class="tfl-top-btn"
+                        aria-label="Back to top">
+                    Back to top
+                    <span class="tfl-top-btn-ico bg-primary text-white">
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+                        </svg>
+                    </span>
+                </button>
             </div>
         </div>
     </div>
 </footer>
+
+<!-- Scroll to Top Button (inayoelea): sasa iko hapa, kwa hiyo inaonekana kwenye kila ukurasa wenye footer.
+     Inajificha footer inapoingia kwenye skrini, kwa sababu footer ina kitufe chake cha "Back to top". -->
+<button x-data="{ show: false, nearFooter: false }"
+        x-init="
+            const footer = document.getElementById('tfl-footer');
+            if (footer && 'IntersectionObserver' in window) {
+                new IntersectionObserver((entries) => { nearFooter = entries[0].isIntersecting; }, { threshold: 0.05 }).observe(footer);
+            }
+        "
+        @scroll.window="show = window.pageYOffset > 300"
+        @click="window.scrollTo({ top: 0, behavior: 'smooth' })"
+        x-show="show && !nearFooter"
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0 translate-y-10"
+        x-transition:enter-end="opacity-100 translate-y-0"
+        x-transition:leave="transition ease-in duration-300"
+        x-transition:leave-start="opacity-100 translate-y-0"
+        x-transition:leave-end="opacity-0 translate-y-10"
+        class="fixed bottom-24 right-6 z-40 p-3 rounded-full bg-primary hover:bg-orange-600 text-white shadow-xl focus:outline-none transform transition-transform hover:-translate-y-1 cursor-pointer"
+        style="display: none;"
+        aria-label="Scroll to top">
+    <!-- Up Arrow Icon -->
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+    </svg>
+</button>

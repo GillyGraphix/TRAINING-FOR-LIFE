@@ -72,10 +72,25 @@
             {{-- Picha + Order --}}
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Picha</label>
-                    <input type="file" name="image" accept="image/*"
+                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Picha <span class="text-gray-400 font-normal">- si lazima</span></label>
+                    <input type="file" name="image" id="programme-image-input" accept="image/jpeg,image/png,image/webp"
                         class="w-full text-sm text-gray-600 dark:text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-[#f79120]/10 file:text-[#f79120] file:font-semibold hover:file:bg-[#f79120]/20">
-                    <img id="programme-current-image" src="" class="mt-2 h-20 rounded-lg hidden object-cover">
+                    <p class="text-xs text-gray-400 mt-1">Picha ya mlalo (uwiano 3:2), mfano 1200&times;800. JPG, PNG au WEBP, isizidi MB 2.</p>
+                    <p id="programme-image-error" class="hidden text-xs font-semibold text-red-600 dark:text-red-400 mt-1"></p>
+
+                    {{-- Hakikisho: inaonyesha picha kama itakavyokatwa kwenye card ya website --}}
+                    <div id="programme-image-preview-wrap" class="hidden mt-3">
+                        <div class="overflow-hidden rounded-lg border border-gray-200 dark:border-gray-600 bg-gray-100 dark:bg-gray-700" style="aspect-ratio: 3 / 2; max-width: 20rem;">
+                            <img id="programme-current-image" src="" alt="Hakikisho la picha" class="w-full h-full object-cover">
+                        </div>
+                        <p id="programme-image-note" class="text-xs text-gray-400 mt-1">Hivi ndivyo picha itakavyoonekana kwenye card.</p>
+                    </div>
+
+                    {{-- Inaonekana wakati wa kuhariri programme yenye picha --}}
+                    <label id="programme-remove-image-wrap" class="hidden mt-2 inline-flex items-center gap-2 text-xs font-semibold text-red-600 dark:text-red-400">
+                        <input type="checkbox" name="remove_image" id="programme-remove-image" value="1" class="rounded border-gray-300 text-red-600 focus:ring-red-500">
+                        Ondoa picha ya sasa
+                    </label>
                 </div>
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Mpangilio (Order)</label>
@@ -154,6 +169,83 @@
 <script>
     let sectionRowCounter = 0;
 
+    // ---- Picha: hakikisho + ukaguzi wa aina na ukubwa ----
+    const PROGRAMME_IMAGE_MAX_MB = 2;
+    const PROGRAMME_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
+    let programmeSavedImageUrl = '';   // picha iliyohifadhiwa tayari (wakati wa kuhariri)
+
+    function programmeImageUrl(path) {
+        if (!path) return '';
+        return /^(https?:)?\/\//.test(path) || path.startsWith('/') ? path : `/storage/${path}`;
+    }
+
+    function setProgrammePreview(url, note) {
+        const wrap = document.getElementById('programme-image-preview-wrap');
+        const img = document.getElementById('programme-current-image');
+        const noteEl = document.getElementById('programme-image-note');
+
+        if (!url) {
+            img.removeAttribute('src');
+            wrap.classList.add('hidden');
+            return;
+        }
+        img.src = url;
+        noteEl.textContent = note;
+        wrap.classList.remove('hidden');
+    }
+
+    function showProgrammeImageError(message) {
+        const el = document.getElementById('programme-image-error');
+        el.textContent = message || '';
+        el.classList.toggle('hidden', !message);
+    }
+
+    function resetProgrammeImageUi() {
+        programmeSavedImageUrl = '';
+        showProgrammeImageError('');
+        setProgrammePreview('', '');
+        document.getElementById('programme-remove-image-wrap').classList.add('hidden');
+        document.getElementById('programme-current-image').classList.remove('opacity-30');
+    }
+
+    document.getElementById('programme-image-input').addEventListener('change', function () {
+        const file = this.files && this.files[0];
+        showProgrammeImageError('');
+        document.getElementById('programme-remove-image').checked = false;
+        document.getElementById('programme-current-image').classList.remove('opacity-30');
+
+        if (!file) {
+            // Hakuna faili mpya: rudisha picha iliyohifadhiwa (kama ipo)
+            setProgrammePreview(programmeSavedImageUrl, 'Picha ya sasa. Chagua faili jipya ukitaka kuibadilisha.');
+            return;
+        }
+
+        if (!PROGRAMME_IMAGE_TYPES.includes(file.type)) {
+            this.value = '';
+            showProgrammeImageError('Aina ya faili hairuhusiwi. Tumia JPG, PNG au WEBP.');
+            setProgrammePreview(programmeSavedImageUrl, 'Picha ya sasa. Chagua faili jipya ukitaka kuibadilisha.');
+            return;
+        }
+
+        if (file.size > PROGRAMME_IMAGE_MAX_MB * 1024 * 1024) {
+            this.value = '';
+            const sizeMb = (file.size / 1024 / 1024).toFixed(1);
+            showProgrammeImageError(`Picha ni nzito sana (MB ${sizeMb}). Kikomo ni MB ${PROGRAMME_IMAGE_MAX_MB}. Ipunguze kwanza.`);
+            setProgrammePreview(programmeSavedImageUrl, 'Picha ya sasa. Chagua faili jipya ukitaka kuibadilisha.');
+            return;
+        }
+
+        setProgrammePreview(URL.createObjectURL(file), 'Picha mpya (bado haijahifadhiwa). Hivi ndivyo itakavyoonekana kwenye card.');
+    });
+
+    document.getElementById('programme-remove-image').addEventListener('change', function () {
+        document.getElementById('programme-current-image').classList.toggle('opacity-30', this.checked);
+        if (this.checked) {
+            document.getElementById('programme-image-input').value = '';
+            showProgrammeImageError('');
+        }
+    });
+
     function updateSectionsEmptyMsg() {
         const container = document.getElementById('sections-container');
         const emptyMsg = document.getElementById('sections-empty-msg');
@@ -205,7 +297,7 @@
 
         form.reset();
         clearSections();
-        document.getElementById('programme-current-image').classList.add('hidden');
+        resetProgrammeImageUi();
         document.getElementById('programme-form-error').classList.add('hidden');
 
         if (item) {
@@ -220,9 +312,9 @@
             document.getElementById('programme-is_active').checked = !!item.is_active;
 
             if (item.image) {
-                const img = document.getElementById('programme-current-image');
-                img.src = `/storage/${item.image}`;
-                img.classList.remove('hidden');
+                programmeSavedImageUrl = programmeImageUrl(item.image);
+                setProgrammePreview(programmeSavedImageUrl, 'Picha ya sasa. Chagua faili jipya ukitaka kuibadilisha.');
+                document.getElementById('programme-remove-image-wrap').classList.remove('hidden');
             }
 
             if (Array.isArray(item.sections)) {
